@@ -1,0 +1,22 @@
+POST http://localhost:8080/api/data_api/user_account/create.php HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "Nguyễn Văn Tâm",
+    "email" : "tamnguyen11@gmail.com",
+    "phone" : "T02020222211",
+    "birth" : "2021-02-02",
+    "username": "tamnguyen11",
+    "password" : "123456",
+    "created" : "2021-06-01"
+}
+
+### 
+
+Put http://localhost:8080/api/data_api/user_account/login.php HTTP/1.1
+content-type: application/json; charset = utf-8
+
+{
+    "username" : "tamnguyen11",
+    "password" : "123456"
+}

@@ -39,7 +39,6 @@ class user_account{
     
         return $stmt;
     }
-
     function check_username(){
         $query= "SELECT count(*) as num
                 FROM

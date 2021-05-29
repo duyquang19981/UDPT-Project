@@ -8,6 +8,14 @@ include_once '../../config/core.php';
 include_once '../../config/database.php';
 include_once '../../shared/utilities.php';
 include_once '../../objects/user_account.php';
+
+// generate json web token
+include_once '../../config/core.php';
+include_once '../../libs/php-jwt/src/BeforeValidException.php';
+include_once '../../libs/php-jwt/src/ExpiredException.php';
+include_once '../../libs/php-jwt/src/SignatureInvalidException.php';
+include_once '../../libs/php-jwt/src/JWT.php';
+use \Firebase\JWT\JWT;
   
 // instantiate database and product object
 $database = new Database();
@@ -17,7 +25,7 @@ $utilities = new Utilities();
 $user = new user_account($db);
   
 // get keywords
-$keywords=isset($_GET["s"]) ? $_GET["s"] : "";
+$keywords=isset($_GET["name"]) ? $_GET["name"] : "";
 $records_per_page = 10;
 // query products
 $stmt = $user->search($keywords,$from_record_num, $records_per_page);

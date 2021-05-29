@@ -8,6 +8,14 @@ include_once '../../config/core.php';
 include_once '../../shared/utilities.php';
 include_once '../../config/database.php';
 include_once '../../objects/user_account.php';
+
+// generate json web token
+include_once '../../config/core.php';
+include_once '../../libs/php-jwt/src/BeforeValidException.php';
+include_once '../../libs/php-jwt/src/ExpiredException.php';
+include_once '../../libs/php-jwt/src/SignatureInvalidException.php';
+include_once '../../libs/php-jwt/src/JWT.php';
+use \Firebase\JWT\JWT;
   
 // utilities
 $utilities = new Utilities();

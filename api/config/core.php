@@ -8,7 +8,8 @@ $home_url="http://localhost:8080/api/";
   
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-  
+
+$from_record_num = 1;
 // show error reporting
 error_reporting(E_ALL);
  

@@ -51,7 +51,7 @@ if($user->id_user!=null){
      echo json_encode(
              array(
                  "message" => "Đăng nhập thành công",
-                 "token" => $jwt
+                 "jwt" => $jwt
              )
          );
 }

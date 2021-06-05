@@ -335,5 +335,33 @@ class user_account{
         
         
     }
+    public function updatepass()
+    {
+        // update query
+        $query = "UPDATE
+                    " . $this->table_name . "
+                SET
+                password = :password
+                WHERE
+                    id_user = :id_user";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // sanitize
+        $this->password=htmlspecialchars(strip_tags($this->password));
+        $this->id_user=htmlspecialchars(strip_tags($this->id_user));
+    
+        // bind new values
+        $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
+        $stmt->bindParam(':id_user', $this->id_user, PDO::PARAM_INT);
+    
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+        
+        return false;
+    }
 }
 ?>

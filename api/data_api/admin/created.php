@@ -35,6 +35,7 @@ if(
     $ad->name = $data->name;
     $ad->username = $data->username;
     $ad->pass = $data->pass;
+    $ad->pass = base64_encode($ad->pass);
     $ad->role = $data -> role;
     $ad->notification_yes = $data->notification_yes;
     $ad->status = $data->status;

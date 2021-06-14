@@ -14,6 +14,6 @@ class SinhVienModel extends Database
   public  function SinhVien()
   {
     $sql = "SELECT * FROM sinhvien";
-    return mysqli_query($this->con,$sql);
+    return mysqli_query($this->connect,$sql);
   }
 }

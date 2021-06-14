@@ -2,23 +2,23 @@
 
 class Home extends Controller
 {
-  // public 
+  public $SinhvienModel;
+
   public function __construct()
   {
-    self::Default();
+    $this->SinhvienModel = self::model("SinhVienModel");
   }
 
-  static function Default()
+  public  function Default()
   {
-    $teo = self::model("SinhVienModel");
     $data =  [
-      "View" => "news",
+      "View" => "create-admin",
       "color" => "red",
       "SoThich" => ["a", "b", "c"],
-      "SV" => $teo->SinhVien()
+      "SV" => $this->SinhvienModel->SinhVien()
     ];
     self::layout(
-      "main",
+      "sign",
       $data
     );
   }

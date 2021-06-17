@@ -5,7 +5,7 @@ class SignupController
     public function index()
     {
         $data = "Hello world !!!!";        
-        $VIEW = "./views/user/signup.phtml";
-        require("./layouts/questionLayout.phtml");
+        $VIEW = "./app/views/user/signup.phtml";
+        require("./app/layouts/questionLayout.phtml");
     }
 }

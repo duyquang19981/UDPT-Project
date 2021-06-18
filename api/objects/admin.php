@@ -61,7 +61,7 @@ class admin{
     public function login()
     {
         $query = "SELECT
-                     p.id_admin
+                     p.id_admin,p.name
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -84,7 +84,7 @@ class admin{
     
         // set values to object properties
         $this->id_admin = $row['id_admin'];
-        
+        $this->name = $row['name'];
         
     }
 

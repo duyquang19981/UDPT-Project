@@ -39,7 +39,8 @@ if($user->id_user!=null){
         "iss" => $issuer,
         "data" => array(
             "id" => $user->id_user,
-            "username" => $user->username
+            "username" => $user->username,
+            "name" => $user->name
         )
      );
   

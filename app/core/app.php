@@ -1,7 +1,6 @@
 <?php
 class app{
-    protected $kind = "user";
-    protected $Controller = "home";
+    protected $Controller = "Home";
     protected $Action = "index";
     protected $Params = [];
 
@@ -10,45 +9,61 @@ class app{
         if ($this->getUrl()!= null)
         {
             $link = $this->getUrl();
-            // kiểm tra đường đẫn có tồn tại không
             if (isset($link[0]))
             {
-                $this->kind = $link[0];
-            }
-            if (isset($link[1]))
-            {
-                $this->Controller = $link[1];
-            }
-            if (isset($link[2]))
-            {
-                $this->Action = $link[2];
+                // kiểm tra file controller có tồn tại ko
+                if(file_exists("./app/controllers/".$link[0]."Controller.php"))
+                {
+                    $this->Controller = $link[0];
+                    unset($link[0]);
+                }
+                
+                
             }
             // chuyển luồng giữa admin và user
-            switch ($this->kind)
+            
+            switch ($this->Controller)                    
             {
-                case "admin":
-                    echo "admin/";
-                    break;
-                case "user":
-                    echo "user/";
-                    switch ($this->Controller)                    
+                case "signup":
+                    require_once "./app/controllers/signupController.php";
+                    $controller = new SignupController();
+                    switch ($this->Action)
                     {
-                        case "signup":
-                            echo "signup/";
-                            require_once "./app/controllers/user/SignupController.php";
-                            $controller = new SignupController();
+                        default:
                             $controller->index();
                             break;
-                        case "login":
-                            echo "login/";
-                            require_once "./app/controllers/user/LoginController.php";
-                            $controller = new LoginController();
-                            $controller->index();
+                    }
+                    break;
+                case "login":
+                    require_once "./app/controllers/loginController.php";
+                    $controller = new LoginController();
+                    // kiểm tra đường dẫn có tồn tại?
+                    if (isset($link[2]))
+                    {
+                        // kiểm tra method trong controller có tồn tại không
+                        if(method_exists($controller,$link[1]))
+                        {
+                            $this->Action = $link[1];
+                        }
+                        unset($link[1]);
+                    }
+                    $this->Params = $link?array_values($link):[];
+                    switch ($this->Action)
+                    {
+                        case "loginpost":
+                            print_r($this->Params);
                             break;
                         default:
-                            echo "Home/";
-                            require_once "./app/controllers/user/HomeController.php";
-                            $controller = new HomeController();
+                            $controller->index();
+                            break;
+                    }
+                    break;
+                default:
+                    require_once "./app/controllers/homeController.php";
+                    $controller = new HomeController();
+                    switch ($this->Action)
+                    {
+                        default:
                             $controller->index();
                             break;
                     }
@@ -57,7 +72,14 @@ class app{
         }
         else
         {
-            echo "eror";
+            require_once "./app/controllers/homeController.php";
+            $controller = new HomeController();
+            switch ($this->Action)
+            {
+                default:
+                    $controller->index();
+                    break;
+            }
         }
         
 

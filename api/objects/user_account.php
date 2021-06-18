@@ -274,9 +274,9 @@ class user_account{
         // return values from database
         return $stmt;
     }
-    public function count(){
+    public function searchcount($keywords){
         $query = "SELECT
-                     p.id_user, p.name, p.email, p.birth, p.phone, p.created
+                      COUNT(*) as total_rows
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -297,7 +297,7 @@ class user_account{
     
         return $row['total_rows'];
     }
-    public function searchcount($keywords){
+    public function count(){
         $query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . "";
     
         $stmt = $this->conn->prepare( $query );
@@ -309,7 +309,7 @@ class user_account{
     public function login()
     {
         $query = "SELECT
-                     p.id_user
+                     p.id_user,p.name
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -332,7 +332,7 @@ class user_account{
     
         // set values to object properties
         $this->id_user = $row['id_user'];
-        
+        $this->name = $row['name'];
         
     }
     public function updatepass()

@@ -4,7 +4,7 @@ class HomeController
 {
     public function index()
     {      
-        $VIEW = "./app/views/user/home.phtml";
+        $VIEW = "./app/views/home.phtml";
         require("./app/layouts/questionLayout.phtml");
     }
 }

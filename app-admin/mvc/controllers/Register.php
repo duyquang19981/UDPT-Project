@@ -12,7 +12,6 @@ class Register extends Controller
   {
     self::layout("sign", [
       "View"  => "create-admin"
-
     ]);
   }
 
@@ -30,6 +29,10 @@ class Register extends Controller
       self::layout("sign", [
         "View"  => "create-admin",
         "result" => $result
+      ]);
+    } else {
+      self::layout("sign", [
+        "View"  => "create-admin"
       ]);
     }
   }

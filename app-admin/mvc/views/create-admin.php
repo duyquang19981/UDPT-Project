@@ -30,8 +30,6 @@ if (isset($_POST['name'])) {
 
               <?php
               if (isset($data["result"])) {
-                echo '<hr/>';
-                echo "result ben view" . $data["result"];
                 if ($data["result"] == "true") {
                   echo '
                   <div class="alert alert-success" role="alert" style="color: green;">
@@ -52,14 +50,12 @@ if (isset($_POST['name'])) {
                   <input name="name" type="text" class="form-control form-control-user" required id="exampleFirstName" placeholder="Name">
                 </div>
                 <div class="form-group">
-                  <input id="username" name="username" type="text" required maxlength="16" pattern="^[a-z_-][a-z0-9_-]{5,17}$" title="Username độ dài 6-16 kí tự, được bao gồm _-, không có kí tự đặc biệt, bắt đầu bằng chữ." class="form-control form-control-user" placeholder="Username">
+                  <input id="username" name="username" type="text" required maxlength="16" pattern="^[a-z_-][a-z0-9_-]{4,17}$" title="Username độ dài 5-16 kí tự, được bao gồm _-, không có kí tự đặc biệt, bắt đầu bằng chữ." class="form-control form-control-user" placeholder="Username">
                 </div>
                 <div class="form-group ">
-                  <input name="password" type="password" required maxlength="16" minlength="6" title="Password độ dài 6-16 kí tự." class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                  <input name="password" type="password" required maxlength="16" minlength="5" title="Password độ dài 5-16 kí tự." class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                 </div>
-                <div class="form-group">
-                  <div class="g-recaptcha" data-sitekey="6Ld4OSkaAAAAABIpETnPqXff9kketkDAmSUnCKDk"></div>
-                </div>
+               
                 <button name="submitCreateAdminFormBtn" type="submit" class="btn btn-primary btn-user btn-block">
                   Tạo
                 </button>

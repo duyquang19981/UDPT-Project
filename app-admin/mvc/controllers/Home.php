@@ -12,7 +12,7 @@ class Home extends Controller
   public  function Default()
   {
     $data =  [
-      "View" => "create-admin",
+      "View" => "login",
       "color" => "red",
       "SoThich" => ["a", "b", "c"],
       "SV" => $this->SinhvienModel->SinhVien()

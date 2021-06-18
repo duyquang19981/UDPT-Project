@@ -16,7 +16,14 @@
                   <div class='noti'>
 
                     <div class="alert alert-danger" role="alert" style="color: red;">
-                      ok ok message
+
+                      <?php
+                      if (isset($data["result"])) {
+                        if ($data["result"] == "true") {
+                          echo "Đăng nhập không thành công";
+                        }
+                      };
+                      ?>
                     </div>
 
                   </div>
@@ -24,15 +31,15 @@
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
 
-                  <form class="user" method="POST" action="/login">
+                  <form class="user" method="POST" action="<?php echo _WEB_ROOT ?>/Login">
                     <div class="form-group">
-                      <input name="username" value="admin" type="text" class="form-control form-control-user" id="exampleInputEmail" placeholder="Username">
+                      <input name="username" value="admin1" type="text" class="form-control form-control-user" id="exampleInputEmail" placeholder="Username">
                     </div>
                     <div class="form-group">
-                      <input name="password" value="admin" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input name="password" value="123456" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                    <button name="submitLoginFormBtn" type="submit" class="btn btn-primary btn-user btn-block">
                       Login
                     </button>
                     <hr>

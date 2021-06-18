@@ -9,6 +9,9 @@ class App
   function __construct()
   {
     $arr = $this->urlProcess();
+    if(empty($arr)){
+      $arr[0]= "Home";
+    }
 
     //controller 
     if (file_exists("./mvc/controllers/" . $arr[0] . ".php")) {

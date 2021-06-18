@@ -1,11 +1,15 @@
 <?php
 
-class SignupController
+class LoginController
 {
     public function index()
     {
         $data = "Hello world !!!!";        
-        $VIEW = "./app/views/user/login/signup.phtml";
+        $VIEW = "./app/views/login/login.phtml";
         require("./app/layouts/questionLayout.phtml");
+    }
+    public function loginpost()
+    {
+        
     }
 }

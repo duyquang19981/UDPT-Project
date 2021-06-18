@@ -3,7 +3,7 @@ USE QUESTIONDB;
 CREATE TABLE ADMIN
 (
 	ID_ADMIN INT AUTO_INCREMENT PRIMARY KEY,
-    NAME TEXT NOT NULL,
+    NAME TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     USERNAME TEXT NOT NULL,
     PASS TEXT NOT NULL,
     ROLE INT,
@@ -16,7 +16,7 @@ CREATE TABLE NOTIFICATION
 	ID_NOTI INT AUTO_INCREMENT PRIMARY KEY,
     ID_QUESTION INT,
     ID_ANSWER INT,
-    CONTENT TEXT,
+    CONTENT TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE
 );
 
@@ -32,14 +32,14 @@ CREATE TABLE REPORT(
 	ID_REPOTT INT AUTO_INCREMENT PRIMARY KEY,
     ID_OWNER INT NOT NULL,
     ID_QUESTION INT NOT NULL,
-    REASION TEXT NOT NULL,
+    REASION TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE
 );
 
 CREATE TABLE USER_ACCOUNT
 (
 	ID_USER INT AUTO_INCREMENT PRIMARY KEY,
-    NAME TEXT NOT NULL,
+    NAME TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     EMAIL TEXT NOT NULL,
     BIRTH DATE,
     PHONE TEXT NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE TAG
 (
     ID_TAG INT AUTO_INCREMENT PRIMARY KEY,
     MOD_ID INT NOT NULL,
-    DESCRIPTION TEXT NOT NULL,
+    DESCRIPTION TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     STATUS INT 
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE ANSWER
     ID_QUESTION INT NOT NULL,
     ID_USER INT NOT NULL,
     MOD_ID INT NOT NULL,
-    CONTENT VARCHAR(500) NOT NULL,
+    CONTENT VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE,
     ACCEPT_DAY DATE,
     REFERENCELINK TEXT,
@@ -82,7 +82,7 @@ CREATE TABLE QUESTION
     OWNER_ID INT NOT NULL,
     CATEGORY_ID INT NOT NULL,
     MOD_ID INT NOT NULL,
-    DESCRIPTION TEXT NOT NULL,
+    DESCRIPTION TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     LIKES INT,
     CREATED DATE,
     ACCEPT_DAY DATE,
@@ -104,7 +104,7 @@ CREATE TABLE CATEGORY_QUES
     ID_CATEGORY_QUES INT AUTO_INCREMENT PRIMARY KEY,
     MOD_ID INT NOT NULL,
     CATEGORY_ID INT,
-    NAME TEXT,
+    NAME TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE,
     STATUS INT
 );
@@ -120,7 +120,7 @@ CREATE TABLE LABEL
 (
     ID_LABEL INT AUTO_INCREMENT PRIMARY KEY,
     MOD_ID INT NOT NULL,
-    DESCRIPTION TEXT NOT NULL,
+    DESCRIPTION TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     STATUS INT 
 );
 
@@ -148,19 +148,19 @@ ALTER TABLE question_label ADD FOREIGN KEY(question_id) REFERENCES question(id_q
 ALTER TABLE question_label ADD FOREIGN KEY(label_id) REFERENCES label(id_label);
 ALTER TABLE label ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Phạm Anh Tú', 'ADMIN','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Trần Duy Quang', 'ADMIN1','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Văn Tâm', 'ADMIN2','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Lê Quang Quí', 'ADMIN3','ADMIN',1,0,1);
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Phạm Anh Tú', 'ADMIN','MTIzNDU2',1,0,1);
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Trần Duy Quang', 'ADMIN1','MTIzNDU2',1,0,1);
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Văn Tâm', 'ADMIN2','MTIzNDU2',1,0,1);
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Lê Quang Quí', 'ADMIN3','MTIzNDU2',1,0,1);
 
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quân', 'npquan99@gmail.com', '1999/05/09', '0845775634', 'nvquan99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Trần Đình Sang', 'tdsang99@gmail.com', '1999/05/09', '084134572', 'tdsang99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phú Quý', 'npquy99@gmail.com', '1999/05/09', '083475142', 'npquy99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Chí Thanh', 'ncthanh99@gmail.com', '1999/05/09', '0757425486', 'ncthanh99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quyền', 'nvquyen99@gmail.com', '1999/05/09', '0357426842', 'nvquyen99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Huỳnh Tấn Thành', 'htthanh@gmail.com', '1999/05/09', '0357412596', 'htthanh99', '123456', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quân', 'npquan99@gmail.com', '1999/05/09', '0845775634', 'nvquan99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Trần Đình Sang', 'tdsang99@gmail.com', '1999/05/09', '084134572', 'tdsang99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phú Quý', 'npquy99@gmail.com', '1999/05/09', '083475142', 'npquy99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Chí Thanh', 'ncthanh99@gmail.com', '1999/05/09', '0757425486', 'ncthanh99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quyền', 'nvquyen99@gmail.com', '1999/05/09', '0357426842', 'nvquyen99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Huỳnh Tấn Thành', 'htthanh@gmail.com', '1999/05/09', '0357412596', 'htthanh99', 'MTIzNDU2', '2021/05/08' );
 
 INSERT INTO LABEL(MOD_ID,DESCRIPTION,STATUS) VALUES(1,N'BUỒN',1);
 INSERT INTO LABEL(MOD_ID,DESCRIPTION,STATUS) VALUES(2,'HAHA',1);

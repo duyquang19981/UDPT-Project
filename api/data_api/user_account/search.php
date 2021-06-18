@@ -1,7 +1,7 @@
 <?php
 // required headers
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+header("Content-Type: application/json; charset=utf8mb4_unicode_ci");
   
 // include database and object files
 include_once '../../config/core.php';

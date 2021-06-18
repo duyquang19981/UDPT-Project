@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
-header('Content-Type: application/json');
+header("Content-Type: application/json; charset=utf8mb4_unicode_ci");
   
 // include database and object files
 include_once '../../config/database.php';

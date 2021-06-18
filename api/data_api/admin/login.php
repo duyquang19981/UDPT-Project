@@ -42,7 +42,8 @@ if($user->id_admin!=null)
        "iss" => $issuer,
        "data" => array(
            "id" => $user->id_admin,
-           "username" => $user->username
+           "username" => $user->username,
+           "name" => $user->name
        )
     );
  

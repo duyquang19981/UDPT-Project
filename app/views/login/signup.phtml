@@ -6,22 +6,48 @@
   
 
     <!-- Login Form -->
-    <form  method="post" >
-      <input type="text" id="Username" class="fadeIn second" name="Username" placeholder="Username">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
-      <input type="text" id="repassword" class="fadeIn third" name="repassword" placeholder="Repassword">
+    <form  method="post" action="/UDPT-PROJECT/signup/signuppost">
+      <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+      <input type="password" id="repassword" class="fadeIn third" name="repassword" placeholder="Repassword">
       <input type="text" id="name" class="fadeIn third" name="name" placeholder="Name">
       <input type="email" id="email" class="fadeIn third" name="email" placeholder="Email">
       <input type="date" id="birth" class="fadeIn third" name="birth" placeholder="Birth">
       <input type="text" id="phone" class="fadeIn third" name="phone" placeholder="Phone">
-      <input type="submit" name = "signup" class="fadeIn fourth" value="Sign Up">
+      <input type="submit" name = "signup" class="fadeIn fourth disabled" value="Sign Up">
+      <p class="invalidFeedback" style="color:red">
+        <?php if(isset($data)){echo $data["messenger"];}?>
+      </p>
     </form>
      
     <!-- Remind Passowrd -->
     
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="/UDPT-PROJECT/forgotpass">Forgot Password?</a>
     </div>
 
   </div>
 </div>
+<scrip>
+<script>
+if($_SESSION["user"]['username'])
+{
+  $( "username" ).text( $_SESSION["user"]['username'] );
+}
+if($_SESSION["user"]['name'])
+{
+  $( "name" ).text( $_SESSION["user"]['name'] );
+}
+if($_SESSION["user"]['phone'])
+{
+  $( "phone" ).text( $_SESSION["user"]['phone'] );
+}
+if($_SESSION["user"]['email'])
+{
+  $( "email" ).text( $_SESSION["user"]['email'] );
+}
+if($_SESSION["user"]['birth'])
+{
+  $( "birth" ).text( $_SESSION["user"]['birth'] );
+}
+</script>

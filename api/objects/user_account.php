@@ -327,12 +327,15 @@ class user_account{
         // execute query
         $stmt->execute();
         $num = $stmt->rowCount();
-        
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($num>0)
+        {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
         // set values to object properties
         $this->id_user = $row['id_user'];
         $this->name = $row['name'];
+        }
+        
         
     }
     public function updatepass()
@@ -362,6 +365,23 @@ class user_account{
         }
         
         return false;
+    }
+
+    public function checkk()
+    {
+        if($this -> check_username()==false)
+        {
+            return 2;
+        }
+        if($this -> check_email()==false)
+        {
+            return 3;
+        }
+        if($this -> check_phone()==false)
+        {
+            return 4;
+        }
+        return 1;
     }
 }
 ?>

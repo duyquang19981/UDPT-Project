@@ -2,13 +2,13 @@
 class app{
     protected $Controller = "Home";
     protected $Action = "index";
-    protected $Params = [];
 
     function __construct()
     {
         if ($this->getUrl()!= null)
         {
             $link = $this->getUrl();
+            // xử lý controller
             if (isset($link[0]))
             {
                 // kiểm tra file controller có tồn tại ko
@@ -20,25 +20,14 @@ class app{
                 
                 
             }
-            // chuyển luồng giữa admin và user
-            
             switch ($this->Controller)                    
             {
+                // xử lý đăng kí
                 case "signup":
                     require_once "./app/controllers/signupController.php";
                     $controller = new SignupController();
-                    switch ($this->Action)
-                    {
-                        default:
-                            $controller->index();
-                            break;
-                    }
-                    break;
-                case "login":
-                    require_once "./app/controllers/loginController.php";
-                    $controller = new LoginController();
-                    // kiểm tra đường dẫn có tồn tại?
-                    if (isset($link[2]))
+                    // xử lý action
+                    if (isset($link[1]))
                     {
                         // kiểm tra method trong controller có tồn tại không
                         if(method_exists($controller,$link[1]))
@@ -47,12 +36,55 @@ class app{
                         }
                         unset($link[1]);
                     }
-                    $this->Params = $link?array_values($link):[];
                     switch ($this->Action)
                     {
-                        case "loginpost":
-                            print_r($this->Params);
+                        case "otppost":
+                            $controller->otppost();
                             break;
+                        case "otp":
+                            $controller->otp();
+                            break;
+                        case "signuppost":
+                            $controller->signuppost();
+                            break;
+                        default:
+                            $controller->index();
+                            break;
+                    }
+                    break;
+                // xử lý đăng nhập
+                case "login":
+                    require_once "./app/controllers/loginController.php";
+                    $controller = new LoginController();
+                    // xử lý action
+                    if (isset($link[1]))
+                    {
+                        // kiểm tra method trong controller có tồn tại không
+                        if(method_exists($controller,$link[1]))
+                        {
+                            $this->Action = $link[1];
+                        }
+                        unset($link[1]);
+                    }
+                    switch ($this->Action)
+                    {
+                        case "logout":
+                            $controller->logout();
+                            break;
+                        case "loginpost":
+                            $controller->loginpost();
+                            break;
+                        default:
+                            echo
+                            $controller->index();
+                            break;
+                    }
+                    break;
+                case "forgotpass":
+                    require_once "./app/controllers/forgotpassController.php";
+                    $controller = new ForgotpassController();
+                    switch ($this->Action)
+                    {
                         default:
                             $controller->index();
                             break;

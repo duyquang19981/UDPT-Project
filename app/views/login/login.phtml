@@ -7,15 +7,19 @@
    
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Username">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
+    <form method ="POST" action="/UDPT-PROJECT/login/loginpost" >
+      
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="submit" class="fadeIn fourth" value="Log In">
+      <p class="invalidFeedback" style="color:red">
+        <?php if(isset($data)){echo $data["messenger"];}?>
+      </p>
     </form>
     
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="/UDPT-PROJECT/forgotpass">Forgot Password?</a>
     </div>
 
   </div>

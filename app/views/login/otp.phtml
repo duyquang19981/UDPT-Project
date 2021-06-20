@@ -1,0 +1,33 @@
+<?php
+//resend OTP
+if(isset($_POST['resend']))
+{
+  $rndno=rand(100000, 999999);
+  $_SESSION['otp'] = $rndno;
+  header('location:'.'/UDPT-PROJECT/signup/otp');
+}
+?>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"> OTP</h2>
+ 
+    <!-- Login Form -->
+    <form method="POST" action="/UDPT-PROJECT/signup/otppost"> 
+    <p class="invalidFeedback" style="color:red">
+        <?php if(isset($data)){echo $data["messenger"];}?>
+      </p>
+      <input type="text" id="email" class="fadeIn second" name="otpvalue" placeholder="OTP">
+      <input type="submit" class="fadeIn fourth" value="Tiếp tục" name="save">
+    </form>
+    <?php echo "<p style=\"color:blu\">".$_SESSION['otp']."</p> "
+    ?>
+    <p class="w3-center"><button class="w3-btn w3-green w3-round" style="width:40%;height:40px" name="resend">Resend OTP</button></p>
+    
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="/UDPT-PROJECT/login">Đăng nhập?</a>
+    </div>
+
+  </div>
+</div>

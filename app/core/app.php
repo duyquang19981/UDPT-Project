@@ -80,6 +80,7 @@ class app{
                             break;
                     }
                     break;
+                // quên mật khẩu
                 case "forgotpass":
                     require_once "./app/controllers/forgotpassController.php";
                     $controller = new ForgotpassController();
@@ -90,6 +91,16 @@ class app{
                             break;
                     }
                     break;
+                    case "userProfile":
+                        require_once "./app/controllers/userProfileController.php";
+                        $controller = new userProfileController();
+                        switch ($this->Action)
+                        {
+                            default:
+                                $controller->index();
+                                break;
+                        }
+                        break;
                 default:
                     require_once "./app/controllers/homeController.php";
                     $controller = new HomeController();

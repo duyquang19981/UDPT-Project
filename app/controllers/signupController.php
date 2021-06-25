@@ -4,9 +4,7 @@ class SignupController
 {
     public function index()
     {   
-        $data = [
-            "messenger" => ""
-        ];
+         
         $VIEW = "./app/views/login/signup.phtml";
         require("./app/layouts/questionLayout.phtml");
     }
@@ -14,6 +12,9 @@ class SignupController
     public function signuppost()
     {
         require_once "./app/core/callapi.php";
+        // require_once './app/core/PHPMailerAutoload.php';
+        require_once "./app/core/class.phpmailer.php";
+        require_once "./app/core/class.smtp.php";
         $callapi = new callapi();
         $data = [
             "messenger" => ""
@@ -41,6 +42,7 @@ class SignupController
                             $data = [
                                 "messenger" => $response["data"]["message"]
                             ];
+                             
                             $VIEW = "./app/views/login/signup.phtml";
                             require("./app/layouts/questionLayout.phtml");
                         }else
@@ -49,37 +51,49 @@ class SignupController
                             {
                                 $rndno=rand(100000, 999999);
                                 $_SESSION['otp'] = $rndno;
-                                // require_once './app/core/class.phpmailer.php';
-                                // $mail = new PHPMailer;
-                                // $mail->IsSMTP();
-                                // $mail->Host = 'smtpout.secureserver.net';
-                                // $mail->Port = '80';
-                                // $mail->SMTPAuth = true;
-                                // $mail->Username = 'tubato1999@gmail.com';					
-                                // $mail->Password = 'quenmatroi1610';
-                                // $mail->SMTPSecure = '';
-                                // $mail->From = 'tubato1999@gmail.com';
-                                // $mail->FromName = 'Webslesson';
-                                // $mail->AddAddress($user["email"]);
-                                // $mail->WordWrap = 50;
-                                // $mail->IsHTML(true);
-                                // $mail->Subject = 'Verification code for Verify Your Email Address';
-                                // $message_body = '
-                                // <p>For verify your email address, enter this verification code when prompted: <b>'.$rndno.'</b>.</p>
-                                // <p>Sincerely,</p>
-                                // ';
-                                // $mail->Body = $message_body;
-            
-                                // if($mail->Send())
-                                // {
-                                //     echo "haha";
-                                //     // echo '<script>alert("Please Check Your Email for Verification Code")</script>';
-                                //     // echo '<script>window.location.replace("email_verify.php?code='.$rndno.'");</script>';
-                                // }
+                                
+                                $mail = new PHPMailer;
+                                $mail->SMTPOptions = [
+                                    'ssl' => [
+                                        'verify_peer' => false,
+                                        'verify_peer_name' => false,
+                                        'allow_self_signed' => true,
+                                    ]
+                                ];
+                                // $mail->SMTPDebug = 4;                               // Enable verbose debug output
+                                $mail->CharSet = 'UTF-8';
+                                $mail->Encoding = 'base64';
+                                $mail->isSMTP();                                      // Set mailer to use SMTP
+                                $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+                                $mail->SMTPAuth = true;                               // Enable SMTP authentication
+                                $mail->Username = 'tubato1999@gmail.com';                 // SMTP username
+                                $mail->Password = 'quenmatroi1602';                           // SMTP password
+                                $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+                                $mail->Port = 587;                                    // TCP port to connect to
 
+                                $mail->setFrom('tubato1999@gmail.com', 'Mailer');
+                                $mail->addAddress($user["email"], 'Joe User');     // Add a recipient
+                                $mail->addReplyTo('tubato1999@gmail.com');
+
+
+                                //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+                                $mail->isHTML(true);                                  // Set email format to HTML
+
+                                $mail->Subject = 'Xác nhận mã OTP';
+                                $mail->Body    = "Mã otp của bạn là:  <b>".$rndno."</b>";
+                                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                                if(!$mail->send()) {
+                                    $data = [
+                                        "messenger" => "lỗi hệ thống"
+                                    ];    
+                                    break;
+                                } else {
+                                    header('location:'.'/UDPT-PROJECT/signup/otp');
+                                    break;
+                                }
                             }
-                            header('location:'.'/UDPT-PROJECT/signup/otp');
-                            break;
+                            
                         }
                         
                     }
@@ -87,6 +101,7 @@ class SignupController
                         $data = [
                                     "messenger" => $e->getMessage()
                                 ];
+                         
                         $VIEW = "./app/views/login/login.phtml";
                         require("./app/layouts/questionLayout.phtml");
                         break;
@@ -98,6 +113,7 @@ class SignupController
                     $data = [
                         "messenger" => "Xin vui lòng điền đầy đủ thông tin"
                     ];
+                     
                     $VIEW = "./app/views/login/signup.phtml";
                     require("./app/layouts/questionLayout.phtml");
                     break;
@@ -108,6 +124,7 @@ class SignupController
                     $data = [
                         "messenger" => "Repassword nhâp không giống password"
                     ];
+                     
                     $VIEW = "./app/views/login/signup.phtml";
                     require("./app/layouts/questionLayout.phtml");
                     break;
@@ -119,6 +136,7 @@ class SignupController
                     $data = [
                         "messenger" => "email không đúng định dạng"
                     ];
+                     
                     $VIEW = "./app/views/login/signup.phtml";
                     require("./app/layouts/questionLayout.phtml");
                 }
@@ -127,6 +145,7 @@ class SignupController
     }
     public function otp()
     {
+         
         $VIEW = "./app/views/login/otp.phtml";
         require("./app/layouts/questionLayout.phtml");
     }
@@ -144,6 +163,7 @@ class SignupController
                     $data = [
                         "messenger" => $response["data"]["message"]
                     ];
+                 
                 $VIEW = "./app/views/login/signup.phtml";
                 require("./app/layouts/questionLayout.phtml");
                 }else
@@ -158,6 +178,7 @@ class SignupController
                 $data = [
                             "messenger" => $e->getMessage()
                         ];
+                 
                 $VIEW = "./app/views/login/login.phtml";
                 require("./app/layouts/questionLayout.phtml");
               };
@@ -168,6 +189,7 @@ class SignupController
             $data = [
                 "messenger" => "OTP sai xin nhập lại"
             ];
+             
             $VIEW = "./app/views/login/otp.phtml";
             require("./app/layouts/questionLayout.phtml");
         }
@@ -240,4 +262,27 @@ class SignupController
             }
         }
     }
+
+    function sendSMS($mobile, $otp) {
+        // Account details
+        $apiKey = urlencode('Your API key');
+        // Message details
+        $numbers = array($mobile);
+        $sender  = urlencode('TXTLCL');
+        $message = rawurlencode('Your One Time Password is '.$otp.' for verification your account.');
+        $numbers = implode(',', $numbers);
+      
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+  
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);      
+        // Process your response here
+        return $response;
+     }
 }

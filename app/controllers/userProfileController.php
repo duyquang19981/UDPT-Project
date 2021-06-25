@@ -1,10 +1,10 @@
 <?php
 
-class ForgotpassController
+class userProfileController
 {
     public function index()
-    { 
-        $VIEW = "./app/views/forgotpass/forgotpass.phtml";
+    {   
+        $VIEW = "./app/views/user/userProfile.phtml";
         require("./app/layouts/questionLayout.phtml");
     }
     

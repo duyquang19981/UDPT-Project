@@ -5,130 +5,15 @@
     <title>Question And Answer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/UDPT-PROJECT/public/css/style.css">
     <link rel="stylesheet" type="text/css" href="/UDPT-PROJECT/public/css/LoginSignup.css">
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse" style="height: 100px;">
-        <div class="container-fluid" style="margin-top: 20px;">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-                <a href="#">
-                    <img src="Logo.jpg" height="60px" width="80px" style="border-radius: 5px; margin-right: 20px; margin-top: -5px;" />
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Ranking</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-nav">
-                    <div class="header-search w56 fl search-type-2 not-logins" style="margin-top: 7px;margin-left: 30px;">
-                        <form action="/search" class="search search-top" style="border-radius: 5px;">
-                            <input type="search" name="keyword" class="searchTerm" placeholder="Input Search Text" style="box-sizing: unset; padding-right: 50px;height: 30px;padding-left: 5px;width: 480px; border-radius: 5px;">
-                            <button type="submit" class="searchButton" style="height: 33px; width:80px; border-radius: 5px;">
-                            <span style="font-size: medium;">Search</span>
-                        </button>
-                        </form>
-                    </div>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <?php if(isset($_SESSION['jwt'])) : ?>
-                    <li>
-                        <a href=#>
-                            <img src="/UDPT-PROJECT/public/images/User.png" height="30px" width="30px" style="background-color: transparent;margin-top: -5px;" />
-                            <span><?php echo $_SESSION['name']; ?></span>
-                        </a>
-                    </li>
-                    <li><a href="/UDPT-PROJECT/login/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                    <?php else : ?>
-                    <li><a href="/UDPT-PROJECT/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid text-center">
-        <div class="row content">
-            <div class="col-sm-2 sidenav">
-                <p style="background-color:moccasin;"><a href="#"><b>Topic</b></a></p>
-                <p><a href="#"><b>Technology</b></a></p>
-                <p><a href="#"><b>Society</b></a></p>
-            </div>
-            <div class="col-sm-10">
-            <div id="primary">                    
-                    <?php require($VIEW); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="mainfooter" role="contentinfo">
-        <div class="footer-middle">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <!--Column1-->
-                        <div class="footer-pad">
-                            <a href="#">
-                                <img src="E:\Microsoft VS Code\resources\PTUD\Logo.jpg" height="80px" width="100px" style="border-radius: 5px;margin-left: 30px;" />
-                                <h4><b>Question And Answer</b></h4>
-                            </a>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <!--Column1-->
-                        <div class="footer-pad">
-                            <h4><b>Address</b></h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">225-227 Nguyen Van Cu Street, 5 District, HCMC</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <!--Column1-->
-                        <div class="footer-pad">
-                            <h4><b>Contact Info</b></h4>
-                            <ul class="list-unstyled">
-                                <li><a href="#">Phone: 0228 676767 34</a></li>
-                                <li><a href="#">Mobile Phone: 0923290076</a></li>
-                                <li><a href="#">Email: quilq@spc-technology.com</a></li>
-                                <li><a href="#">Fax: 12311122221</a></li>
-                                <li>
-                                    <a href="#"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h4><b>Follow Us</b></h4>
-                        <ul class="social-network social-circle">
-                            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 copy">
-                        <p class="text-center">&copy; Copyright 2018 - Company Name. All rights reserved.</p>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </footer>
-
+<?php require($VIEW); ?>
 </body>
-
 </html>

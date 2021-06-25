@@ -4,7 +4,8 @@
 class LoginController
 {
     public function index()
-    {     
+    {   
+         
         $VIEW = "./app/views/login/login.phtml";
         require("./app/layouts/questionLayout.phtml");
     }
@@ -41,6 +42,7 @@ class LoginController
                     $data = [
                         "messenger" => $response["data"]["message"]
                     ];
+                     
                     $VIEW = "./app/views/login/login.phtml";
                     require("./app/layouts/questionLayout.phtml");
                 };
@@ -50,6 +52,7 @@ class LoginController
                 $data = [
                             "messenger" => $e->getMessage()
                         ];
+                 
                 $VIEW = "./app/views/login/login.phtml";
                 require("./app/layouts/questionLayout.phtml");
               };
@@ -59,6 +62,7 @@ class LoginController
             $data = [
                 "messenger" => "Xin vui lòng điền username, password"
             ];
+             
             $VIEW = "./app/views/login/login.phtml";
             require("./app/layouts/questionLayout.phtml");
         }

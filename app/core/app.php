@@ -84,8 +84,27 @@ class app{
                 case "forgotpass":
                     require_once "./app/controllers/forgotpassController.php";
                     $controller = new ForgotpassController();
+                    // xử lý action
+                    if (isset($link[1]))
+                    {
+                        // kiểm tra method trong controller có tồn tại không
+                        if(method_exists($controller,$link[1]))
+                        {
+                            $this->Action = $link[1];
+                        }
+                        unset($link[1]);
+                    }
                     switch ($this->Action)
                     {
+                        case "changepass":
+                            $controller->changepass();
+                            break;
+                        case "otppost":
+                            $controller->otppost();
+                            break;
+                        case "fogotpasspost":
+                            $controller->fogotpasspost();
+                            break;
                         default:
                             $controller->index();
                             break;
@@ -114,6 +133,7 @@ class app{
             }
         }
         else
+        //Home
         {
             require_once "./app/controllers/homeController.php";
             $controller = new HomeController();

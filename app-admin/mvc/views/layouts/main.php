@@ -91,7 +91,7 @@ Session::checkSession();
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="#addGiangVienRecord" data-toggle="modal">Tạo tài khoản Giảng viên</a>
+                        <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
                     </div>
                 </div>
             </li>
@@ -234,33 +234,24 @@ Session::checkSession();
                     </div>
                 </div>
             </div>
-            <div id="addGiangVienRecord" class="modal fade">
+            <div id="addDanhMucCauHoiRecord" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="addForm2" method="POST" action="/admin/manage-table/GiangVien/add" onsubmit="validateAddForm2(); return false;">
+                        <form id="addForm2" method="POST" action="<?php echo _WEB_ROOT ?>/Category/Create">
                             <div class="modal-header">
-                                <h4 class="modal-title">Add Record</h4>
+                                <h4 class="modal-title">Thêm danh mục</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Tên: </label>
-                                    <input name="ten" type="text" class="form-control" required maxlength="30">
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
+                                    <input name="cate-name" type="text" class="form-control" required maxlength="200">
                                 </div>
-                                <div class="form-group">
-                                    <label>Mail: </label>
-                                    <input name="mail" type="email" class="form-control" required maxlength="30">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tài khoản: </label>
-                                    <input id='username2' name="username" type="text" class="form-control" pattern="^[a-z_-][a-z0-9_-]{5,17}$" title="Username độ dài 6-16 kí tự, được bao gồm _-, không có kí tự đặc biệt, bắt đầu bằng chữ." required maxlength="16">
-                                    <p class="username-noti text-warning" style="visibility:hidden;"><small>Tài khoản đã tồn tại hoặc không hợp lệ.</small></p>
-                                </div>
-
                             </div>
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
+                                <input name="submitAddCategoryFormBtn" type="submit" class="btn btn-success" value="Add">
                             </div>
                         </form>
                     </div>

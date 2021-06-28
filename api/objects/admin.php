@@ -103,4 +103,34 @@ class admin
             return true;
         }
     }
+
+    function turnOffNotification()
+    {
+        $query = "UPDATE admin SET notification_yes = 0
+        WHERE
+        id_admin = :id_admin";
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_admin = htmlspecialchars(strip_tags($this->id_admin));
+        $stmt->bindParam(":id_admin", $this->id_admin, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+    
+    function turnOnNotification()
+    {
+        $query = "UPDATE admin SET notification_yes = 1
+        WHERE
+        id_admin = :id_admin";
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_admin = htmlspecialchars(strip_tags($this->id_admin));
+        $stmt->bindParam(":id_admin", $this->id_admin, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }

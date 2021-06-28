@@ -146,7 +146,7 @@ Session::checkSession();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                        <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
+                            <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">
@@ -154,11 +154,35 @@ Session::checkSession();
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
+                                <form class="dropdown-item" method="POST" action="
+                                    <?php
+                                    if (Session::get("notification_yes")) {
+                                        echo _WEB_ROOT . "/Notification/TurnOff";
+                                    } else {
+                                        echo _WEB_ROOT . "/Notification/TurnOn";
+                                    }
+                                    ?>
+                                ">
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" hidden=true />
+                                    <?php
+                                    if (Session::get("notification_yes")) {
+                                    ?>
+                                        <i class="fa fa-bell-slash" aria-hidden="true"></i>
+                                        <button name="submitToggleFormBtn" style="padding: 5px; border: none; background: none;" type="submit"> Turn off notification</button>
+                                    <?php
+                                    } else { ?>
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                        <button name="submitToggleFormBtn" style="padding: 5px; border: none; background: none;" type="submit"> Turn on notification</button>
+                                    <?php
+                                    }
+                                    ?>
+                                </form>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
+
                         </li>
 
                     </ul>

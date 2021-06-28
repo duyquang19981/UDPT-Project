@@ -30,17 +30,20 @@ class Login extends Controller
         $_adminID = $adminData["id_admin"];
         $_username = $adminData["username"];
         $_name = $adminData["name"];
+        $_notification_yes = $adminData["notification_yes"];
 
         Session::set('admin-login', true);
         Session::set('admin-id', $_adminID);
         Session::set('admin-username', $_username);
         Session::set('admin-name', $_name);
+        Session::set('notification_yes', $_notification_yes);
+
         // return Home
         header('Location:Home');
       } else {
         self::layout("sign", [
           "View"  => "login",
-          "res" => $res
+          "res" => $res,
         ]);
       }
     } else {

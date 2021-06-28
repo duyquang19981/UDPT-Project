@@ -29,8 +29,9 @@ if (isset($_POST['name'])) {
               </div>
 
               <?php
-              if (isset($data["result"])) {
-                if ($data["result"] == "true") {
+              if (isset($data["res"])) {
+                $res = $data["res"];
+                if ($res["result"] == "true") {
                   echo '
                   <div class="alert alert-success" role="alert" style="color: green;">
                     Tạo tài khoản thành công
@@ -55,7 +56,7 @@ if (isset($_POST['name'])) {
                 <div class="form-group ">
                   <input name="password" type="password" required maxlength="16" minlength="5" title="Password độ dài 5-16 kí tự." class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                 </div>
-               
+
                 <button name="submitCreateAdminFormBtn" type="submit" class="btn btn-primary btn-user btn-block">
                   Tạo
                 </button>
@@ -63,7 +64,7 @@ if (isset($_POST['name'])) {
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="/">Về trang chủ</a>
+                <a class="small" href="<?php echo _WEB_ROOT ?>/Login">Về trang Đăng nhập </a>
               </div>
 
             </div>

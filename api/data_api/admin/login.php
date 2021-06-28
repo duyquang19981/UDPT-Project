@@ -2,8 +2,10 @@
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=utf8mb4_unicode_ci");
-  
-// database connection will be here
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With");
+
+// database connection will be here\
 // include database and object files
 include_once '../../config/database.php';
 include_once '../../objects/admin.php';
@@ -14,60 +16,62 @@ include_once '../../libs/php-jwt/src/BeforeValidException.php';
 include_once '../../libs/php-jwt/src/ExpiredException.php';
 include_once '../../libs/php-jwt/src/SignatureInvalidException.php';
 include_once '../../libs/php-jwt/src/JWT.php';
+
 use \Firebase\JWT\JWT;
-  
+
 // instantiate database and user_account object
 $database = new Database();
 $db = $database->getConnection();
-  
-// prepare product object
-$user = new admin($db);
-  
-// set ID property of record to read
-$data = json_decode(file_get_contents("php://input"));
-  
-// set product property values
-$user->username = $data->username;
-$user->pass = $data->pass;
 
-$user->login(); 
+$admin = new admin($db);
+$requestData = json_decode(file_get_contents("php://input"));
 
+$admin->username = $requestData->username;
+$requestPassword = $requestData->pass;
+$admin->getByUsername();
+$res = ["result" => "false"];
 // check if email exists and if password is correct
-if($user->id_admin!=null)
-{
- 
-    $token = array(
-       "iat" => $issued_at,
-       "exp" => $expiration_time,
-       "iss" => $issuer,
-       "data" => array(
-           "id" => $user->id_admin,
-           "username" => $user->username,
-           "name" => $user->name
-       )
-    );
- 
-    // set response code
-    http_response_code(200);
- 
-    // generate jwt
-    $jwt = JWT::encode($token, $key);
-    echo json_encode(
-            array(
-                "message" => "Successful login.",
-                "jwt" => $jwt
+if ($admin->id_admin != null) {
+    $_password = $admin->pass;
+    //check password
+    if (password_verify($requestPassword, $_password)) {
+        $res['data'] =  $admin;
+        $res["result"] = "true";
+        http_response_code(200);
+        $token = array(
+            "iat" => $issued_at,
+            "exp" => $expiration_time,
+            "iss" => $issuer,
+            "data" => array(
+                "id" => $admin->id_admin,
+                "username" => $admin->username,
+                "name" => $admin->name
             )
         );
- 
-}
- 
-// login failed
-else{
- 
-    // set response code
+
+        $jwt = JWT::encode($token, $key);
+        echo json_encode(
+            array(
+                "message" => "Successful login.",
+                "jwt" => $jwt,
+                "res" => $res
+            )
+        );
+    } else {
+        http_response_code(401);
+        echo json_encode(
+            array(
+                "message" => "Đăng nhập thất bại!! Tên đăng nhập hoặc mật khẩu sai!",
+                "res" => $res
+            )
+        );
+    }
+} else {
     http_response_code(401);
- 
-    // tell the user login failed
-    echo json_encode(array("message" => "Đăng nhập thất bại!! Tên đăng nhập hoặc mật khẩu sai!"));
+    echo json_encode(
+        array(
+            "message" => "Đăng nhập thất bại!! Tên đăng nhập hoặc mật khẩu sai!",
+            "res" => $res
+        )
+    );
 }
-?>

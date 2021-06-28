@@ -12,13 +12,13 @@ class Home extends Controller
   public  function Default()
   {
     $data =  [
-      "View" => "login",
+      "View" => "contact",
       "color" => "red",
       "SoThich" => ["a", "b", "c"],
       "SV" => $this->SinhvienModel->SinhVien()
     ];
     self::layout(
-      "sign",
+      "main",
       $data
     );
   }

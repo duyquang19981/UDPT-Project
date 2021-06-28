@@ -24,11 +24,12 @@ class Register extends Controller
       $password = $_POST["password"];
       $password = password_hash($password, PASSWORD_DEFAULT);
       //call api Create Admin
-      $result = $this->AdminModel->CreateAdmin($name, $username, $password);
+      $res = $this->AdminModel->CreateAdmin($name, $username, $password);
+      $res = json_decode($res, true);
       //Show result
       self::layout("sign", [
         "View"  => "create-admin",
-        "result" => $result
+        "res" => $res
       ]);
     } else {
       self::layout("sign", [

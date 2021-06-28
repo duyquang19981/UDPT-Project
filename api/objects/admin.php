@@ -1,46 +1,49 @@
 <?php
-class admin{
-  
+class admin
+{
+
     // database connection and table name
     private $conn;
     private $table_name = "admin";
-  
+
     // object properties
-    public $ID_ADMIN;
+    public $id_admin;
     public $name;
-    public $USERNAME;
-    public $PASS;
-    public $ROLE;
-    public $NOTIFICATION_YES;
-    public $STATUS;
-  
+    public $username;
+    public $pass;
+    public $role;
+    public $notification_yes;
+    public $status;
+
     // constructor with $db as database connection
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
-    function create(){
-    
+
+    function create()
+    {
+
         // query to insert record
-        if($this -> check_username()==false)
-        {
+        if ($this->check_username() == false) {
             return 2;
         }
         $query = "INSERT INTO
                     " . $this->table_name . "
                 set
                 name =:name,  username=:username, pass=:pass, role =:role , notification_yes =:notification_yes, status =:status";
-    
+
         // prepare query
         $stmt = $this->conn->prepare($query);
-    
+
         // sanitize
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->username=htmlspecialchars(strip_tags($this->username));
-        $this->pass=htmlspecialchars(strip_tags($this->pass));
-        $this->role=htmlspecialchars(strip_tags($this->role));
-        $this->notification_yes=htmlspecialchars(strip_tags($this->notification_yes));
-        $this->status=htmlspecialchars(strip_tags($this->status));
-    
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->username = htmlspecialchars(strip_tags($this->username));
+        $this->pass = htmlspecialchars(strip_tags($this->pass));
+        $this->role = htmlspecialchars(strip_tags($this->role));
+        $this->notification_yes = htmlspecialchars(strip_tags($this->notification_yes));
+        $this->status = htmlspecialchars(strip_tags($this->status));
+
         // bind values
         $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
         $stmt->bindParam(":username", $this->username, PDO::PARAM_STR);
@@ -50,67 +53,54 @@ class admin{
         $stmt->bindParam(":status", $this->status, PDO::PARAM_INT);
 
         // execute query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return 1;
         }
-    
+
         return 0;
-        
     }
 
-    public function login()
+    function getByUsername()
     {
-        $query = "SELECT
-                     p.id_admin,p.name
-                FROM
-                    " . $this->table_name . " p
-                WHERE
-                    p.username = :username and pass = :pass";
-        // prepare query statement
+        $query =  "SELECT * FROM admin WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
-    
-        // sanitize
-        $this->username=htmlspecialchars(strip_tags($this->username));
-        $this->pass=htmlspecialchars(strip_tags($this->pass));
-        
-        $stmt->bindParam(':username', $this->username, PDO::PARAM_STR);
-        $stmt->bindParam(':pass', $this->pass, PDO::PARAM_STR);
 
-        // execute query
+        $this->username = htmlspecialchars(strip_tags($this->username));
+
+        $stmt->bindParam(':username', $this->username, PDO::PARAM_STR);
         $stmt->execute();
-        $num = $stmt->rowCount();
-        
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
         // set values to object properties
-        $this->id_admin = $row['id_admin'];
-        $this->name = $row['name'];
-        
+        if (isset($row['ID_ADMIN'])) {
+            $this->id_admin = $row['ID_ADMIN'];
+            $this->pass = $row['PASS'];
+            $this->name = $row['NAME'];
+            $this->role =  $row['ROLE'];
+            $this->notification_yes =  $row['NOTIFICATION_YES'];
+            $this->status =  $row['STATUS'];
+        }
     }
 
-    function check_username(){
-        $query= "SELECT count(*) as num
+    function check_username()
+    {
+        $query = "SELECT count(*) as num
                 FROM
                 " . $this->table_name . "
                 WHERE
-                username = :username" ;
-        
+                username = :username";
+
         $stmt = $this->conn->prepare($query);
 
-        $this->username=htmlspecialchars(strip_tags($this->username));
+        $this->username = htmlspecialchars(strip_tags($this->username));
         $stmt->bindParam(":username", $this->username, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $num = $row['num'];
-        if($num >0)
-        {
+        if ($num > 0) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
-
     }
-
 }
-?>

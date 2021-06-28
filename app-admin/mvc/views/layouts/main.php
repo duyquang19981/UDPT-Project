@@ -1,3 +1,8 @@
+<?php
+// include '../../libs/session.php';
+Session::checkSession();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -141,8 +146,9 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
+                        <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -199,7 +205,7 @@
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="/admin/logout">Logout</a>
+                            <a class="btn btn-primary" href="<?php echo _WEB_ROOT ?>/Login/Logout">Logout</a>
                         </div>
                     </div>
                 </div>

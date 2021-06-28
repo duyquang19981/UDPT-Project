@@ -149,6 +149,9 @@ ALTER TABLE question_label ADD FOREIGN KEY(question_id) REFERENCES question(id_q
 ALTER TABLE question_label ADD FOREIGN KEY(label_id) REFERENCES label(id_label);
 ALTER TABLE label ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 
+-- DEFAULT ADMIN
+INSERT INTO `admin` (`ID_ADMIN`, `NAME`, `USERNAME`, `PASS`, `ROLE`, `NOTIFICATION_YES`, `STATUS`) VALUES (NULL, 'TRẦN DUY QUANG', 'admin1', '$2y$10$MjEZAHgxXgp9m3fe5Z2WSeFUwBFtRLuHx6Vt0toIt7x8jZPybJn1a', '1', '1', '1');
+
 INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', '123456', '2021/05/08' );
 INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', '123456', '2021/05/08' );
 INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quân', 'npquan99@gmail.com', '1999/05/09', '0845775634', 'nvquan99', '123456', '2021/05/08' );

@@ -102,9 +102,8 @@ CREATE TABLE RATING
 
 CREATE TABLE CATEGORY_QUES
 (
-    ID_CATEGORY_QUES INT AUTO_INCREMENT PRIMARY KEY,
+    CATEGORY_ID INT AUTO_INCREMENT PRIMARY KEY,
     MOD_ID INT NOT NULL,
-    CATEGORY_ID INT,
     NAME TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE,
     STATUS INT
@@ -138,13 +137,12 @@ ALTER TABLE answer ADD FOREIGN KEY(id_question) REFERENCES question(id_question)
 ALTER TABLE question_tag ADD FOREIGN KEY(question_id) REFERENCES question(id_question);
 ALTER TABLE question_tag ADD FOREIGN KEY(tag_id) REFERENCES tag(id_tag);
 ALTER TABLE question ADD FOREIGN KEY(owner_id) REFERENCES user_account(id_user);
-ALTER TABLE question ADD FOREIGN KEY(category_id) REFERENCES category_ques(id_category_ques);
+ALTER TABLE question ADD FOREIGN KEY(category_id) REFERENCES category_ques(category_id);
 ALTER TABLE question ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 ALTER TABLE rating ADD FOREIGN KEY(OWNER_ID) REFERENCES admin(id_admin);
 ALTER TABLE rating ADD FOREIGN KEY(question_ID) REFERENCES question(id_question);
 ALTER TABLE rating ADD FOREIGN KEY(answer_ID) REFERENCES ANSWER(id_answer);
 ALTER TABLE category_ques ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
-ALTER TABLE category_ques ADD FOREIGN KEY(category_id) REFERENCES category_ques(id_category_ques);
 ALTER TABLE question_label ADD FOREIGN KEY(question_id) REFERENCES question(id_question);
 ALTER TABLE question_label ADD FOREIGN KEY(label_id) REFERENCES label(id_label);
 ALTER TABLE label ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);

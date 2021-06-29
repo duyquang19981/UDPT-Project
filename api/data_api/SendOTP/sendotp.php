@@ -67,7 +67,7 @@ if($email != null)
                                         <div style="margin-top:32px"></div>
                                         <p style="font-family:AvenirNext-Medium;font-size:14px;color:#11131b;text-align:center;line-height:20px;margin:0px">
                                             Bạn đang tạo tài khoản tại trang web 
-                                            <a href="http://localhost:8080/UDPT-PROJECT" style="color:#046cfc;text-decoration:none" target="_blank" >Ask and Answer</a>
+                                            <a href="http://localhost:8080/UDPT-PROJECT" style="color:#046cfc;text-decoration:none" target="_blank" >Question And Answer</a>
                                             <br>
                                         </p>
                     

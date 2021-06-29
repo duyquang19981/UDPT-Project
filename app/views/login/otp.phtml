@@ -22,6 +22,7 @@
 
   </div>
 </div>
+<?php require_once "./app/config.php";?>
 <script type="text/javascript">
 $(document).ready(function(){
   $("#sendOtp").on("click", function(e){ 
@@ -32,17 +33,16 @@ $(document).ready(function(){
       'Connection': 'Keep-Alive',
       'Content-Type': 'application/json; charset=utf-8'
       },
-      url  : 'http://localhost:8080/UDPT-Project/api/data_api/SendOTP/sendotp.php',
       type : "POST",
-      cache: false,
+      url  : _API_ROOT.'SendOTP/sendotp.php',
+      dataType: "json",
       data : {email:email},
-      success:function(result){
+      success:function(result, status, xhr){
         alert(xhr.status);
         alert("hahaah");
       },
-      error: function (xhr, thrownError, result) {
-        alert(xhr.status);
-        alert(thrownError);
+      error: function (xhr, status, error) {
+        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
       }
     });  
       

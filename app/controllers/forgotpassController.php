@@ -12,6 +12,7 @@ class ForgotpassController
     public function fogotpasspost()
     { 
         require_once "./app/core/callapi.php";
+        require_once "./app/config.php";
         $callapi = new callapi();
         $data = [
             "messenger" => ""
@@ -24,7 +25,7 @@ class ForgotpassController
             "otp" => $rndno
         ];
         $_SESSION['user'] = $user;
-        $response_ = $callapi->callAPI('POST', 'http://localhost:8080/UDPT-Project/api/data_api/SendOTP/sendotp.php', json_encode($user));
+        $response_ = $callapi->callAPI('POST', _API_ROOT.'SendOTP/sendotp.php', json_encode($user));
         if($response_["code"]>=400)
         {
             $data = [
@@ -50,6 +51,7 @@ class ForgotpassController
         if($_SESSION['otp'] == $_REQUEST["otpvalue"])
         {
             require_once "./app/core/callapi.php";
+            require_once "./app/config.php";
             $callapi = new callapi();
             try {
                 
@@ -84,6 +86,7 @@ class ForgotpassController
     public function changepass()
     {
         require_once "./app/core/callapi.php";
+        require_once "./app/config.php";
         $callapi = new callapi();
         $data = [
             "messenger" => ""
@@ -101,7 +104,7 @@ class ForgotpassController
                         "password"=>$pass,
                         "email"=> $_SESSION['email']
                     ];
-                    $response_ = $callapi->callAPI('POST', 'http://localhost:8080/UDPT-Project/api/data_api/user_account/forgotpass.php', json_encode($user));
+                    $response_ = $callapi->callAPI('POST', _API_ROOT.'user_account/forgotpass.php', json_encode($user));
                     if($response_["code"]>=400)
                     {
                         $data = [

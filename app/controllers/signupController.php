@@ -12,6 +12,7 @@ class SignupController
     public function signuppost()
     {
         require_once "./app/core/callapi.php";
+        require_once "./app/config.php";
         $callapi = new callapi();
         $data = [
             "messenger" => ""
@@ -38,7 +39,7 @@ class SignupController
                             "otp" => $rndno
                         ];
                         // kiểm tra tài khoản đã tòn tại chưa
-                        $response = $callapi->callAPI('PUT', 'http://localhost:8080/UDPT-Project/api/data_api/user_account/checksignup.php', json_encode($user));
+                        $response = $callapi->callAPI('PUT', _API_ROOT.'user_account/checksignup.php', json_encode($user));
                         if($response["code"]>=400)
                         {
                             $data = [
@@ -51,7 +52,7 @@ class SignupController
                         {
                             // gửi otp qua email
                             $_SESSION['user'] = $user;
-                            $response_ = $callapi->callAPI('POST', 'http://localhost:8080/UDPT-Project/api/data_api/SendOTP/sendotp.php', json_encode($email_));
+                            $response_ = $callapi->callAPI('POST', _API_ROOT.'SendOTP/sendotp.php', json_encode($email_));
                             if($response_["code"]>=400)
                             {
                                 $data = [
@@ -120,21 +121,16 @@ class SignupController
         }
         
     }
-    public function otp()
-    {
-         
-        $VIEW = "./app/views/login/otp.phtml";
-        require("./app/layouts/questionLayout.phtml");
-    }
     public function otppost()
     {
         if($_SESSION['otp'] == $_REQUEST["otpvalue"])
         {
             require_once "./app/core/callapi.php";
+            require_once "./app/config.php";
             $callapi = new callapi();
             try {
                 $user = $_SESSION['user'];
-                $response = $callapi->callAPI('POST', 'http://localhost:8080/UDPT-Project/api/data_api/user_account/create.php', json_encode($user));
+                $response = $callapi->callAPI('POST', _API_ROOT.'user_account/create.php', json_encode($user));
                 if($response["code"]>=400)
                 {
                     $data = [

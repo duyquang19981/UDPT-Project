@@ -4,14 +4,11 @@ class Category extends Controller
 
   public function Default()
   {
-    // header('Location:' . _WEB_ROOT . '/Category/Read');
-    // header('Location:' . _WEB_ROOT . '/Home');
-
+    header('Location:' . _WEB_ROOT . '/Category/Read');
   }
 
   public function Create()
   {
-    echo "<h1> Creat category:</h1>";
     if (isset($_POST["submitAddCategoryFormBtn"])) {
       $id_admin = $_POST["id_admin"];
       $cate_name = $_POST["cate-name"];
@@ -29,41 +26,75 @@ class Category extends Controller
       $responseData = $responseData["data"];
       $res = $responseData["res"];
       if ($res["result"] != "false") {
-        echo "<h1> them category thanh cong </h1>";
-        // Session::set('notification_yes', 1);
+        header('Location:' . _WEB_ROOT . '/Category/Read');
       }
-      // header('Location:' . _WEB_ROOT . '/Category/Read');
-      // header('Location:' . _WEB_ROOT . '/Home');
-
+      echo "<h1> them category khong thanh cong</h1>";
     } else {
       echo "<h1> them category khong thanh cong</h1>";
-
-      // header('Location:' . _WEB_ROOT . '/Category/Read');
-      // header('Location:' . _WEB_ROOT . '/Home');
-
     }
   }
 
-  public function TurnOff()
+  public function Read()
   {
-    if (isset($_POST["submitToggleFormBtn"])) {
-      $id_admin = $_POST["id_admin"];
+    $requestData = null;
+    $callapi = new callapi();
+    $requestData = json_encode($requestData);
+    $url =  _API_ROOT . "/category/read-all.php";
+    $responseData =  $callapi->callAPI("GET", $url, 0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    if ($res["result"] != "false") {
+      $data =  [
+        "View" => "category",
+        "Categories" => $res["categories"],
+      ];
+      self::layout(
+        "main",
+        $data
+      );
+    }
+  }
+
+  public function Update()
+  {
+    if (isset($_POST["submitUpdateCate"])) {
+      $cate_id = $_POST["cate_id"];
+      $cate_name = $_POST["cate_name"];
+
       $requestData = [
-        "id_admin" =>  $id_admin
+        "category_id" =>  $cate_id,
+        "name" => trim($cate_name)
       ];
       $callapi = new callapi();
       $requestData = json_encode($requestData);
-      $url =  _API_ROOT . "/admin/turn-off-notification.php";
+      $url =  _API_ROOT . "/category/update.php";
       $responseData =  $callapi->callAPI("POST", $url, $requestData);
       $responseData = $responseData["data"];
       $res = $responseData["res"];
-      if ($res["result"]) {
-        Session::set('notification_yes', 0);
+      if ($res["result"] == "false") {
+        echo "alert('Khong thanh cong')";
       }
-      //Show result
-      header('Location:' . _WEB_ROOT . '/Home');
-    } else {
-      header('Location:' . _WEB_ROOT . '/Home');
     }
+    header('Location:' . _WEB_ROOT . '/Category/Read');
+  }
+
+  public function Delete()
+  {
+    if (isset($_POST["submitDeleteCate"])) {
+      $cate_id = $_POST["cate_id"];
+      $requestData = [
+        "category_id" =>  $cate_id,
+      ];
+      $callapi = new callapi();
+      $requestData = json_encode($requestData);
+      $url =  _API_ROOT . "/category/delete.php";
+      $responseData =  $callapi->callAPI("POST", $url, $requestData);
+      $responseData = $responseData["data"];
+      $res = $responseData["res"];
+      if ($res["result"] == "false") {
+        echo "alert('Khong thanh cong')";
+      }
+    }
+    header('Location:' . _WEB_ROOT . '/Category/Read');
   }
 }

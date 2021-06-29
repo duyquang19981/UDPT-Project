@@ -48,7 +48,7 @@ class Notification extends Controller
       $responseData =  $callapi->callAPI("POST", $url, $requestData);
       $responseData = $responseData["data"];
       $res = $responseData["res"];
-      if ($res["result"]) {
+      if ($res["result"] != "false") {
         Session::set('notification_yes', 0);
       }
       //Show result

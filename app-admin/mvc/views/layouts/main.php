@@ -28,9 +28,7 @@ Session::checkSession();
 </head>
 
 <body id="page-top">
-    <div id="content">
-        <?php require_once   "./mvc/views/" . $data["View"] . ".php" ?>
-    </div>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -72,10 +70,7 @@ Session::checkSession();
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh sách bảng:</h6>
-                        <!-- {{#each tableList}} -->
-                        <a class="collapse-item" href="/admin/manage-table?index={{@index}}">{{TenBang}}</a>
-                        <!-- {{/each}} -->
-
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
 
                     </div>
                 </div>
@@ -192,7 +187,9 @@ Session::checkSession();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div id="content">
+                        <?php require_once   "./mvc/views/" . $data["View"] . ".php" ?>
+                    </div>
                     <!-- {{{body}}} -->
                     <!-- end Page Content -->
                     <!-- Footer -->

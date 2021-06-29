@@ -47,4 +47,62 @@ class category_ques
 
         return 0;
     }
+
+    function readAll()
+    {
+        $query = "SELECT * FROM 
+                    " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
+    function update()
+    {
+        $query = "UPDATE 
+                    " . $this->table_name . "
+                SET 
+                name = :name
+                WHERE category_id =:category_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        // bind values
+        $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    function delete()
+    {
+        $query = "DELETE FROM
+                    " . $this->table_name . "
+                WHERE category_id =:category_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+
+        // bind values
+        $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+        }
+
+        return 0;
+    }
 }

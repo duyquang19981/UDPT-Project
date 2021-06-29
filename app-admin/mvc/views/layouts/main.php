@@ -71,6 +71,7 @@ Session::checkSession();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh sách bảng:</h6>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
 
                     </div>
                 </div>
@@ -87,6 +88,8 @@ Session::checkSession();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
+                        <a class="collapse-item" href="#addNhanCauHoiRecord" data-toggle="modal">Tạo nhãn câu hỏi</a>
+
                     </div>
                 </div>
             </li>
@@ -243,12 +246,36 @@ Session::checkSession();
                                 <div class="form-group">
                                     <label>Tên: </label>
                                     <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
-                                    <input name="cate-name" type="text" class="form-control" required maxlength="200">
+                                    <input name="cate_name" type="text" class="form-control" required maxlength="200">
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                                 <input name="submitAddCategoryFormBtn" type="submit" class="btn btn-success" value="Add">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addNhanCauHoiRecord" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="addForm2" method="POST" action="<?php echo _WEB_ROOT ?>/Label/Create">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm nhãn</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Tên: </label>
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
+                                    <input name="label_description" type="text" class="form-control" required maxlength="200">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <input name="submitAddLabelFormBtn" type="submit" class="btn btn-success" value="Add">
                             </div>
                         </form>
                     </div>

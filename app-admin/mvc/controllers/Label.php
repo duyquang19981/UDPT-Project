@@ -1,36 +1,34 @@
 <?php
-class Category extends Controller
+class Label extends Controller
 {
 
   public function Default()
   {
-    header('Location:' . _WEB_ROOT . '/Category/Read');
+    header('Location:' . _WEB_ROOT . '/Label/Read');
   }
 
   public function Create()
   {
-    if (isset($_POST["submitAddCategoryFormBtn"])) {
+    if (isset($_POST["submitAddLabelFormBtn"])) {
       $id_admin = $_POST["id_admin"];
-      $cate_name = $_POST["cate_name"];
-      $today = date("Y-m-d");
+      $label_description = $_POST["label_description"];
       $requestData = [
         "mod_id" =>  $id_admin,
-        "name" => $cate_name,
-        "created" => $today,
+        "description" => $label_description,
         "status" => 1
       ];
       $callapi = new callapi();
       $requestData = json_encode($requestData);
-      $url =  _API_ROOT . "/category/create.php";
+      $url =  _API_ROOT . "/label/create.php";
       $responseData =   $callapi->callAPI("POST", $url, $requestData);
       $responseData = $responseData["data"];
       $res = $responseData["res"];
       if ($res["result"] != "false") {
-        header('Location:' . _WEB_ROOT . '/Category/Read');
+        header('Location:' . _WEB_ROOT . '/Label/Read');
       }
-      echo "<h1> them category khong thanh cong</h1>";
+      echo "<h1> them label khong thanh cong</h1>";
     } else {
-      echo "<h1> them category khong thanh cong</h1>";
+      echo "<h1> them label khong thanh cong</h1>";
     }
   }
 
@@ -39,14 +37,14 @@ class Category extends Controller
     $requestData = null;
     $callapi = new callapi();
     $requestData = json_encode($requestData);
-    $url =  _API_ROOT . "/category/read-all.php";
+    $url =  _API_ROOT . "/label/read-all.php";
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
     if ($res["result"] != "false") {
       $data =  [
-        "View" => "category",
-        "Categories" => $res["categories"],
+        "View" => "label",
+        "Labels" => $res["labels"],
       ];
       self::layout(
         "main",
@@ -58,16 +56,16 @@ class Category extends Controller
   public function Update()
   {
     if (isset($_POST["submitUpdateCate"])) {
-      $cate_id = $_POST["cate_id"];
-      $cate_name = $_POST["cate_name"];
+      $id_label = $_POST["id_label"];
+      $label_description = $_POST["label_description"];
 
       $requestData = [
-        "category_id" =>  $cate_id,
-        "name" => trim($cate_name)
+        "id_label" =>  $id_label,
+        "description" => trim($label_description)
       ];
       $callapi = new callapi();
       $requestData = json_encode($requestData);
-      $url =  _API_ROOT . "/category/update.php";
+      $url =  _API_ROOT . "/label/update.php";
       $responseData =  $callapi->callAPI("POST", $url, $requestData);
       $responseData = $responseData["data"];
       $res = $responseData["res"];
@@ -75,19 +73,19 @@ class Category extends Controller
         echo "alert('Khong thanh cong')";
       }
     }
-    header('Location:' . _WEB_ROOT . '/Category/Read');
+    header('Location:' . _WEB_ROOT . '/Label/Read');
   }
 
   public function Delete()
   {
     if (isset($_POST["submitDeleteCate"])) {
-      $cate_id = $_POST["cate_id"];
+      $id_label = $_POST["id_label"];
       $requestData = [
-        "category_id" =>  $cate_id,
+        "id_label" =>  $id_label,
       ];
       $callapi = new callapi();
       $requestData = json_encode($requestData);
-      $url =  _API_ROOT . "/category/delete.php";
+      $url =  _API_ROOT . "/label/delete.php";
       $responseData =  $callapi->callAPI("POST", $url, $requestData);
       $responseData = $responseData["data"];
       $res = $responseData["res"];
@@ -95,6 +93,6 @@ class Category extends Controller
         echo "alert('Khong thanh cong')";
       }
     }
-    header('Location:' . _WEB_ROOT . '/Category/Read');
+    header('Location:' . _WEB_ROOT . '/Label/Read');
   }
 }

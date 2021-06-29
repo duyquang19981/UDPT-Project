@@ -29,7 +29,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php if(isset($_SESSION['jwt'])) : ?>
                     <li>
-                        <a href="/UDPT-PROJECT/userProfile">
+                        <a href="/UDPT-PROJECT/userProfile/<?php  echo $_SESSION["user_id"]?>">
                             <img src="/UDPT-PROJECT/public/images/User.png" height="30px" width="30px" style="background-color: transparent;margin-top: -5px;" />
                             <span><?php echo $_SESSION['name']; ?></span>
                         </a>

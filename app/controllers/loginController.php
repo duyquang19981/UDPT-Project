@@ -1,6 +1,5 @@
 <?php
 
-
 class LoginController
 {
     public function index()
@@ -11,6 +10,7 @@ class LoginController
     }
     public function loginpost() {
         require_once "./app/core/callapi.php";
+        require_once "./app/config.php";
         $callapi = new callapi();
         $data = [
             "messenger" => ""
@@ -22,11 +22,11 @@ class LoginController
                 "password" => $_REQUEST["password"],
             ];
             try {
-                $response = $callapi->callAPI('PUT', 'http://localhost:8080/UDPT-Project/api/data_api/user_account/login.php', json_encode($user));
+                $response = $callapi->callAPI('PUT', _API_ROOT.'user_account/login.php', json_encode($user));
                 if (isset($response["data"]["jwt"]))
                 {
                     
-                    $response1 = $callapi->callAPI('PUT', 'http://localhost:8080/UDPT-Project/api/data_api/validate_token.php', json_encode($response["data"]));
+                    $response1 = $callapi->callAPI('PUT', _API_ROOT.'validate_token.php', json_encode($response["data"]));
                     $user = [
                         "jwt" => $response["data"]["jwt"],
                         "id" => $response1["data"]["data"]["id"],
@@ -82,6 +82,6 @@ class LoginController
         unset($_SESSION['username']);
         unset($_SESSION['email']);
         unset($_SESSION['jwt']);
-        header('location:'.'/UDPT-PROJECT/login');
+        header('location:'.'/UDPT-PROJECT');
     }
 }

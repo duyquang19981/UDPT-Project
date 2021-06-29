@@ -383,5 +383,34 @@ class user_account{
         }
         return 1;
     }
+
+    public function forgotpass()
+    {
+        // update query
+        $query = "UPDATE
+                    " . $this->table_name . "
+                SET
+                password = :password
+                WHERE
+                    email = :email";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // sanitize
+        $this->password=htmlspecialchars(strip_tags($this->password));
+        $this->email=htmlspecialchars(strip_tags($this->email));
+    
+        // bind new values
+        $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+    
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+        
+        return false;
+    }
 }
 ?>

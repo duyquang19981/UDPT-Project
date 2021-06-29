@@ -6,10 +6,90 @@
             <p><a href="#"><b>Technology</b></a></p>
             <p><a href="#"><b>Society</b></a></p>
         </div>
-        <div class="col-sm-10">
-          <div id="primary">                    
-          </div>
+        <div class="col-sm-10" style="padding:1%">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                    <form>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file"/>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                <div class="col-md-6" style="text-align:left">
+                    <div class="profile-head">
+                        <h3><b>
+                            Kshiti Ghelani
+                        </b></h3>
+                        <div class="row" style="margin-top:2%">
+                            <div class="col-md-6"><b>Email : </b><span>tubato1999@gmail.com</span></div>
+                            <div class="col-md-6"><b>Phone : </b><span>0858456152</span></div>
+                        </div>
+                        <div class="row" style="margin-top:2%">
+                            <div class="col-md-6"><b>Birth : </b><span>02/06/1999</span></div>
+                        </div>
+                        <div class="row" style="margin-top:2%">
+                            <div class="col-md-4"><b style="font-size: 18px">Questions : <span>10</span></b></div>
+                            <div class="col-md-4"><b style="font-size: 18px">Aswers : <span>110</span></b></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-2">
+                <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changeprofile">Change profile</button>
+                <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changepass">Change Pass</button>
+                </div>
+            </div>
+            <div class="row">
+                
+            
+            </div>
         </div>
     </div>
 </div>
+<!-- Modal change profile -->
+<div class="modal fade" id="changeprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Change Profile</b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        body
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal change pass -->
+<div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Change Pass</b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        body
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php require_once("./app/views/header-footer/footer.phtml"); ?>
+

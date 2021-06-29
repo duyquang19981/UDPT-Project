@@ -4,12 +4,13 @@
     <h2 class="active"> Forgot Passowrd </h2>
  
     <!-- Login Form -->
-    <form method="POST" action="/UDPT-PROJECT/forgotpass/fogotpasspost">
+    <form method="POST" action="/UDPT-PROJECT/forgotpass/changepass">
     <p class="invalidFeedback" style="color:red">
         <?php if(isset($data)){echo $data["messenger"];}?>
       </p>
-      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
-      <input type="submit" class="fadeIn fourth" value="Tiếp tục">
+    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+      <input type="password" id="repassword" class="fadeIn third" name="repassword" placeholder="Repassword">
+      <input type="submit" class="fadeIn fourth" value="Đổi mật khẩu">
     </form>
     
     <!-- Remind Passowrd -->

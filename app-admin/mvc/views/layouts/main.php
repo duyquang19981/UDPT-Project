@@ -175,6 +175,10 @@ Session::checkSession();
                                     }
                                     ?>
                                 </form>
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/Home/ChangePassword">
+                                    <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change pasword
+                                </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout

@@ -72,6 +72,7 @@ Session::checkSession();
                         <h6 class="collapse-header">Danh sách bảng:</h6>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Question/Read">Câu hỏi</a>
 
                     </div>
                 </div>

@@ -87,9 +87,11 @@ class category_ques
 
     function delete()
     {
-        $query = "DELETE FROM
-                    " . $this->table_name . "
-                WHERE category_id =:category_id";
+        $query = "UPDATE 
+                " . $this->table_name . "
+            SET 
+            status = 0
+            WHERE category_id =:category_id";
 
         // prepare query
         $stmt = $this->conn->prepare($query);

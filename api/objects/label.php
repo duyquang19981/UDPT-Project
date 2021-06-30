@@ -84,8 +84,10 @@ class label
 
     function delete()
     {
-        $query = "DELETE FROM
-                    " . $this->table_name . "
+        $query = "UPDATE 
+                " . $this->table_name . "
+                SET 
+                status = 0
                 WHERE id_label =:id_label";
 
         // prepare query

@@ -25,11 +25,16 @@ $db = $database->getConnection();
 $user = new user_account($db);
   
 // get id of product to be edited
-$data = json_decode(file_get_contents("php://input"));
- 
-// get jwt
-$jwt=isset($data->jwt) ? $data->jwt : "";
+// $data = json_decode(file_get_contents("php://input"));
 
+    $data = json_decode(file_get_contents("php://input"));
+    $jwt= $data->jwt;
+    $user->id_user = $data->id_user;
+    $user->password = $data->password;
+    $oldpassword = $data->oldpassword;
+// get jwt
+$user->password = base64_encode($user->password);
+$oldpassword = base64_encode($oldpassword);
 // if jwt is not empty
 if($jwt){
  
@@ -39,45 +44,54 @@ if($jwt){
         // decode jwt
         $decoded = JWT::decode($jwt, $key, array('HS256'));
         $id =  $decoded->data->id;
-        $user->id_user = $data->id_user;
-        if($id == $user->id_user)
-        {
-            // set product property values
-            $user->password = $data->password;
-            $user->password = base64_encode($user->password);
-            
-            // update the product
-            if($user->updatepass()){
-                // set response code
-                http_response_code(200);
-                
-                // response in json format
-                echo json_encode(
-                        array(
-                            "message" => "pass was updated."
-                        )
-                    );
-            }
-            
-            // if unable to update the product, tell the user
-            else{
-            
-                // set response code - 503 service unavailable
-                http_response_code(503);
-            
-                // tell the user
-                echo json_encode(array("message" => "Unable to update account."));
-            }
-        }
-        else
+        if($user->checkoldpass($oldpassword) == false)
         {
             // set response code
-            http_response_code(401);
+            http_response_code(400);
         
             // show error message
             echo json_encode(array(
-                "message" => "Access denied.",
+                "message" => "Old Password wrong",
             ));
+        }
+        else
+        {
+            if($id == $user->id_user)
+            {
+                
+                // update the product
+                if($user->updatepass()){
+                    // set response code
+                    http_response_code(200);
+                    
+                    // response in json format
+                    echo json_encode(
+                            array(
+                                "message" => "pass was updated."
+                            )
+                        );
+                }
+                
+                // if unable to update the product, tell the user
+                else{
+                
+                    // set response code - 503 service unavailable
+                    http_response_code(503);
+                
+                    // tell the user
+                    echo json_encode(array("message" => "Unable to update account."));
+                }
+            }
+            else
+            {
+                // set response code
+                http_response_code(401);
+            
+                // show error message
+                echo json_encode(array(
+                    "message" => "Access denied.",
+                ));
+            }
         }
             
     }
@@ -91,7 +105,7 @@ if($jwt){
         // show error message
         echo json_encode(array(
             "message" => "Access denied.",
-            "error" => $e->getMessage()
+            "error" => $e->getMessage(),
         ));
     }
 }

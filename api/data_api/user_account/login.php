@@ -40,7 +40,8 @@ if($user->id_user!=null){
         "data" => array(
             "id" => $user->id_user,
             "username" => $user->username,
-            "name" => $user->name
+            "name" => $user->name,
+            "image" => $user->image
         )
      );
   

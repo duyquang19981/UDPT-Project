@@ -8,6 +8,7 @@ class user_account{
     // object properties
     public $id_user;
     public $name;
+    public $image;
     public $email;
     public $birth;
     public $phone;
@@ -25,7 +26,7 @@ class user_account{
     
         // select all query
         $query = "SELECT
-                    p.id_user, p.name, p.email, p.birth, p.phone, p.created
+                    p.id_user, p.name, p.image, p.email, p.birth, p.phone, p.created
                 FROM
                     " . $this->table_name . " p
                 ORDER BY
@@ -159,7 +160,7 @@ class user_account{
     
         // query to read single record
         $query = "SELECT
-                    p.id_user, p.name, p.email, p.birth, p.phone, p.created
+                    p.id_user, p.name,p.image, p.email, p.birth, p.phone, p.created
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -181,6 +182,7 @@ class user_account{
     
         // set values to object properties
         $this->name = $row['name'];
+        $this->image = $row['image'];
         $this->email = $row['email'];
         $this->birth = $row['birth'];
         $this->phone = $row['phone'];
@@ -227,7 +229,7 @@ class user_account{
     
         // select all query
         $query = "SELECT
-                     p.id_user, p.name, p.email, p.birth, p.phone, p.created
+                     p.id_user, p.name, p.image, p.email, p.birth, p.phone, p.created
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -255,7 +257,7 @@ class user_account{
     
         // select query
         $query = "SELECT
-                    p.id_user, p.name, p.email, p.birth, p.phone, p.created
+                    p.id_user, p.name,p.image, p.email, p.birth, p.phone, p.created
                 FROM
                     " . $this->table_name . " p
                 ORDER BY p.created DESC
@@ -309,7 +311,7 @@ class user_account{
     public function login()
     {
         $query = "SELECT
-                     p.id_user,p.name
+                     p.id_user,p.name,p.image
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -334,6 +336,7 @@ class user_account{
         // set values to object properties
         $this->id_user = $row['id_user'];
         $this->name = $row['name'];
+        $this->image = $row['image'];
         }
         
         
@@ -366,7 +369,6 @@ class user_account{
         
         return false;
     }
-
     public function checkk()
     {
         if($this -> check_username()==false)
@@ -383,7 +385,6 @@ class user_account{
         }
         return 1;
     }
-
     public function forgotpass()
     {
         // update query
@@ -411,6 +412,45 @@ class user_account{
         }
         
         return false;
+    }
+
+    public function getnumques($id)
+    {
+        $query = "SELECT COUNT(*) as total_rows FROM question WHERE owner_id = ".$id ;
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_rows'];
+    }
+
+    public function getnumans($id)
+    {
+        $query = "SELECT COUNT(DISTINCT ID_QUESTION) as total_rows FROM answer WHERE ID_USER =  ".$id ;
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_rows'];
+    }
+    public function checkoldpass($old)
+    {
+        $query = "SELECT COUNT(*) as total_rows 
+        FROM " . $this->table_name . " 
+        WHERE id_user = ? and password = ?";
+    // prepare query
+    $stmt = $this->conn->prepare($query);
+
+    $stmt->bindParam(1, $this->id_user, PDO::PARAM_STR);
+    $stmt->bindParam(2, $old, PDO::PARAM_STR);
+
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($row['total_rows']>0)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
     }
 }
 ?>

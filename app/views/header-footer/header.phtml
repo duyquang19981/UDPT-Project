@@ -6,8 +6,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-                <a href="#">
-                    <img src="Logo.jpg" height="60px" width="80px" style="border-radius: 5px; margin-right: 20px; margin-top: -5px;" />
+                <a href="/UDPT-PROJECT">
+                    <img src="/UDPT-PROJECT/public/images/Logo.jpg" height="60px" width="80px" style="border-radius: 5px; margin-right: 20px; margin-top: -5px;" />
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -26,15 +26,20 @@
                         </form>
                     </div>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" >
                     <?php if(isset($_SESSION['jwt'])) : ?>
                     <li>
                         <a href="/UDPT-PROJECT/userProfile/<?php  echo $_SESSION["user_id"]?>">
-                            <img src="/UDPT-PROJECT/public/images/User.png" height="30px" width="30px" style="background-color: transparent;margin-top: -5px;" />
+                        <?php 
+                            if($_SESSION['image'] != null):?>
+                                <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                            <?php else : ?>
+                                <img src="/UDPT-PROJECT/public/images/User.png" height="40px" width="40px" style="background-color: transparent;margin-top: -5px;border-radius: 50%;" />
+                            <?php endif; ?>
                             <span><?php echo $_SESSION['name']; ?></span>
                         </a>
                     </li>
-                    <li><a href="/UDPT-PROJECT/login/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    <li><a href="/UDPT-PROJECT/login/logout"><span class="glyphicon glyphicon-log-in" ></span> Logout</a></li>
                     <?php else : ?>
                     <li><a href="/UDPT-PROJECT/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <?php endif; ?>

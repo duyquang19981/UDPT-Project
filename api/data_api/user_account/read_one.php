@@ -10,13 +10,6 @@ header("Content-Type: application/json; charset=utf8mb4_unicode_ci");
 include_once '../../config/database.php';
 include_once '../../objects/user_account.php';
 
-// generate json web token
-include_once '../../config/core.php';
-include_once '../../libs/php-jwt/src/BeforeValidException.php';
-include_once '../../libs/php-jwt/src/ExpiredException.php';
-include_once '../../libs/php-jwt/src/SignatureInvalidException.php';
-include_once '../../libs/php-jwt/src/JWT.php';
-use \Firebase\JWT\JWT;
   
 // get database connection
 $database = new Database();
@@ -36,6 +29,7 @@ if($user->name!=null){
     $user_arr = array(
         "id_user" =>  $user->id_user,
         "name" => $user->name,
+        "image" => $user->image,
         "email" => $user->email,
         "birth" => $user->birth,
         "phone" => $user->phone,

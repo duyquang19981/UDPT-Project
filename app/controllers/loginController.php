@@ -31,7 +31,8 @@ class LoginController
                         "jwt" => $response["data"]["jwt"],
                         "id" => $response1["data"]["data"]["id"],
                         "username" => $response1["data"]["data"]["username"],
-                        "name" => $response1["data"]["data"]["name"]
+                        "name" => $response1["data"]["data"]["name"],
+                        "image" => $response1["data"]["data"]["image"]
                     ];
                     
                     $this->createUserSession($user);
@@ -73,7 +74,9 @@ class LoginController
         $_SESSION['user_id'] = $user["id"];
         $_SESSION['username'] = $user["haha"];
         $_SESSION['name'] = $user["name"];
+        $_SESSION['image'] = $user["image"];
         $_SESSION['jwt'] = $user["jwt"];
+
         header('location:'.'/UDPT-PROJECT');
     }
 
@@ -81,7 +84,8 @@ class LoginController
         unset($_SESSION['user_id']);
         unset($_SESSION['username']);
         unset($_SESSION['email']);
+        unset($_SESSION['image']);
         unset($_SESSION['jwt']);
-        header('location:'.'/UDPT-PROJECT');
+        header('location:'.'/UDPT-PROJECT/login');
     }
 }

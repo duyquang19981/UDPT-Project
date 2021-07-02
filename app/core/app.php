@@ -112,21 +112,24 @@ class app{
                 case "userProfile":
                     require_once "./app/controllers/userProfileController.php";
                     $controller = new userProfileController();
+                     // xử lý action
+                     if (isset($link[1]))
+                     {
+                         // kiểm tra method trong controller có tồn tại không
+                         if(method_exists($controller,$link[1]))
+                         {
+                             $this->Action = $link[1];
+                         }
+                         
+                     }
                     switch ($this->Action)
                     {
+                        case 'changepass':
+                            $controller->changepass();
+                            break;
                         default:
                             $id = $link[1];
                             $controller->index($id);
-                            break;
-                    }
-                    break;
-                default:
-                    require_once "./app/controllers/homeController.php";
-                    $controller = new HomeController();
-                    switch ($this->Action)
-                    {
-                        default:
-                            $controller->index();
                             break;
                     }
                     break;

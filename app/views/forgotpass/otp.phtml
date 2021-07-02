@@ -27,23 +27,27 @@
 $(document).ready(function(){
   $("#sendOtp").on("click", function(e){ 
     e.preventDefault();    
-    var email = $("#email").text();
+    var email = 
+    {
+      email: "<?php echo $_SESSION['email']?>",
+      otp: "<?php $rndno=rand(100000, 999999);
+        $_SESSION["otp"] = $rndno;
+        echo $rndno;
+      ?>"
+    }
     $.ajax({
       headers: {
       'Connection': 'Keep-Alive',
       'Content-Type': 'application/json; charset=utf-8'
       },
-      url  : _API_ROOT+'SendOTP/sendotp.php',
+      url  : "<?php echo _API_ROOT.'SendOTP/sendotp.php' ?>",
       type : "POST",
-      cache: false,
-      data : {email:email},
+      data : JSON.stringify(email),
       success:function(result){
-        alert(xhr.status);
-        alert("hahaah");
+        alert("Đã gửi otp");
       },
       error: function (xhr, thrownError, result) {
-        alert(xhr.status);
-        alert(thrownError);
+        alert(result);
       }
     });  
       

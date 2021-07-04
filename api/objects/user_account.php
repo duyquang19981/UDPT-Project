@@ -436,21 +436,38 @@ class user_account{
         $query = "SELECT COUNT(*) as total_rows 
         FROM " . $this->table_name . " 
         WHERE id_user = ? and password = ?";
-    // prepare query
-    $stmt = $this->conn->prepare($query);
+        // prepare query
+        $stmt = $this->conn->prepare($query);
 
-    $stmt->bindParam(1, $this->id_user, PDO::PARAM_STR);
-    $stmt->bindParam(2, $old, PDO::PARAM_STR);
+        $stmt->bindParam(1, $this->id_user, PDO::PARAM_STR);
+        $stmt->bindParam(2, $old, PDO::PARAM_STR);
 
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($row['total_rows']>0)
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row['total_rows']>0)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function updateAvata($id, $image)
     {
-        return true;
-    }
-    else{
+        $query = "UPDATE
+                    " . $this->table_name . "
+                SET
+                    image = '".$image."'
+                WHERE
+                    id_user = ".(int)$id ;
+        $stmt = $this->conn->prepare($query);
+        
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
         return false;
-    }
     }
 }
 ?>

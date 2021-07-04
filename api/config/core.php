@@ -2,9 +2,15 @@
 // show error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-  
+
+define('_DIR_ROOT', __DIR__);
+if (!empty($_SERVER['HTTPS']) && $_SERVER('HTTP') == "on") {
+        $web_root = 'https://' . $_SERVER['HTTP_HOST'];
+    } else {
+        $web_root = 'http://' . $_SERVER['HTTP_HOST'];
+    }
 // home page url
-$home_url="http://localhost:8080/UDPT-Project/api/";
+$home_url= $web_root."/UDPT-Project/api/data_api/";
   
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;

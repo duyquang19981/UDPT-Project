@@ -57,7 +57,8 @@ if($jwt){
                 // response in json format
                 echo json_encode(
                         array(
-                            "message" => "User was updated."
+                            "message" => "User was updated.",
+                            "name"=>$user->name
                         )
                     );
             }

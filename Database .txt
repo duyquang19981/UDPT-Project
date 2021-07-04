@@ -149,16 +149,20 @@ ALTER TABLE question_label ADD FOREIGN KEY(label_id) REFERENCES label(id_label);
 ALTER TABLE label ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 
 -- DEFAULT ADMIN
-INSERT INTO `admin` (`ID_ADMIN`, `NAME`, `USERNAME`, `PASS`, `ROLE`, `NOTIFICATION_YES`, `STATUS`) VALUES (NULL, 'TRẦN DUY QUANG', 'admin1', '$2y$10$MjEZAHgxXgp9m3fe5Z2WSeFUwBFtRLuHx6Vt0toIt7x8jZPybJn1a', '1', '1', '1');
 
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quân', 'npquan99@gmail.com', '1999/05/09', '0845775634', 'nvquan99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Trần Đình Sang', 'tdsang99@gmail.com', '1999/05/09', '084134572', 'tdsang99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phú Quý', 'npquy99@gmail.com', '1999/05/09', '083475142', 'npquy99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Chí Thanh', 'ncthanh99@gmail.com', '1999/05/09', '0757425486', 'ncthanh99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quyền', 'nvquyen99@gmail.com', '1999/05/09', '0357426842', 'nvquyen99', '123456', '2021/05/08' );
-INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Huỳnh Tấn Thành', 'htthanh@gmail.com', '1999/05/09', '0357412596', 'htthanh99', '123456', '2021/05/08' );
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Phạm Anh Tú', 'ADMIN','MTIzNDU2',1,0,1);
+INSERT INTO `admin` ( `NAME`, `USERNAME`, `PASS`, `ROLE`, `NOTIFICATION_YES`, `STATUS`) VALUES ('TRẦN DUY QUANG', 'admin1', '$2y$10$MjEZAHgxXgp9m3fe5Z2WSeFUwBFtRLuHx6Vt0toIt7x8jZPybJn1a', '1', '1', '1');
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Văn Tâm', 'ADMIN2','MTIzNDU2',1,0,1);
+INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Lê Quang Quí', 'ADMIN3','MTIzNDU2',1,0,1);
+
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quân', 'npquan99@gmail.com', '1999/05/09', '0845775634', 'nvquan99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Trần Đình Sang', 'tdsang99@gmail.com', '1999/05/09', '084134572', 'tdsang99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phú Quý', 'npquy99@gmail.com', '1999/05/09', '083475142', 'npquy99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Chí Thanh', 'ncthanh99@gmail.com', '1999/05/09', '0757425486', 'ncthanh99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Văn Quyền', 'nvquyen99@gmail.com', '1999/05/09', '0357426842', 'nvquyen99', 'MTIzNDU2', '2021/05/08' );
+INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Huỳnh Tấn Thành', 'htthanh@gmail.com', '1999/05/09', '0357412596', 'htthanh99', 'MTIzNDU2', '2021/05/08' );
 
 INSERT INTO LABEL(MOD_ID,DESCRIPTION,STATUS) VALUES(1,N'BUỒN',1);
 INSERT INTO LABEL(MOD_ID,DESCRIPTION,STATUS) VALUES(2,'HAHA',1);
@@ -173,13 +177,13 @@ INSERT INTO TAG(MOD_ID,DESCRIPTION,STATUS) VALUES(2,N'AD xem xét vấn đề n�
 INSERT INTO TAG(MOD_ID,DESCRIPTION,STATUS) VALUES(3,N'AD thấy hay không',1);
 INSERT INTO TAG(MOD_ID,DESCRIPTION,STATUS) VALUES(4,N'AD',1);
 
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(2,NULL,N'VẤN ĐỀ 1','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(1,1,N'VẤN ĐỀ 2','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(4,NULL,N'VẤN ĐỀ 3','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(3,NULL,N'VẤN ĐỀ 4','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(1,4,N'VẤN ĐỀ 5','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(1,NULL,N'VẤN ĐỀ 6','2021/05/08',1);
-INSERT INTO CATEGORY_QUES(MOD_ID,CATEGORY_ID,NAME,CREATED,STATUS) VALUES(1,6,N'VẤN ĐỀ 7','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(2,N'VẤN ĐỀ 1','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(1,N'VẤN ĐỀ 2','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(4,N'VẤN ĐỀ 3','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(3,N'VẤN ĐỀ 4','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(1,N'VẤN ĐỀ 5','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(1,N'VẤN ĐỀ 6','2021/05/08',1);
+INSERT INTO CATEGORY_QUES(MOD_ID,NAME,CREATED,STATUS) VALUES(1,N'VẤN ĐỀ 7','2021/05/08',1);
 
 INSERT INTO QUESTION(OWNER_ID,CATEGORY_ID,MOD_ID,DESCRIPTION,LIKES,CREATED,ACCEPT_DAY,STATUS) VALUES(1,3,2,N'CÂU HỎI 1',50,'2021/05/10','2021/05/10',1);
 INSERT INTO QUESTION(OWNER_ID,CATEGORY_ID,MOD_ID,DESCRIPTION,LIKES,CREATED,ACCEPT_DAY,STATUS) VALUES(2,3,2,N'CÂU HỎI 2',50,'2021/05/10','2021/05/10',1);

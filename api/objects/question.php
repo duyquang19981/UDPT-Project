@@ -129,4 +129,43 @@ class question
 
         return 0;
     }
+
+    function readAcceptYes()
+    {
+        $query = "SELECT * FROM 
+        " . $this->table_name .
+            " WHERE accept_day is not NULL AND mod_id is not NULL";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
+    function readAcceptNo()
+    {
+        $query = "SELECT * FROM 
+        " . $this->table_name .
+            " WHERE accept_day is NULL ";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
+    function readDeleted()
+    {
+        $query = "SELECT * FROM 
+        " . $this->table_name .
+            " WHERE status = 0 ";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
 }

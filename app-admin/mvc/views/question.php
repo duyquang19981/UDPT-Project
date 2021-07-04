@@ -6,7 +6,64 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="<?php echo _PUBLIC ?>/js/admin-crud/admin-crud-cauhoi.js"></script>
 
+
+
+
 <div class="container-xl">
+  <style>
+    .dropbtn {
+      background-color: #18a6d7ba;
+      color: black;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #227fa0ba;
+    }
+  </style>
+  <div class="dropdown">
+    <button class="dropbtn"><?php if (isset($data["FilterTitle"]))
+                              echo $data["FilterTitle"];
+                            else echo "Unknown" ?></button>
+    <div class="dropdown-content">
+      <a href="<?php echo _WEB_ROOT ?>/Question/Read">Tất cả</a>
+      <a href="<?php echo _WEB_ROOT ?>/Question/ReadAcceptYes">Đã duyệt</a>
+      <a href="<?php echo _WEB_ROOT ?>/Question/ReadAcceptNo">Chưa duyệt</a>
+      <a href="<?php echo _WEB_ROOT ?>/Question/ReadDeleted">Đã xóa</a>
+    </div>
+
+  </div>
   <div class="table-responsive">
     <div class="table-wrapper">
       <div class="table-title">
@@ -45,7 +102,7 @@
                       function(){alert('<?php echo trim($question['description']); ?>'); 
                       return false;})(); return false; " style="  
                       white-space: nowrap; 
-                      width: 420px; 
+                      width: 400px; 
                       display: block;
                       overflow: hidden;
                       text-overflow: ellipsis;
@@ -58,8 +115,17 @@
                 <td><?php echo $question["accept_day"]; ?></td>
                 <td> <?php echo $question["status"]; ?></td>
                 <td>
-                  <a href="#editRecord" class="editButton edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Approve">&#xE254;</i></a>
-                  <a href="#deleteRecord" class="deleteButton delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <?php
+                  if ($question["mod_id"] == null) { ?>
+                    <a href="#editRecord" class="editButton edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Accept">&#xE254;</i></a>
+                  <?php  }
+                  ?>
+                  <?php
+                  if ($question["status"] != 0) { ?>
+                    <a href="#deleteRecord" class="deleteButton delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <?php  }
+                  ?>
+
                 </td>
               </tr>
             <?php

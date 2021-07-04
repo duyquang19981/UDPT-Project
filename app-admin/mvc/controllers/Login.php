@@ -8,44 +8,53 @@ class Login extends Controller
     $this->AdminModel = $this->model("AdminModel");
   }
 
-  // This controller will call this function as default action
   public function Default()
   {
     if (isset($_POST["submitLoginFormBtn"])) {
       $username = $_POST["username"];
       $password = $_POST["password"];
-
       //call api login Admin
-      $result = $this->AdminModel->LoginAdmin($username, $password);
-      echo "<pre>";
-      var_dump($result);
-      echo "</pre>";
-      $result = json_decode($result, true);
-      $_adminID = $result["ID_ADMIN"];
-      $_username = $result["USERNAME"];
-      $_password = $result["PASS"];
-      $_name = $result["NAME"];
-      echo "<hr/>";
-      echo $_username;
-      echo "<hr/>";
-      echo $_password;
-      echo "<hr/>";
-      echo $_name;
-      echo "<hr/>";
-      if ($result == "true") {
-        // đã lấy giữ liệu được từ api, decode ra array, truy cập dữ liệu bình thường
-        // Session::set('admin-login', true);
-      }
-      //Show result
+      $requestData = [
+        "username" =>  $username,
+        "pass" =>  $password
+      ];
+      $callapi = new callapi();
+      $requestData =    json_encode($requestData);
+      $url =  _API_ROOT . "/admin/login.php";
+      $responseData =  $callapi->callAPI("POST", $url, $requestData);
+      $responseData = $responseData["data"];
+      $res = $responseData["res"];
 
-      self::layout("sign", [
-        "View"  => "login",
-        "result" => $result
-      ]);
+      if ($res["result"] != "false") {
+        $adminData = $res['data'];
+        $_adminID = $adminData["id_admin"];
+        $_username = $adminData["username"];
+        $_name = $adminData["name"];
+        $_notification_yes = $adminData["notification_yes"];
+
+        Session::set('admin-login', true);
+        Session::set('admin-id', $_adminID);
+        Session::set('admin-username', $_username);
+        Session::set('admin-name', $_name);
+        Session::set('notification_yes', $_notification_yes);
+
+        // return Home
+        header('Location:Home');
+      } else {
+        self::layout("sign", [
+          "View"  => "login",
+          "res" => $res,
+        ]);
+      }
     } else {
       self::layout("sign", [
         "View"  => "login",
       ]);
     }
+  }
+
+  public function Logout()
+  {
+    Session::destroy();
   }
 }

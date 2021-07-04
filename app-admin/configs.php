@@ -15,3 +15,12 @@ define('_WEB_ROOT', $web_root);
 
 $public = _WEB_ROOT . '/public';
 define('_PUBLIC', $public);
+
+$containerFolder = $web_root . "/..";
+define('_CONTAINER_FOLDER', $containerFolder);
+
+$current_admin_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$indexOfReplaceString = strpos($current_admin_url, "app-admin");
+
+$api_url = substr_replace($current_admin_url, "api/data_api", $indexOfReplaceString);
+define('_API_ROOT', $api_url);

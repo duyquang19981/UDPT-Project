@@ -22,13 +22,25 @@ class Register extends Controller
       $name = $_POST["name"];
       $username = $_POST["username"];
       $password = $_POST["password"];
-      $password = password_hash($password, PASSWORD_DEFAULT);
+      $requestData = [
+        "username" =>  $username,
+        "pass" =>  $password,
+        "name" => $name,
+        "status" => 1,
+        "notification_yes" => 1,
+        "role" => 1
+      ];
       //call api Create Admin
-      $result = $this->AdminModel->CreateAdmin($name, $username, $password);
+      $callapi = new callapi();
+      $requestData = json_encode($requestData);
+      $url =  _API_ROOT . "/admin/create.php";
+      $responseData =  $callapi->callAPI("POST", $url, $requestData);
+      $responseData = $responseData["data"];
+      $res = $responseData["res"];
       //Show result
       self::layout("sign", [
         "View"  => "create-admin",
-        "result" => $result
+        "res" => $res
       ]);
     } else {
       self::layout("sign", [

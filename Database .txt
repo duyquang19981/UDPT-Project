@@ -83,7 +83,7 @@ CREATE TABLE QUESTION
     ID_QUESTION INT AUTO_INCREMENT PRIMARY KEY,
     OWNER_ID INT NOT NULL,
     CATEGORY_ID INT NOT NULL,
-    MOD_ID INT NOT NULL,
+    MOD_ID INT ,
     DESCRIPTION TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     LIKES INT,
     CREATED DATE,
@@ -103,9 +103,8 @@ CREATE TABLE RATING
 
 CREATE TABLE CATEGORY_QUES
 (
-    ID_CATEGORY_QUES INT AUTO_INCREMENT PRIMARY KEY,
+    CATEGORY_ID INT AUTO_INCREMENT PRIMARY KEY,
     MOD_ID INT NOT NULL,
-    CATEGORY_ID INT,
     NAME TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
     CREATED DATE,
     STATUS INT
@@ -139,22 +138,18 @@ ALTER TABLE answer ADD FOREIGN KEY(id_question) REFERENCES question(id_question)
 ALTER TABLE question_tag ADD FOREIGN KEY(question_id) REFERENCES question(id_question);
 ALTER TABLE question_tag ADD FOREIGN KEY(tag_id) REFERENCES tag(id_tag);
 ALTER TABLE question ADD FOREIGN KEY(owner_id) REFERENCES user_account(id_user);
-ALTER TABLE question ADD FOREIGN KEY(category_id) REFERENCES category_ques(id_category_ques);
+ALTER TABLE question ADD FOREIGN KEY(category_id) REFERENCES category_ques(category_id);
 ALTER TABLE question ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 ALTER TABLE rating ADD FOREIGN KEY(OWNER_ID) REFERENCES admin(id_admin);
 ALTER TABLE rating ADD FOREIGN KEY(question_ID) REFERENCES question(id_question);
 ALTER TABLE rating ADD FOREIGN KEY(answer_ID) REFERENCES ANSWER(id_answer);
 ALTER TABLE category_ques ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
-ALTER TABLE category_ques ADD FOREIGN KEY(category_id) REFERENCES category_ques(id_category_ques);
 ALTER TABLE question_label ADD FOREIGN KEY(question_id) REFERENCES question(id_question);
 ALTER TABLE question_label ADD FOREIGN KEY(label_id) REFERENCES label(id_label);
 ALTER TABLE label ADD FOREIGN KEY(mod_id) REFERENCES admin(id_admin);
 
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Phạm Anh Tú', 'ADMIN','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Trần Duy Quang', 'ADMIN1','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Nguyễn Văn Tâm', 'ADMIN2','ADMIN',1,0,1);
-INSERT INTO ADMIN(name,username,pass,role,NOTIFICATION_yes,status) VALUES(N'Lê Quang Quí', 'ADMIN3','ADMIN',1,0,1);
-
+-- DEFAULT ADMIN
+INSERT INTO `admin` (`ID_ADMIN`, `NAME`, `USERNAME`, `PASS`, `ROLE`, `NOTIFICATION_YES`, `STATUS`) VALUES (NULL, 'TRẦN DUY QUANG', 'admin1', '$2y$10$MjEZAHgxXgp9m3fe5Z2WSeFUwBFtRLuHx6Vt0toIt7x8jZPybJn1a', '1', '1', '1');
 
 INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phạm Anh Tú', 'tubato1999@gmail.com', '1999/06/02', '0858456152', 'tubato1999', '123456', '2021/05/08' );
 INSERT INTO user_account( NAME, email, birth, phone, username, PASSWORD, created ) VALUES( N'Nguyễn Phúc Thạnh', 'npthanh99@gmail.com', '1999/05/09', '0845775112', 'npthanh99', '123456', '2021/05/08' );

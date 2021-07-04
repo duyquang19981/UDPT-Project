@@ -1,3 +1,8 @@
+<?php
+// include '../../libs/session.php';
+Session::checkSession();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,9 +28,7 @@
 </head>
 
 <body id="page-top">
-    <div id="content">
-        <?php require_once   "./mvc/views/" . $data["View"] . ".php" ?>
-    </div>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -67,10 +70,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh sách bảng:</h6>
-                        <!-- {{#each tableList}} -->
-                        <a class="collapse-item" href="/admin/manage-table?index={{@index}}">{{TenBang}}</a>
-                        <!-- {{/each}} -->
-
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Question/Read">Câu hỏi</a>
 
                     </div>
                 </div>
@@ -86,7 +88,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="#addGiangVienRecord" data-toggle="modal">Tạo tài khoản Giảng viên</a>
+                        <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
+                        <a class="collapse-item" href="#addNhanCauHoiRecord" data-toggle="modal">Tạo nhãn câu hỏi</a>
+
                     </div>
                 </div>
             </li>
@@ -141,18 +145,47 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
+                            <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
+                                <form class="dropdown-item" method="POST" action="
+                                    <?php
+                                    if (Session::get("notification_yes")) {
+                                        echo _WEB_ROOT . "/Notification/TurnOff";
+                                    } else {
+                                        echo _WEB_ROOT . "/Notification/TurnOn";
+                                    }
+                                    ?>
+                                ">
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" hidden=true />
+                                    <?php
+                                    if (Session::get("notification_yes")) {
+                                    ?>
+                                        <i class="fa fa-bell-slash" aria-hidden="true"></i>
+                                        <button name="submitToggleFormBtn" style="padding: 5px; border: none; background: none;" type="submit"> Turn off notification</button>
+                                    <?php
+                                    } else { ?>
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                        <button name="submitToggleFormBtn" style="padding: 5px; border: none; background: none;" type="submit"> Turn on notification</button>
+                                    <?php
+                                    }
+                                    ?>
+                                </form>
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/Home/ChangePassword">
+                                    <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change pasword
+                                </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
+
                         </li>
 
                     </ul>
@@ -162,7 +195,9 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div id="content">
+                        <?php require_once   "./mvc/views/" . $data["View"] . ".php" ?>
+                    </div>
                     <!-- {{{body}}} -->
                     <!-- end Page Content -->
                     <!-- Footer -->
@@ -199,38 +234,53 @@
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="/admin/logout">Logout</a>
+                            <a class="btn btn-primary" href="<?php echo _WEB_ROOT ?>/Login/Logout">Logout</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="addGiangVienRecord" class="modal fade">
+            <div id="addDanhMucCauHoiRecord" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="addForm2" method="POST" action="/admin/manage-table/GiangVien/add" onsubmit="validateAddForm2(); return false;">
+                        <form id="addForm2" method="POST" action="<?php echo _WEB_ROOT ?>/Category/Create">
                             <div class="modal-header">
-                                <h4 class="modal-title">Add Record</h4>
+                                <h4 class="modal-title">Thêm danh mục</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Tên: </label>
-                                    <input name="ten" type="text" class="form-control" required maxlength="30">
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
+                                    <input name="cate_name" type="text" class="form-control" required maxlength="200">
                                 </div>
-                                <div class="form-group">
-                                    <label>Mail: </label>
-                                    <input name="mail" type="email" class="form-control" required maxlength="30">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tài khoản: </label>
-                                    <input id='username2' name="username" type="text" class="form-control" pattern="^[a-z_-][a-z0-9_-]{5,17}$" title="Username độ dài 6-16 kí tự, được bao gồm _-, không có kí tự đặc biệt, bắt đầu bằng chữ." required maxlength="16">
-                                    <p class="username-noti text-warning" style="visibility:hidden;"><small>Tài khoản đã tồn tại hoặc không hợp lệ.</small></p>
-                                </div>
-
                             </div>
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
+                                <input name="submitAddCategoryFormBtn" type="submit" class="btn btn-success" value="Add">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addNhanCauHoiRecord" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="addForm2" method="POST" action="<?php echo _WEB_ROOT ?>/Label/Create">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm nhãn</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Tên: </label>
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
+                                    <input name="label_description" type="text" class="form-control" required maxlength="200">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <input name="submitAddLabelFormBtn" type="submit" class="btn btn-success" value="Add">
                             </div>
                         </form>
                     </div>

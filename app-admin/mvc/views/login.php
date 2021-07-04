@@ -16,11 +16,11 @@
                   <div class='noti'>
 
                     <div class="alert alert-danger" role="alert" style="color: red;">
-
                       <?php
-                      if (isset($data["result"])) {
-                        if ($data["result"] == "true") {
-                          echo "Đăng nhập không thành công";
+                      if (isset($data["res"])) {
+                        $res = $data["res"];
+                        if ($res["result"] == "false") {
+                          echo "Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản.";
                         }
                       };
                       ?>
@@ -46,11 +46,9 @@
 
                   </form>
                   <hr>
+
                   <div class="text-center">
-                    <a class="small" href="/">Về trang chủ</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="/register">Tạo tài khoản</a>
+                    <a class="small" href="<?php echo _WEB_ROOT ?>/Register">Tạo tài khoản</a>
                   </div>
                 </div>
               </div>

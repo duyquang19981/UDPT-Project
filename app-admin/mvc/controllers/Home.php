@@ -2,40 +2,52 @@
 
 class Home extends Controller
 {
-  public $SinhvienModel;
-
-  public function __construct()
-  {
-    $this->SinhvienModel = self::model("SinhVienModel");
-  }
 
   public  function Default()
   {
     $data =  [
-      "View" => "login",
-      "color" => "red",
-      "SoThich" => ["a", "b", "c"],
-      "SV" => $this->SinhvienModel->SinhVien()
+      "View" => "contact",
     ];
     self::layout(
-      "sign",
+      "main",
       $data
     );
   }
 
-  static function Show($a, $b)
+  public function ChangePassword()
   {
-    $teo = self::model("SinhVienModel");
-    $tong = $teo->Tong($a, $b);
+    $data =  [
+      "View" => "change-password",
+    ];
     self::layout(
       "main",
-      [
-        "Page" => "news",
-        "Number" => $tong,
-        "color" => "red",
-        "SoThich" => ["a", "b", "c"],
-        "SV" => $teo->SinhVien()
-      ]
-    );    //require apdep.php
+      $data
+    );
+  }
+
+  public function SubmitChangePassword()
+  {
+    if (isset($_POST["submitChangePW"])) {
+      $id_admin = $_POST["id_admin"];
+      $password = $_POST["password"];
+      $requestData = [
+        "id_admin" =>  $id_admin,
+        "pass" => $password,
+      ];
+      $callapi = new callapi();
+      $requestData = json_encode($requestData);
+      $url =  _API_ROOT . "/admin/change-password.php";
+      $responseData =  $callapi->callAPI("POST", $url, $requestData);
+      $responseData = $responseData["data"];
+      $res = $responseData["res"];
+      self::layout("main", [
+        "View"  => "change-password",
+        "res" => $res
+      ]);
+    } else {
+      self::layout("main", [
+        "View"  => "change-password"
+      ]);
+    }
   }
 }

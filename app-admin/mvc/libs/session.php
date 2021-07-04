@@ -32,23 +32,23 @@ class Session
   public static function checkSession()
   {
     self::init();
-    if (self::get("login") == false) {
+    if (self::get("admin-login") == false) {
       self::destroy();
-      header("Location:login.php");
+      header("Location: " . _WEB_ROOT . "/Login");
     }
   }
 
   public static function checkLogin()
   {
     self::init();
-    if (self::get("login") == true) {
-      header("Location:index.php");
+    if (self::get("admin-login") == true) {
+      header("Location:" . _WEB_ROOT . "Home");
     }
   }
 
   public static function destroy()
   {
     session_destroy();
-    header("Location:login.php");
+    header("Location:./");
   }
 }

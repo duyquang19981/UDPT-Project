@@ -27,9 +27,17 @@ $db = $database->getConnection();
 // initialize object
 $user = new user_account($db);
 
-$records_per_page = 10;
-
-$stmt = $user->readPaging($from_record_num, $records_per_page);
+$page=isset($_GET["page"]) ? $_GET["page"] : "";
+if($page <0)
+{
+    $page = 1;
+}
+$from_record_num = 0;
+if ($page > 1)
+{
+    $from_record_num = ($page-1)*$records_per_page;
+}
+$stmt = $user->readPaging($from_record_num, $records_per_page );
 $num = $stmt->rowCount();
   
 // check if more than 0 record found
@@ -37,7 +45,7 @@ if($num>0){
   
     // products array
     $user_arr=array();
-    $user_arr["records"]=array();
+    $user_arr["data"]=array();
     $user_arr["paging"]=array();
   
     // retrieve our table contents
@@ -55,17 +63,18 @@ if($num>0){
             "email" => $email,
             "birth" => $birth,
             "phone" => $phone,
+            "status" => $status,
             "created" => $created
         );
   
-        array_push($user_arr["records"], $user_item);
+        array_push($user_arr["data"], $user_item);
     }
   
   
     // include paging
     $total_rows=$user->count();
     $page_url="{$home_url}user_account/read_paging.php?";
-    $paging=$utilities->getPaging($page, $total_rows, $records_per_page, $page_url);
+    $paging=$utilities->getPaging($page, $total_rows, $records_per_page);
     $user_arr["paging"]=$paging;
   
     // set response code - 200 OK

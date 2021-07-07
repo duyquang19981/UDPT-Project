@@ -146,9 +146,18 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-  $("#changepasss").on("click", function(){    
+  
+  $("#changepasss").on("click", function(e){    
+    e.preventDefault();
+    $("#changepass").modal("hide");
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
     if($("input[name=password]").val() != $("input[name=repassword]").val())
     {
+      $("#loadMe").modal("hide");
       alert("Password and Repassword do not match");
     }
     else
@@ -168,17 +177,20 @@ $(document).ready(function(){
           $("input[name=password]").val('')
           $("input[name=oldpassword]").val('')
           $("input[name=repassword]").val('')
+          $("#loadMe").modal("hide");
           alert("Change Password Success");
           
         },
         error: function (xhr, status, error) {
           if(xhr.status == 401)
           {
+            $("#loadMe").modal("hide");
             alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
             window.location="<?php echo _Web_ROOT."/login/logout" ;?>";
           }
           else
           {
+            $("#loadMe").modal("hide");
             alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
           }
           
@@ -189,9 +201,17 @@ $(document).ready(function(){
 
   });   
 
-  $("#changeinfo").on("click", function(){    
+  $("#changeinfo").on("click", function(e){   
+    e.preventDefault();
+    $("#changeprofile").modal("hide");
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
     if($("input[name=name]").val() == "" || $("input[name=email]").val()== "" || $("input[name=phone]").val()== "" || $("input[name=birth]").val()== "")
     {
+      $("#loadMe").modal("hide");
       alert("Xin vui lòng nhập đủng thông tin");
     }
     else
@@ -210,18 +230,20 @@ $(document).ready(function(){
         url  : "<?php echo (_API_ROOT.'user_account/update.php')?>",
         dataType: "json",
         success:function(result, status, xhr){
-          var obj = jQuery.parseJSON( result );
+          $("#loadMe").modal("hide");
           alert("Change Profile Success");
           window.location="<?php echo _Web_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
         },
         error: function (xhr, status, error) {
           if(xhr.status == 401)
           {
+            $("#loadMe").modal("hide");
             alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
             window.location="<?php echo _Web_ROOT."/login/logout" ;?>";
           }
           else
           {
+            $("#loadMe").modal("hide");
             alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
           }
           
@@ -234,6 +256,11 @@ $(document).ready(function(){
 
   $("#fileupload").change(function(e) { 
     e.preventDefault();
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
     let myForm = document.getElementById('upfile');
     let formData = new FormData(myForm);
     $.ajax({
@@ -243,6 +270,7 @@ $(document).ready(function(){
       contentType: false,
       success:function(result, status, xhr){
         var obj = jQuery.parseJSON( result );
+        $("#loadMe").modal("hide");
         alert("Change Avatar Success");
         window.location="<?php echo _Web_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
       },

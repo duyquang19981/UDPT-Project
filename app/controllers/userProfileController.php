@@ -48,8 +48,4 @@ class userProfileController
         
     }
     
-    public function changepass()
-    {
-        echo "hihi";
-    }
 }

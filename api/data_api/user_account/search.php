@@ -26,7 +26,16 @@ $user = new user_account($db);
   
 // get keywords
 $keywords=isset($_GET["name"]) ? $_GET["name"] : "";
-$records_per_page = 10;
+$page=isset($_GET["page"]) ? $_GET["page"] : "";
+if($page <0)
+{
+    $page = 1;
+}
+$from_record_num = 1;
+if ($page > 1)
+{
+    $from_record_num = ($page-1)*$records_per_page;
+}
 // query products
 $stmt = $user->search($keywords,$from_record_num, $records_per_page);
 $num = $stmt->rowCount();
@@ -61,7 +70,7 @@ if($num>0){
   
     $total_rows=$user->searchcount($keywords);
     $page_url="{$home_url}user_account/search.php?s={$keywords}&"  ;
-    $paging=$utilities->getPaging($page, $total_rows, $records_per_page, $page_url);
+    $paging=$utilities->getPaging($page, $total_rows, $records_per_page);
     $user_arr["paging"]=$paging;
 
     

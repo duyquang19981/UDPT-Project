@@ -105,7 +105,7 @@
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input id="saveButton" name="submitUpdateCate" type="submit" class="btn btn-info" value="Save">
         </div>
-      </form>
+      </form> 
     </div>
   </div>
 </div>

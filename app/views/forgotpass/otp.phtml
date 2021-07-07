@@ -26,7 +26,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
   $("#sendOtp").on("click", function(e){ 
-    e.preventDefault();    
+    e.preventDefault();
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });  
     var email = 
     {
       email: "<?php echo $_SESSION['email']?>",
@@ -44,6 +49,7 @@ $(document).ready(function(){
       type : "POST",
       data : JSON.stringify(email),
       success:function(result){
+        $("#loadMe").modal("hide");
         alert("Đã gửi otp");
       },
       error: function (xhr, thrownError, result) {

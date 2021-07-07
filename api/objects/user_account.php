@@ -15,6 +15,7 @@ class user_account{
     public $username;
     public $password;
     public $created;
+    public $stutus;
   
     // constructor with $db as database connection
     public function __construct($db){
@@ -235,7 +236,7 @@ class user_account{
                 WHERE
                     p.name LIKE ?
                 ORDER BY
-                    p.created DESC
+                    p.id_user ASC
                     LIMIT ?, ?";
     
         // prepare query statement
@@ -257,10 +258,10 @@ class user_account{
     
         // select query
         $query = "SELECT
-                    p.id_user, p.name,p.image, p.email, p.birth, p.phone, p.created
+                    p.id_user, p.name,p.image, p.email, p.birth, p.phone, p.created, p.status
                 FROM
                     " . $this->table_name . " p
-                ORDER BY p.created DESC
+                ORDER BY p.id_user ASC
                 LIMIT ?, ?";
     
         // prepare query statement
@@ -284,7 +285,7 @@ class user_account{
                 WHERE
                     p.name LIKE ?
                 ORDER BY
-                    p.created DESC";
+                    p.id_user ASC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -467,6 +468,34 @@ class user_account{
         if($stmt->execute()){
             return true;
         }
+        return false;
+    }
+
+    public function updatestatus()
+    {
+        // update query
+        $query = "UPDATE
+                    " . $this->table_name . "
+                SET
+                    status = :status
+                    
+                WHERE
+                    id_user = :id_user";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        $this->status=htmlspecialchars(strip_tags($this->status));
+        $this->id_user=htmlspecialchars(strip_tags($this->id_user));
+
+        $stmt->bindParam(':status', $this->status, PDO::PARAM_INT);
+        $stmt->bindParam(':id_user', $this->id_user, PDO::PARAM_INT);
+
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+        
         return false;
     }
 }

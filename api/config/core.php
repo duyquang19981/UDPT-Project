@@ -15,7 +15,7 @@ $home_url= $web_root."/UDPT-Project/api/data_api/";
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-$from_record_num = 1;
+$records_per_page = 10;
 // show error reporting
 error_reporting(E_ALL);
  

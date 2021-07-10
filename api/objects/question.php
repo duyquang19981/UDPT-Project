@@ -168,4 +168,20 @@ class question
 
         return 0;
     }
+
+    function readById()
+    {
+        $query = "SELECT * FROM 
+        " . $this->table_name .
+            " WHERE id_question = :id_question ";
+        $stmt = $this->conn->prepare($query);
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
 }

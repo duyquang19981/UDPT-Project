@@ -113,7 +113,7 @@
                 <td><?php echo $question["likes"]; ?></td>
                 <td><?php echo $question["created"]; ?></td>
                 <td><?php echo $question["accept_day"]; ?></td>
-                <td> <?php echo $question["status"]; ?></td>
+                <td><?php echo $question["status"]; ?></td>
                 <td>
                   <?php
                   if ($question["mod_id"] == null) { ?>

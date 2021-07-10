@@ -27,29 +27,38 @@ Session::checkSession();
     <script src="<?php echo _PUBLIC ?>/js/admin-crud/function.js"></script>
 
     <style>
-    /* Center the loader */
-    #loader {
-        border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    text-align: center;
-    }
+        /* Center the loader */
+        #loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            text-align: center;
+        }
 
-    @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-    }
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
 
-    @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-    }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -100,7 +109,9 @@ Session::checkSession();
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Question/Read">Câu hỏi</a>
-                        
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Answer/Read">Câu trả lời</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Notification/Read">Thông báo của tôi</a>
+
 
                     </div>
                 </div>
@@ -173,7 +184,7 @@ Session::checkSession();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
+                            <a href="<?php echo _WEB_ROOT ?>/..">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">

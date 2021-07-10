@@ -41,7 +41,11 @@
                 <td> <?php echo $label["mod_id"]; ?></td>
                 <td>
                   <a href="#editRecord" class="editButton edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                  <a href="#deleteRecord" class="deleteButton delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <?php
+                  if ($label["status"] != 0) { ?>
+                    <a href="#deleteRecord" class="deleteButton delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                  <?php  }
+                  ?>
                 </td>
               </tr>
             <?php

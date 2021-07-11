@@ -130,7 +130,8 @@ Session::checkSession();
                         <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
                         <a class="collapse-item" href="#addNhanCauHoiRecord" data-toggle="modal">Tạo nhãn câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/AutoAccept">Duyệt tự động</a>
-
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/Export">Export dữ liệu</a>
+ 
                     </div>
                 </div>
             </li>

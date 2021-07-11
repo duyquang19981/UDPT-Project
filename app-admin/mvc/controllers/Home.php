@@ -71,4 +71,15 @@ class Home extends Controller
     }
     header('Location:' . _WEB_ROOT . '/Question/Read');
   }
+
+  public function Export()
+  {
+    $data =  [
+      "View" => "export",
+    ];
+    self::layout(
+      "main",
+      $data
+    );
+  }
 }

@@ -129,6 +129,7 @@ Session::checkSession();
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
                         <a class="collapse-item" href="#addNhanCauHoiRecord" data-toggle="modal">Tạo nhãn câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/AutoAccept">Duyệt tự động</a>
 
                     </div>
                 </div>
@@ -184,7 +185,6 @@ Session::checkSession();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a href="<?php echo _WEB_ROOT ?>/..">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">
@@ -218,6 +218,10 @@ Session::checkSession();
                                 <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/Home/ChangePassword">
                                     <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change pasword
+                                </a>
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/..">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Go to user site
                                 </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

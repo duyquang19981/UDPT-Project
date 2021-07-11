@@ -66,6 +66,9 @@ class Notification extends Controller
     // Nội dung câu hỏi ( trường content trong notification): "Câu hỏi từ người dùng 'id_user': day la noi dung cau hoi."
     // Nội dung câu hỏi ( trường content trong notification): "Câu trả lời từ người dùng 'id_user': day la noi dung cau tra loi."
 
+    // Nếu admin có notification_yes = 0 thì không thêm thông báo, notification_yes = 1 thì thêm,
+    // thêm trong notification_admin
+    
     $admin_id = Session::get("admin-id");
     $requestData = [
       "admin_id" =>  $admin_id

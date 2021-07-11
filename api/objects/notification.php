@@ -34,4 +34,16 @@ class notification
 
     return 0;
   }
+
+  function readAll()
+  {
+    $query = "SELECT * FROM 
+                  " . $this->table_name;
+    $stmt = $this->conn->prepare($query);
+    if ($stmt->execute()) {
+      return $stmt;
+    }
+
+    return 0;
+  }
 }

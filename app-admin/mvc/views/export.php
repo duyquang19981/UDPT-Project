@@ -21,7 +21,7 @@
   <!-- <a href="<?php echo _API_ROOT ?>/export/question_tag.php" target="_blank">question_tag</a> -->
   <a href="<?php echo _API_ROOT ?>/export/rating.php" target="_blank">rating</a>
   <a href="<?php echo _API_ROOT ?>/export/report.php" target="_blank">report</a>
-  <!-- <a href="<?php echo _API_ROOT ?>/export/tag.php" target="_blank">tag</a> -->
+  <a href="<?php echo _API_ROOT ?>/export/tag.php" target="_blank">tag</a>
   <a href="<?php echo _API_ROOT ?>/export/user_account.php" target="_blank">user_account</a>
 
 </div>

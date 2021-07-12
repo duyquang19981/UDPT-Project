@@ -114,8 +114,8 @@
                 <td><?php echo $answer["status"]; ?></td>
                 <td>
                   <?php
-                  if ($answer["mod_id"] == null) { ?>
-                    <a href="#editRecord" class="editButton edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Accept">&#xE254;</i></a>
+                  if ($answer["mod_id"] == null && $answer["status"] != 0) { ?>
+                    <a href="#editRecord" class="editButton accept" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Accept">done</i></a>
                   <?php  }
                   ?>
                   <?php

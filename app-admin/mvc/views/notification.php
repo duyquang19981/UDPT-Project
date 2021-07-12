@@ -56,7 +56,7 @@
                 <td>
                   <?php
                   if ($notification["isAccepted"] == "false") { ?>
-                    <a href="#editRecord" class="editButton edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Accept">&#xE254;</i></a>
+                    <a href="#editRecord" class="editButton accept" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Accept">done</i></a>
                   <?php  }
                   ?>
                 </td>

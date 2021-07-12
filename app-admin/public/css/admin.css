@@ -116,6 +116,10 @@ table.table td a:hover {
     color: #2196F3;
 }
 
+table.table td a.accept {
+    color: #179c23;
+}
+
 table.table td a.edit {
     color: #FFC107;
 }

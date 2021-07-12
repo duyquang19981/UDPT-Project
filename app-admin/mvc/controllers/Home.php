@@ -6,7 +6,7 @@ class Home extends Controller
   public  function Default()
   {
     $data =  [
-      "View" => "contact",
+      "View" => "home",
     ];
     self::layout(
       "main",

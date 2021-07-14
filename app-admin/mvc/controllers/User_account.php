@@ -15,12 +15,11 @@ class User_account extends Controller
     }
     $requestData = null;
     $callapi = new callapi();
-    $requestData = json_encode($requestData);
     $url =  _API_ROOT . "/user_account/read_paging.php?page=".$page;
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData;
-    if ($res!= "false") {
+    if ($res!= "false" && isset($res["data"])) {
       $data =  [
         "View" => "user_account",
         "User" => $res["data"],
@@ -31,6 +30,16 @@ class User_account extends Controller
         $data
       );
     }
+    else
+      {
+        $data =  [
+          "View" => "user_account"
+        ];
+        self::layout(
+          "main",
+          $data
+        );
+      }
   }
 
   public function updateStatus()
@@ -82,5 +91,42 @@ class User_account extends Controller
     }
   }
 
+  public function Search($keyword,$page)
+  {
+    if ($keyword == "")
+    {
+      header('Location:' . _WEB_ROOT . '/user_account/Read/1');
+    }
+    else {
+      $callapi = new callapi();
+      $url =  _API_ROOT . "/user_account/search.php?name=".$keyword."&page=".$page;
+      $responseData =  $callapi->callAPI("GET", $url, 0);
+      $responseData = $responseData["data"];
+      $res = $responseData;
+      if ($res!= "false" && isset($res["data"])) 
+      {
+        $data =  [
+          "View" => "user_account",
+          "User" => $res["data"],
+          "paging" => $res["paging"],
+          "keyword" => $keyword,
+        ];
+        self::layout(
+          "main",
+          $data
+        );
+      }
+      else
+      {
+        $data =  [
+          "View" => "user_account"
+        ];
+        self::layout(
+          "main",
+          $data
+        );
+      }
+    }
+  }
 
 }

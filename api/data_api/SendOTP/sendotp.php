@@ -35,7 +35,7 @@ if($email != null)
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
 
-    $mail->setFrom('tubato1999@gmail.com', 'Xác thực OTP');
+    $mail->setFrom('tubato1999@gmail.com', 'Admin Web Question and Answer');
     $mail->addAddress($email);     // Add a recipient
     $mail->addReplyTo('tubato1999@gmail.com');
 

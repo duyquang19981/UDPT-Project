@@ -169,5 +169,41 @@ class question
         return 0;
     }
 
-    
+    function countQuesCheck()
+    {
+        $query = "SELECT
+        COUNT(*) as total_rows
+        FROM
+            " . $this->table_name . " p
+        WHERE
+            p.mod_id is null";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['total_rows'];
+    }
+    function get3quesCheck()
+    {
+        $query = "SELECT
+        u.NAME,
+        u.IMAGE,
+        q.DESCRIPTION,
+        q.ID_QUESTION,
+        q.CREATED
+        FROM
+            question AS q,
+            user_account AS u
+        WHERE
+            q.OWNER_ID = u.ID_USER AND q.MOD_ID IS NULL
+        ORDER BY
+            q.CREATED
+        DESC
+        LIMIT 0, 3";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 }

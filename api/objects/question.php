@@ -168,7 +168,6 @@ class question
 
         return 0;
     }
-
     function readById()
     {
         $query = "SELECT * FROM 
@@ -184,7 +183,6 @@ class question
 
         return 0;
     }
-
     function countQuesCheck()
     {
         $query = "SELECT

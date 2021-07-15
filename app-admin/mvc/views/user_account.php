@@ -7,9 +7,10 @@
 <script src="<?php echo _PUBLIC ?>/js/admin-crud/admin-crud-user-account.js"></script>
 
 <div class="container-xl">
-<div style="width: 50%;top: 50%;text-align: center;" >
+<div style="width: 50%;top: 50%;" >
+<h5>Tìm kiếm user: </h5>
    <div style="width: 100%;display: flex;">
-      <input type="text" id="search"  placeholder="What are you looking for?" style="width: 100%;border: 3px solid #435d7d;border-right: none;padding: 5px;height: 40px;border-radius: 5px 0 0 5px;outline: none;">
+      <input type="text" id="search"  placeholder="Name user" style="width: 100%;border: 3px solid #435d7d;border-right: none;padding: 5px;height: 40px;border-radius: 5px 0 0 5px;outline: none;">
       <button id="searchbuton"  style="width: 40px;height: 36px;border: 1px solid #435d7d;background: #435d7d;text-align: center;color: #fff;border-radius: 0 5px 5px 0;height: 40px;cursor: pointer;font-size: 20px;">
         <i class="fa fa-search"></i>
      </button>

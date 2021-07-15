@@ -1,0 +1,1 @@
+"D:\XAMPP\php\php.exe" -f "D:\XAMPP\htdocs\UDPT-Project\app\cronjob\Sendmailadmin.php"

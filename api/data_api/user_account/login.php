@@ -33,39 +33,52 @@ $user->login();
 // read the details of product to be edited
 if($user->id_user!=null){
     
-    $token = array(
-        "iat" => $issued_at,
-        "exp" => $expiration_time,
-        "iss" => $issuer,
-        "data" => array(
-            "id" => $user->id_user,
-            "username" => $user->username,
-            "name" => $user->name,
-            "image" => $user->image
-        )
-     );
-  
-     // set response code
-     http_response_code(200);
-  
-     // generate jwt
-     $jwt = JWT::encode($token, $key);
-     echo json_encode(
-             array(
-                 "message" => "Đăng nhập thành công",
-                 "jwt" => $jwt
-             )
-         );
-}
-  
-// no products found will be here
+    if($user->status == 1)
+    {
+        $token = array(
+            "iat" => $issued_at,
+            "exp" => $expiration_time,
+            "iss" => $issuer,
+            "data" => array(
+                "id" => $user->id_user,
+                "username" => $user->username,
+                "name" => $user->name,
+                "image" => $user->image
+            )
+            );
+        
+            // set response code
+            http_response_code(200);
+        
+            // generate jwt
+            $jwt = JWT::encode($token, $key);
+            echo json_encode(
+                    array(
+                        "message" => "Đăng nhập thành công",
+                        "jwt" => $jwt
+                    )
+                );
+        }
+        else
+        {
+            // set response code - 404 Not found
+            http_response_code(404);
+
+            // tell the user no products found
+            echo json_encode(
+                array("message" => "Tài khoản của bạn đã bị khóa. Xin vui lòng liên hệ email: tubato1999@gmail.com")
+            );
+        }
+    }
 else{
-  
+
     // set response code - 404 Not found
     http_response_code(404);
-  
+
     // tell the user no products found
     echo json_encode(
         array("message" => "Đăng nhập thất bại!! Tên đăng nhập hoặc mật khẩu sai!")
     );
 }
+
+   

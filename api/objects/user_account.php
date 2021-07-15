@@ -15,7 +15,7 @@ class user_account{
     public $username;
     public $password;
     public $created;
-    public $stutus;
+    public $status;
   
     // constructor with $db as database connection
     public function __construct($db){
@@ -230,14 +230,15 @@ class user_account{
     
         // select all query
         $query = "SELECT
-                     p.id_user, p.name, p.image, p.email, p.birth, p.phone, p.created
+                     p.id_user, p.name, p.image, p.email, p.birth, p.phone, p.created,p.status
                 FROM
                     " . $this->table_name . " p
                 WHERE
                     p.name LIKE ?
                 ORDER BY
+                    p.status ASC,
                     p.id_user ASC
-                    LIMIT ?, ?";
+                LIMIT ?, ?";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -261,7 +262,9 @@ class user_account{
                     p.id_user, p.name,p.image, p.email, p.birth, p.phone, p.created, p.status
                 FROM
                     " . $this->table_name . " p
-                ORDER BY p.id_user ASC
+                ORDER BY 
+                    p.status ASC,
+                    p.id_user ASC
                 LIMIT ?, ?";
     
         // prepare query statement
@@ -312,7 +315,7 @@ class user_account{
     public function login()
     {
         $query = "SELECT
-                     p.id_user,p.name,p.image
+                     p.id_user,p.name,p.image,p.status
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -338,6 +341,7 @@ class user_account{
         $this->id_user = $row['id_user'];
         $this->name = $row['name'];
         $this->image = $row['image'];
+        $this->status = $row['status'];
         }
         
         

@@ -62,7 +62,8 @@ if($num>0){
             "phone" => $phone,
             "email" => $email,
             "birth" => $birth,
-            "created" => $created
+            "created" => $created,
+            "status" => $status,
         );
   
         array_push($user_arr["data"], $user_item);

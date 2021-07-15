@@ -30,14 +30,14 @@ if($email != null)
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'tubato1999@gmail.com';                 // SMTP username
-    $mail->Password = 'quenmatroi1602';                           // SMTP password
+    $mail->Username = 'nguyenphamanhtu99@gmail.com';                 // SMTP username
+    $mail->Password = 'tuthao1610';                           // SMTP password
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587;                                    // TCP port to connect to
 
-    $mail->setFrom('tubato1999@gmail.com', 'Xác thực OTP');
+    $mail->setFrom('nguyenphamanhtu99@gmail.com', 'Admin Web Question and Answer');
     $mail->addAddress($email);     // Add a recipient
-    $mail->addReplyTo('tubato1999@gmail.com');
+    $mail->addReplyTo('nguyenphamanhtu99@gmail.com');
 
 
     //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -96,8 +96,5 @@ if($email != null)
     }
     
 }
-
-
-
 
 ?>

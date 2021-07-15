@@ -168,6 +168,7 @@ class question
 
         return 0;
     }
+
     function readById()
     {
         $query = "SELECT * FROM 

@@ -27,29 +27,38 @@ Session::checkSession();
     <script src="<?php echo _PUBLIC ?>/js/admin-crud/function.js"></script>
 
     <style>
-    /* Center the loader */
-    #loader {
-        border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    text-align: center;
-    }
+        /* Center the loader */
+        #loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            text-align: center;
+        }
 
-    @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-    }
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
 
-    @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-    }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -99,8 +108,11 @@ Session::checkSession();
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/user_account/Read/1">Danh sách user</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Tag/Read">Tag</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Question/Read">Câu hỏi</a>
-                        
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Answer/Read">Câu trả lời</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Notification/Read">Thông báo của tôi</a>
+
 
                     </div>
                 </div>
@@ -118,6 +130,9 @@ Session::checkSession();
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="#addDanhMucCauHoiRecord" data-toggle="modal">Tạo danh mục câu hỏi</a>
                         <a class="collapse-item" href="#addNhanCauHoiRecord" data-toggle="modal">Tạo nhãn câu hỏi</a>
+                        <a class="collapse-item" href="#addTagRecord" data-toggle="modal">Tạo Tag</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/AutoAccept">Duyệt tự động</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/Export">Export dữ liệu</a>
 
                     </div>
                 </div>
@@ -141,12 +156,6 @@ Session::checkSession();
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
-                    <!-- {{#section 'searchbar'}}
-                    
-                    {{/section}}
-                    {{{_sections.searchbar}}} -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -173,7 +182,6 @@ Session::checkSession();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a href="<?php echo _WEB_ROOT ?>/../app/Home">go to user</a>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello, <?php echo Session::get("admin-name"); ?></span>
                                 <img class="img-profile rounded-circle" src="<?php echo _PUBLIC ?>/img/undraw_profile.svg">
@@ -207,6 +215,10 @@ Session::checkSession();
                                 <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/Home/ChangePassword">
                                     <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change pasword
+                                </a>
+                                <a class="dropdown-item" href="<?php echo _WEB_ROOT ?>/..">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Go to user site
                                 </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -309,6 +321,30 @@ Session::checkSession();
                             <div class="modal-footer">
                                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                                 <input name="submitAddLabelFormBtn" type="submit" class="btn btn-success" value="Add">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="addTagRecord" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="addForm2" method="POST" action="<?php echo _WEB_ROOT ?>/Tag/Create">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm Tag</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Tên: </label>
+                                    <input name="id_admin" value="<?php echo Session::get("admin-id") ?>" type="text" class="form-control" hidden=true>
+                                    <input name="tag_description" type="text" class="form-control" required maxlength="200">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <input name="submitAddTagFormBtn" type="submit" class="btn btn-success" value="Add">
                             </div>
                         </form>
                     </div>

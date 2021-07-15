@@ -502,5 +502,16 @@ class user_account{
         
         return false;
     }
+
+    function readAll()
+    {
+        $query = "SELECT * FROM 
+                    " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
 }
-?>

@@ -34,6 +34,10 @@ class userProfileController
                                 "ques" => $response1["data"]["ques"],
                                 "answer" => $response1["data"]["answer"],
                             ];
+
+                            $response2 = $callapi->callAPI('GET', _API_ROOT.'category/read-all.php', null);
+                            $category = $response2["data"]["res"]["categories"];
+                            // print_r($category);
                             $VIEW = "./app/views/user/userProfile.phtml";
                             require("./app/layouts/questionLayout.phtml");
                         }

@@ -90,10 +90,92 @@
                 </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                </div>   
-            
+              <div class="tabs">
+                <div class="container">
+                  <div role="tablist" class="tabs__control">
+                    <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current">Take Questions</button>
+                    <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1">Your Questions</button>
+                  </div>
+                </div>
+                <div class="tabs__contents" style="border-style: solid;padding:1%;border-color: #8f8d8d; margin:1%">
+                  <div data-tab-content="1" role="tabpanel" tabindex="0" id="tab-1" class="tabs__content tabs__content--current">
+                    <div class="container">
+                    <div class="row" >
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8" style="text-align: left;">
+                      <!-- method ="POST" action="/UDPT-PROJECT/questions/create" -->
+                      <form method ="POST" action="/UDPT-PROJECT/questions/create">
+                        <H3>Đặt câu hỏi</H3>
+                        <div class="form-group">
+                          <label for="exampleFormControlTextarea1">Câu hỏi</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" name= "exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="row"> 
+                          <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1">Danh mục câu hỏi</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="exampleFormControlSelect1">
+                              <?php if (isset($category) && count($category) > 0) {
+                              foreach ($category as $categorys) { 
+                              if($categorys["status"] == 1 ) 
+                              {
+                                ?>
+                              <option value="<?php echo $categorys["category_id"]?>"><?php echo $categorys["name"]?></option>
+                              <?php
+                              }
+                            }
+                            
+                            } ?>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-8">
+                            <label for="exampleFormControlSelect1">Gắn tag</label>
+                            <div></div>
+                            <input type="text"  data-role="tagsinput" placeholder="Add tags" name="tag" id="tag"/>
+                          </div>
+                          <input type="text"  class="hidden" name ="link"  id="link"/>
+                          <input type="text"  class="hidden" name ="tags" id="tags"/>
+                        </div>
+                        <div style="text-align: right;">
+                          <button type="submit" class="btn btn-primary" id="createQues">Đăng câu hỏi</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+               
+                    </div>
+                  </div>
+                  <div data-tab-content="2" role="tabpanel" tabindex="0" id="tab-2" class="tabs__content" hidden style="text-align: left;">
+                  <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-10">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Special title treatment</h5>
+                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Special title treatment</h5>
+                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  
+                </div>
+              </div>
             </div>
+            
         </div>
     </div>
 </div>
@@ -280,8 +362,66 @@ $(document).ready(function(){
       data : formData,
     });  
   });
+
+  $("#createQues").on("click", function(e){  
+    var a = $('#tag').val();
+    $('#tags').val(a);
+    $('#link').val("/UDPT-project/<?php echo $_GET["url"]?>")
+    alert($('#link').val())
+  });
+
 });
 
 
 </script>
+
+<script>
+  // Get all tabs
+  var tabs_items = document.querySelectorAll(".tabs");
+
+  // Loop through all tabs
+  tabs_items.forEach(function (tabs) {
+    // Set variable
+    var controls = tabs.querySelector(".tabs__control");
+    var tab = controls.querySelectorAll(".tabs__tab");
+    var contents = tabs.querySelector(".tabs__contents");
+    var content = contents.querySelectorAll(".tabs__content");
+
+    // Loop through all tabs
+    tab.forEach(function (item) {
+      item.onclick = function (e) {
+        e.preventDefault();
+
+        // Get clicked tab ID
+        var tabId = item.dataset.tab;
+
+        // Set current tab
+        tab.forEach(function (item) {
+          if (tabId == item.dataset.tab) {
+            item.classList.add("tabs__tab--current");
+            item.setAttribute('aria-selected','true');
+            item.removeAttribute('tabindex','-1');
+          } else {
+            item.classList.remove("tabs__tab--current");
+            item.setAttribute('aria-selected','false');
+            item.setAttribute('tabindex','-1');
+          }
+        });
+
+        // Set current content
+        content.forEach(function (item) {
+          if (tabId == item.dataset.tabContent) {
+            item.classList.add("tabs__content--current");
+            item.removeAttribute('hidden','hidden');
+          } else {
+            item.classList.remove("tabs__content--current");
+            item.setAttribute('hidden','hidden');
+          }
+        });
+      };
+    });
+  });
+
+</script>
+
 <?php require_once("./app/views/header-footer/footer.phtml"); ?>

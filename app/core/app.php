@@ -133,6 +133,27 @@ class app{
                             break;
                     }
                     break;
+                case 'questions':
+                    require_once "./app/controllers/questionsController.php";
+                    $controller = new QuestionsController();
+                    // xử lý action
+                    if (isset($link[1]))
+                    {
+                        // kiểm tra method trong controller có tồn tại không
+                        if(method_exists($controller,$link[1]))
+                        {
+                            $this->Action = $link[1];
+                        }
+                    switch ($this->Action)
+                    {
+                        case 'create':
+                            $controller->create();
+                            break;
+                    
+                    }
+                    }
+
+                    break;
             }
         }
         else

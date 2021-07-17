@@ -3,7 +3,7 @@
 /* BASIC */
 
 html {
-    background-color: #56baed;
+    background-color: #919191;
 }
 
 body {
@@ -82,7 +82,7 @@ h2.active {
 input[type=button],
 input[type=submit],
 input[type=reset] {
-    background-color: #56baed;
+    background-color: #919191;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -356,7 +356,7 @@ input[type=date]:placeholder {
     bottom: -10px;
     width: 0;
     height: 2px;
-    background-color: #56baed;
+    background-color: #919191;
     content: "";
     transition: width 0.2s;
 }

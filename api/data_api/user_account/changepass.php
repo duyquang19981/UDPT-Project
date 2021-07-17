@@ -25,14 +25,13 @@ $db = $database->getConnection();
 $user = new user_account($db);
   
 // get id of product to be edited
-// $data = json_decode(file_get_contents("php://input"));
 
-    $data = json_decode(file_get_contents("php://input"));
-    $jwt= $data->jwt;
-    $user->id_user = $data->id_user;
-    $user->password = $data->password;
-    $oldpassword = $data->oldpassword;
-// get jwt
+
+$data = json_decode(file_get_contents("php://input"));
+$jwt= $data->jwt;
+$user->id_user = $data->id_user;
+$user->password = $data->password;
+$oldpassword = $data->oldpassword;
 $user->password = base64_encode($user->password);
 $oldpassword = base64_encode($oldpassword);
 // if jwt is not empty

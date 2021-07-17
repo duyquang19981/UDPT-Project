@@ -37,7 +37,7 @@ if(
 
     $ques->category_id = $data->category_id;
     $ques->description = $data->description;
-    $ques->created = date("Y-m-d h:i:");
+    $ques->created = date("Y-m-d h:i:s");
     $ques->owner_id = $data->owner_id;
     $tags = $data->tags;
     $jwt = $data->jwt;
@@ -54,7 +54,8 @@ if(
             {
                 $id_ques = $ques->getIDafterCreate();
                 $tag = explode(",",filter_var(trim($tags,",")));
-                for ($i = 0; $i < count($tag); $i++)
+                $num = count($tag);
+                for ($i = 0; $i < $num; $i++)
                 {
                     $tag = new tag($db);
                     

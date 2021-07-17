@@ -37,7 +37,7 @@ if(
     $user->birth = $data->birth;
     $user->username = $data->username;
     $user->password = $data->password;
-    $user->created = date('Y-m-d');
+    $user->created = date("Y-m-d h:i:s");;
     $user->password = base64_encode($user->password);
     
     $check = $user->create();

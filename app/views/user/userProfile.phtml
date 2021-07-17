@@ -186,7 +186,7 @@ $(document).ready(function(){
           {
             $("#loadMe").modal("hide");
             alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location="<?php echo _Web_ROOT."/login/logout" ;?>";
+            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
           }
           else
           {
@@ -232,14 +232,14 @@ $(document).ready(function(){
         success:function(result, status, xhr){
           $("#loadMe").modal("hide");
           alert("Change Profile Success");
-          window.location="<?php echo _Web_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
+          window.location="<?php echo _WEB_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
         },
         error: function (xhr, status, error) {
           if(xhr.status == 401)
           {
             $("#loadMe").modal("hide");
             alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location="<?php echo _Web_ROOT."/login/logout" ;?>";
+            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
           }
           else
           {
@@ -272,7 +272,7 @@ $(document).ready(function(){
         var obj = jQuery.parseJSON( result );
         $("#loadMe").modal("hide");
         alert("Change Avatar Success");
-        window.location="<?php echo _Web_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
+        window.location="<?php echo _WEB_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
       },
       error: function (xhr, status, error) {
         alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)

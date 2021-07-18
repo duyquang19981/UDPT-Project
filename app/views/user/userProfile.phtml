@@ -1,6 +1,6 @@
 <?php require_once("./app/views/header-footer/header.phtml"); ?>
 <?php require_once "./app/config.php";?>
-<div class="container-fluid text-center">
+<div class="container-fluid text-center" style="background-color: #cccccc">
     <div class="row content">
         <div class="col-sm-2 sidenav">
             <p style="background-color:moccasin;"><a href="#"><b>Topic</b></a></p>
@@ -8,14 +8,14 @@
             <p><a href="#"><b>Society</b></a></p>
         </div>
         <div class="col-sm-10" style="padding:1%">
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%;  background-color: #f1f1f1">
+                <div class="col-md-4">      
                     <div class="profile-img">
                     <form id="upfile" method="POST">
                         <?php if(isset($user["image"])):?>
                         <img src="<?php echo $user["image"]?>" />
                         <?php else : ?>
-                          <img src="/UDPT-PROJECT/public/images/User.png" />
+                          <img src="<?php  echo _PUBLIC ?>/images/User.png" />
                         <?php endif; ?>
 
                         <?php if($user["id"] == $_SESSION["user_id"]):?>
@@ -89,30 +89,31 @@
                 <?php endif; ?>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="padding:1%">
               <div class="tabs">
                 <div class="container">
                   <div role="tablist" class="tabs__control">
-                    <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current">Take Questions</button>
-                    <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1">Your Questions</button>
+                    <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Make a Questions</button>
+                    <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Your Questions</button>
                   </div>
                 </div>
-                <div class="tabs__contents" style="border-style: solid;padding:1%;border-color: #8f8d8d; margin:1%">
+                <div class="tabs__contents" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%; min-height:500px; max-height:800px; background-color: #f1f1f1;overflow-y: scroll;overflow-x:hidden">
                   <div data-tab-content="1" role="tabpanel" tabindex="0" id="tab-1" class="tabs__content tabs__content--current">
                     <div class="container">
                     <div class="row" >
-                      <div class="col-md-2"></div>
-                      <div class="col-md-8" style="text-align: left;">
-                      <!-- method ="POST" action="/UDPT-PROJECT/questions/create" -->
-                      <form method ="POST" action="/UDPT-PROJECT/questions/create">
-                        <H3>Đặt câu hỏi</H3>
+                      
+                      <div class="col-md-11" style="text-align: left;">
+                      <div style="text-align: center;"> 
+                      <b style="font-size: 35px;">Đặt câu hỏi</b>
+                      </div>
+                        
                         <div class="form-group">
-                          <label for="exampleFormControlTextarea1">Câu hỏi</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" name= "exampleFormControlTextarea1" rows="3"></textarea>
+                          <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu hỏi</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" name= "exampleFormControlTextarea1" rows="8"></textarea>
                         </div>
                         <div class="row"> 
                           <div class="form-group col-md-4">
-                            <label for="exampleFormControlSelect1">Danh mục câu hỏi</label>
+                            <label for="exampleFormControlSelect1" style="font-size: 20px;">Danh mục câu hỏi</label>
                             <select class="form-control" id="exampleFormControlSelect1" name="exampleFormControlSelect1">
                               <?php if (isset($category) && count($category) > 0) {
                               foreach ($category as $categorys) { 
@@ -128,17 +129,15 @@
                             </select>
                           </div>
                           <div class="form-group col-md-8">
-                            <label for="exampleFormControlSelect1">Gắn tag</label>
+                            <label for="exampleFormControlSelect1" style="font-size: 20px;">Gắn tag</label>
                             <div></div>
                             <input type="text"  data-role="tagsinput" placeholder="Add tags" name="tag" id="tag"/>
                           </div>
-                          <input type="text"  class="hidden" name ="link"  id="link"/>
-                          <input type="text"  class="hidden" name ="tags" id="tags"/>
                         </div>
+
                         <div style="text-align: right;">
                           <button type="submit" class="btn btn-primary" id="createQues">Đăng câu hỏi</button>
                         </div>
-                      </form>
                     </div>
                   </div>
                
@@ -146,27 +145,65 @@
                   </div>
                   <div data-tab-content="2" role="tabpanel" tabindex="0" id="tab-2" class="tabs__content" hidden style="text-align: left;">
                   <div class="row">
-                  <div class="col-md-1"></div>
-                  <div class="col-md-10">
+                  
+                  <div class="col-md-12">
                   <div class="row">
-                    <div class="col-sm-6">
-                      <div class="card">
-                        <div class="card-body">
-                          <h5 class="card-title">Special title treatment</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <?php if (isset($question) && count($question) > 0) {
+                    foreach ($question as $ques) { ?>
+                    <div class="col-sm-6" style="margin-top:1%; ">
+                      <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
+                        <div class="card-body" style="padding:1%">
+                          <div class="row">
+                            <div class="col-md-1">
+                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />  
+                            </div>
+                            <div class="col-md-9" >
+                            <b style="font-size: 20px;">
+                            <?php echo $_SESSION['name']; ?>
+                            </b>
+                            <P><?php echo $ques["created"]?> <span style="color: <?php if ($ques["mod_id"] != null) { echo "#01a324";}else{echo "#e70303";}?>;"> <?php if ($ques["mod_id"] != null) { echo "(Đã duyệt)";}else{echo "(Chờ duyệt)";}?> </span></P>
+                            <b><?php echo $ques["category_id"]?> </b>
+                            <p ></p>
+                            </div>
+                            <div class="col-md-2" style="text-align: right;font-size: 15px;">
+                            <span  class="glyphicon glyphicon-edit"></span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                            <p><?php echo $ques["description"]?></p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-1" ></div>
+                            <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
+                            foreach ($ques["tags"] as $tag) { ?> 
+                              <div class="col-md-1"  style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"];?></div>                      
+                               <?php
+                                }
+                              }
+                              ?> 
+                          </div>
+                          <div class="row">
+                            <div class="col-md-9"></div>
+                            <div >
+                            <p style="text-align: center;font-size: 15px;"><?php echo $ques["likes"]?><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up"></span>20 <span  class="glyphicon glyphicon-comment"></span></p>
+                            </div>
+                          </div>
                         </div>
+
                       </div>
                     </div>
-                    <div class="col-sm-6">
-                      <div class="card">
-                        <div class="card-body">
-                          <h5 class="card-title">Special title treatment</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div>
-                    </div>
+                    <?php
+                      }
+                    }
+                    else
+                    {
+                      echo "Bạn chưa đặt câu hỏi nào hết!";
+                    } ?>
+
+                    
                   </div>
                   </div>
                   </div>
@@ -364,11 +401,52 @@ $(document).ready(function(){
   });
 
   $("#createQues").on("click", function(e){  
-    var a = $('#tag').val();
-    $('#tags').val(a);
-    $('#link').val("/UDPT-project/<?php echo $_GET["url"]?>")
-    alert($('#link').val())
+    $("#loadMe").modal({
+      backdrop: "static", //remove ability to close modal with click
+      keyboard: false, //remove option to close with keyboard
+      show: true //Display loader!
+    });
+    var datas = {
+      "category_id":$('#exampleFormControlSelect1').val(),
+      "description":$('#exampleFormControlTextarea1').val(),
+      "tags":$('#tag').val(),
+      "owner_id":"<?php echo $_SESSION["user_id"]?>",
+      "jwt": "<?php echo $_SESSION["jwt"]?>"
+    }
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        type : "POST",
+        url  : "<?php echo (_API_ROOT.'question/create.php')?>",
+        dataType: "json",
+        success:function(result, status, xhr){
+          $("#loadMe").modal("hide");
+          alert("Đăng câu hỏi thành công");
+          $('#exampleFormControlSelect1').val("");
+          $('#exampleFormControlTextarea1').val("");
+          $('#tag').val("");
+        },
+        error: function (xhr, status, error) {
+          if(xhr.status == 401)
+          {
+            $("#loadMe").modal("hide");
+            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
+          }
+          else
+          {
+            $("#loadMe").modal("hide");
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+          }
+          
+        },
+        data : JSON.stringify(datas)
+      });  
+                
+            
+
+
   });
+
 
 });
 

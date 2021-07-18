@@ -45,4 +45,32 @@ class notification_admin
 
       return 0;
   }
+  function create()
+  {
+    $query = "INSERT INTO
+                    " . $this->table_name . " 
+                set
+                noti_id = :noti_id,
+                admin_id = :admin_id,
+                status = :status";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->noti_id = htmlspecialchars(strip_tags($this->noti_id));
+        $this->admin_id = htmlspecialchars(strip_tags($this->admin_id));
+        $this->status = htmlspecialchars(strip_tags($this->status));
+        
+        // bind values
+        $stmt->bindParam(":noti_id", $this->noti_id, PDO::PARAM_INT);
+        $stmt->bindParam(":admin_id", $this->admin_id, PDO::PARAM_INT);
+        $stmt->bindParam(":status", $this->status, PDO::PARAM_INT);
+
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+        }
+
+        return 0;
+  }
 }

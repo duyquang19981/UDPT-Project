@@ -4,7 +4,7 @@
     <h2 class="active"> OTP</h2>
  
     <!-- Login Form -->
-    <form method="POST" action="/UDPT-PROJECT/forgotpass/otppost"> 
+    <form method="POST" action="<?php echo _WEB_ROOT ?>/forgotpass/otppost"> 
     <p class="invalidFeedback" style="color:red">
         <?php if(isset($data)){echo $data["messenger"];}?>
       </p>
@@ -17,7 +17,7 @@
     
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="/UDPT-PROJECT/login">Đăng nhập?</a>
+      <a class="underlineHover" href="<?php echo _WEB_ROOT ?>/login">Đăng nhập?</a>
     </div>
 
   </div>

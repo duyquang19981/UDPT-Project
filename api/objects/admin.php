@@ -163,4 +163,14 @@ class admin
 
         return 0;
     }
+
+    function get_id_admin_noti()
+    {
+        $query = "SELECT id_admin FROM 
+                    " . $this->table_name. " where notification_yes = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+        
+    }
 }

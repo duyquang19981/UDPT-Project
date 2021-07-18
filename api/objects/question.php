@@ -239,6 +239,19 @@ class question
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        return $row['id_question'];;
+        return $row['id_question'];
+    }
+
+    function getlist($id)
+    {
+        $query = "SELECT * FROM 
+                    " . $this->table_name. " where owner_id = " .$id. " ORDER BY
+                    mod_id ASC,
+                    created ASC" ;
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->execute();
+        return $stmt;
+        
     }
 }

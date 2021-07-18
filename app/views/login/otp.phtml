@@ -4,7 +4,7 @@
     <h2 class="active"> OTP</h2>
  
     <!-- Login Form -->
-    <form method="POST" action="/UDPT-PROJECT/signup/otppost"> 
+    <form method="POST" action="<?php echo _WEB_ROOT ?>/signup/otppost"> 
     <p class="invalidFeedback" style="color:red">
         <?php if(isset($data)){echo $data["messenger"];}?>
       </p>
@@ -12,12 +12,13 @@
       <input type="submit" class="fadeIn fourth" value="Tiếp tục" name="save">
       <?php echo "<p id=\"email\" style=\"color:white\">".$_SESSION['user']["email"]."</p> "
     ?>
+    <p><?php echo $_SESSION['otp']?></p>
     </form>
     <p class="w3-center"><button class="w3-btn w3-green w3-round" style="width:40%;height:40px" id="sendOtp">Resend OTP</button></p>
     
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="/UDPT-PROJECT/login">Đăng nhập?</a>
+      <a class="underlineHover" href="<?php echo _WEB_ROOT ?>/login">Đăng nhập?</a>
     </div>
 
   </div>
@@ -36,7 +37,6 @@ $(document).ready(function(){
     {
       email: "<?php echo $_SESSION['email']?>",
       otp: "<?php  $rndno=rand(100000, 999999);
-        $_SESSION["otp"] = $rndno;
         echo $rndno;
       ?>"
     }

@@ -107,4 +107,15 @@ class category_ques
 
         return 0;
     }
+
+    function getNamebyid($id)
+    {
+        $query = "SELECT name FROM 
+                    " . $this->table_name. " where category_id = ".$id ;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['name'];
+        
+    }
 }

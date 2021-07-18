@@ -37,7 +37,20 @@ class userProfileController
 
                             $response2 = $callapi->callAPI('GET', _API_ROOT.'category/read-all.php', null);
                             $category = $response2["data"]["res"]["categories"];
-                            // print_r($category);
+                            
+                            $dataa = [
+                                "owner_id" => $user["id"]
+                            ];
+                            $response3 = $callapi->callAPI('POST', _API_ROOT.'question/get_by_owner_id.php', json_encode($dataa));
+                            if(isset($response3["data"]["res"]))
+                            {
+                                $question = $response3["data"]["res"];
+                            }
+                            else
+                            {
+                                $question = null; 
+                            }
+
                             $VIEW = "./app/views/user/userProfile.phtml";
                             require("./app/layouts/questionLayout.phtml");
                         }

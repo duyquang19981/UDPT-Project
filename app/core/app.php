@@ -143,11 +143,10 @@ class app
                     $this->Controller = new $this->Controller;
                     if (isset($link[1])) {
                         if (method_exists($this->Controller, $link[1])) {
-                            $this->action = $link[1];
+                            $this->Action = $link[1];
                         }
                         unset($link[1]);
                     }
-
                     $this->Params = ($link && count($link) == 2) ? array_values($link) : [-1, 1];
                     call_user_func_array([$this->Controller, $this->Action], $this->Params);
                     break;

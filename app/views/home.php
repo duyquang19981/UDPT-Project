@@ -93,11 +93,13 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <?php
-                    for ($x = 1; $x <= $data["TotalPages"]; $x++) {
-                        if ($x == $data["Page"]) {
-                            echo ' <li class="active " ><a>' . $x . ' </a></li>';
-                        } else {
-                            echo ' <li><a href="' . _WEB_ROOT . '/Home/index/' . $data["cateActive"] . '/' . $x . '">' . $x . ' </a></li>';
+                    if (isset($data["TotalPages"])) {
+                        for ($x = 1; $x <= $data["TotalPages"]; $x++) {
+                            if ($x == $data["Page"]) {
+                                echo ' <li class="active " ><a>' . $x . ' </a></li>';
+                            } else {
+                                echo ' <li><a href="' . _WEB_ROOT . '/Home/index/' . $data["cateActive"] . '/' . $x . '">' . $x . ' </a></li>';
+                            }
                         }
                     }
                     ?>

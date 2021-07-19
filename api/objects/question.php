@@ -107,6 +107,24 @@ class question
         return 0;
     }
 
+    function readAcceptedAndNotDeleted()
+    {
+        //for user site
+        $query = "SELECT * FROM 
+            " . $this->table_name .
+            " WHERE status = 1" .
+            " AND mod_id is not NULL" .
+            " ORDER BY `CREATED` DESC";
+
+        $stmt = $this->conn->prepare($query);
+        // bind values
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
     function countByCategoryId()
     {
         //count total questions by cate id

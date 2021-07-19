@@ -75,6 +75,10 @@ class Home extends Controller
     } else {
       $keyword = '';
     }
+    if (empty(trim($keyword))) {
+      header('Location:' . _WEB_ROOT . '/Home');
+      return;
+    }
     $callapi = new callapi();
     //get category
     $url =  _API_ROOT . "/category/read-all.php";

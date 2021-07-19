@@ -5,7 +5,7 @@ class ForgotpassController
     public function index()
     { 
         $VIEW = "./app/views/forgotpass/forgotpass.phtml";
-        require("./app/layouts/questionLayout.phtml");
+        require("./app/layouts/loginLayout.phtml");
     }
     
     
@@ -33,7 +33,7 @@ class ForgotpassController
             ];
             
             $VIEW = "./app/views/forgotpass/forgotpass.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
         else
         {
@@ -42,7 +42,7 @@ class ForgotpassController
             ];
             
             $VIEW = "./app/views/forgotpass/otp.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
     }
 
@@ -59,7 +59,7 @@ class ForgotpassController
                     unset($_SESSION['otp']);
 
                     $VIEW = "./app/views/forgotpass/changepass.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
             
                 
               }
@@ -69,7 +69,7 @@ class ForgotpassController
                         ];
                  
                 $VIEW = "./app/views/login/login.phtml";
-                require("./app/layouts/questionLayout.phtml");
+                require("./app/layouts/loginLayout.phtml");
               };
 
         }
@@ -80,7 +80,7 @@ class ForgotpassController
             ];
              
             $VIEW = "./app/views/login/otp.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
     }
     public function changepass()
@@ -112,7 +112,7 @@ class ForgotpassController
                         ];
                         
                         $VIEW = "./app/views/forgotpass/forgotpass.phtml";
-                        require("./app/layouts/questionLayout.phtml");
+                        require("./app/layouts/loginLayout.phtml");
                     }
                     else
                     {   
@@ -121,7 +121,7 @@ class ForgotpassController
                         ];
                         
                         $VIEW = "./app/views/login/login.phtml";
-                        require("./app/layouts/questionLayout.phtml");
+                        require("./app/layouts/loginLayout.phtml");
                     }
                 }
                 else
@@ -130,7 +130,7 @@ class ForgotpassController
                         "messenger" => "Repassword không giống password"
                     ];
                     $VIEW = "./app/views/forgotpass/changepass.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
                 }
                 
             }
@@ -140,7 +140,7 @@ class ForgotpassController
                     "messenger" => "Xin nhập Repassword "
                 ];
                 $VIEW = "./app/views/forgotpass/changepass.phtml";
-                require("./app/layouts/questionLayout.phtml");
+                require("./app/layouts/loginLayout.phtml");
             }
         }
         else
@@ -149,7 +149,7 @@ class ForgotpassController
                 "messenger" => "Xin nhập Password"
             ];
             $VIEW = "./app/views/forgotpass/forgotpass.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
     }
 }

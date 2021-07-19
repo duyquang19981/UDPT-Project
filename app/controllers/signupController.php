@@ -6,7 +6,7 @@ class SignupController
     {   
          
         $VIEW = "./app/views/login/signup.phtml";
-        require("./app/layouts/questionLayout.phtml");
+        require("./app/layouts/loginLayout.phtml");
     }
 
     public function signuppost()
@@ -47,7 +47,7 @@ class SignupController
                             ];
                              
                             $VIEW = "./app/views/login/signup.phtml";
-                            require("./app/layouts/questionLayout.phtml");
+                            require("./app/layouts/loginLayout.phtml");
                         }else
                         {
                             // gửi otp qua email
@@ -60,7 +60,7 @@ class SignupController
                                 ];
                                 
                                 $VIEW = "./app/views/login/signup.phtml";
-                                require("./app/layouts/questionLayout.phtml");
+                                require("./app/layouts/loginLayout.phtml");
                             }
                             else
                             {
@@ -69,7 +69,7 @@ class SignupController
                                 ];
                                 
                                 $VIEW = "./app/views/login/otp.phtml";
-                                require("./app/layouts/questionLayout.phtml");
+                                require("./app/layouts/loginLayout.phtml");
                             }
                             break;
                         }
@@ -81,7 +81,7 @@ class SignupController
                                 ];
                          
                         $VIEW = "./app/views/login/login.phtml";
-                        require("./app/layouts/questionLayout.phtml");
+                        require("./app/layouts/loginLayout.phtml");
                         break;
                     };
                 }
@@ -93,7 +93,7 @@ class SignupController
                     ];
                      
                     $VIEW = "./app/views/login/signup.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
                     break;
                 }
             // trả lỗi repassword sai
@@ -104,7 +104,7 @@ class SignupController
                     ];
                      
                     $VIEW = "./app/views/login/signup.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
                     break;
                 }
             // trả lỗi email sai cú pháp
@@ -116,7 +116,7 @@ class SignupController
                     ];
                      
                     $VIEW = "./app/views/login/signup.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
                 }
         }
         
@@ -138,7 +138,7 @@ class SignupController
                     ];
                  
                 $VIEW = "./app/views/login/signup.phtml";
-                require("./app/layouts/questionLayout.phtml");
+                require("./app/layouts/loginLayout.phtml");
                 }else
                 {
                     unset($_SESSION['user']);
@@ -153,7 +153,7 @@ class SignupController
                         ];
                  
                 $VIEW = "./app/views/login/login.phtml";
-                require("./app/layouts/questionLayout.phtml");
+                require("./app/layouts/loginLayout.phtml");
               };
 
         }
@@ -164,7 +164,7 @@ class SignupController
             ];
              
             $VIEW = "./app/views/login/otp.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
     }
 

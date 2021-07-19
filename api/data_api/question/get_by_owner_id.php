@@ -2,7 +2,7 @@
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -13,6 +13,7 @@ include_once '../../config/database.php';
 include_once '../../objects/question.php';
 include_once '../../objects/tag.php';
 include_once '../../objects/category_ques.php';
+include_once '../../objects/answer.php';
 $database = new Database();
 $db = $database->getConnection();
 
@@ -68,6 +69,10 @@ if ($num > 0) {
     $cate = new category_ques($db);
     $questions[$i]["category_id"] = $cate ->getNamebyid($questions[$i]["category_id"]);
 
+    $answer = new answer($db);
+    $answer->id_question = $questions[$i]["id_question"];
+    $stmt1 =  $answer->readByQuesID();
+    $questions[$i]["comment"] = $stmt1->rowCount();
   }
 
   $res["result"] = "true";

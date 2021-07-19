@@ -73,7 +73,6 @@ class app{
                             $controller->loginpost();
                             break;
                         default:
-                            echo
                             $controller->index();
                             break;
                     }
@@ -146,10 +145,11 @@ class app{
                         }
                     switch ($this->Action)
                     {
-                        case 'create':
-                            $controller->create();
+                        
+                        default:
+                            $id = $link[1];
+                            $controller->index($id);
                             break;
-                    
                     }
                     }
 

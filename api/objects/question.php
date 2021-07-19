@@ -254,4 +254,39 @@ class question
         return $stmt;
         
     }
+
+    function read_one()
+    {
+        // query to read single record
+        $query = "SELECT
+                    p.id_question, p.owner_id,p.category_id, p.description, p.likes, p.created,p.status
+                FROM
+                    " . $this->table_name . " p
+                WHERE
+                    p.id_question = ? and p.status = 1
+                LIMIT
+                    0,1";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+    
+        // bind id of product to be updated
+        $stmt->bindParam(1, $this->id_question);
+    
+        // execute query
+        $stmt->execute();
+    
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // set values to object properties
+        $this->owner_id = $row['owner_id'];
+        $this->category_id = $row['category_id'];
+        $this->description = $row['description'];
+        $this->likes = $row['likes'];
+        $this->status = $row['status'];
+        $this->created = $row['created'];
+    }
+
+
 }

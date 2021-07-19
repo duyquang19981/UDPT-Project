@@ -19,13 +19,10 @@
 </head>
 
 <body>
-  <?php require_once("./app/views/header-footer/header.phtml"); ?>
-<div class="container-fluid text-center" style="background-color: #cccccc">
-    <div class="row content" style="background-color: #cccccc">
-      <?php require($VIEW); ?>
-    </div>
-</div>
-<?php require_once("./app/views/header-footer/footer.phtml"); ?>
+
+<?php require($VIEW); ?>
+
+
 <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">

@@ -6,7 +6,7 @@ class LoginController
     {   
          
         $VIEW = "./app/views/login/login.phtml";
-        require("./app/layouts/questionLayout.phtml");
+        require("./app/layouts/loginLayout.phtml");
     }
     public function loginpost() {
         require_once "./app/core/callapi.php";
@@ -45,7 +45,7 @@ class LoginController
                     ];
                      
                     $VIEW = "./app/views/login/login.phtml";
-                    require("./app/layouts/questionLayout.phtml");
+                    require("./app/layouts/loginLayout.phtml");
                 };
                 
               }
@@ -55,7 +55,7 @@ class LoginController
                         ];
                  
                 $VIEW = "./app/views/login/login.phtml";
-                require("./app/layouts/questionLayout.phtml");
+                require("./app/layouts/loginLayout.phtml");
               };
         }
         else
@@ -65,7 +65,7 @@ class LoginController
             ];
              
             $VIEW = "./app/views/login/login.phtml";
-            require("./app/layouts/questionLayout.phtml");
+            require("./app/layouts/loginLayout.phtml");
         }
 
     }

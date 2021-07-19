@@ -151,4 +151,20 @@ class answer
 
         return 0;
     }
+
+    function readByQuesID()
+    {
+        $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.status
+         FROM 
+        " . $this->table_name ." as p".
+            " WHERE p.id_question = :id_question and p.status = 1 and p.mod_id is not null";
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+        
+    }
 }

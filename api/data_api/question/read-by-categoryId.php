@@ -11,6 +11,7 @@ include_once '../../config/database.php';
 
 // instantiate product object
 include_once '../../objects/question.php';
+include_once '../../objects/category_ques.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -44,13 +45,15 @@ if (
         "accept_day" => $ACCEPT_DAY,
         "status" => $STATUS,
       );
+      $cate = new category_ques($db);
+      $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
 
       array_push($res["questions"], $ques);
     }
 
     $stmt = $question->countByCategoryId();
-    $total = $stmt->fetch(PDO::FETCH_ASSOC);
-    $res["total"] = $total["COUNT(*)"];
+    $totalQues = $stmt->fetch(PDO::FETCH_ASSOC);
+    $res["totalPages"] = ceil($totalQues["COUNT(*)"] / $question->limit);
 
     $res["result"] = "true";
     http_response_code(201);
@@ -62,7 +65,7 @@ if (
   } else {
     $stmt = $question->countByCategoryId();
     $total = $stmt->fetch(PDO::FETCH_ASSOC);
-    $res["total"] = $total["COUNT(*)"];
+    $res["totalPages"] = $total["COUNT(*)"];
     http_response_code(201);
 
     echo json_encode(array(

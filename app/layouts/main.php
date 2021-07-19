@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/LoginSignup.css">
-  <link rel="stylesheet" type="text/css" href="<?php echo _WEB_ROOT ?>/css/style.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/style.css">
 </head>
 
 <body>

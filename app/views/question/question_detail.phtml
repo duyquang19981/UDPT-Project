@@ -1,9 +1,4 @@
 
-<div class="col-sm-2 sidenav">
-            <p style="background-color:moccasin;"><a href="#"><b>Topic</b></a></p>
-            <p><a href="#"><b>Technology</b></a></p>
-            <p><a href="#"><b>Society</b></a></p>
-        </div>
 <div class="col-sm-7" style="text-align: left; padding:1%">
     <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
         <div class="card-body" style="padding:1%">
@@ -53,7 +48,7 @@
             <?php if (isset($answer) && count($answer) > 0) {
                     foreach ($answer as $ans) { ?> 
             <div>
-                <hr  style="width=30%; size=10px; align=center" />
+                <hr  style="width:30%; size:10px; align:center;" />
                 <div class="row">
                     <div class="col-md-1">
                         <img src="<?php if($ans["user_image"] != null){echo $ans["user_image"];} else{echo _PUBLIC.'/images/User.png';}  ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;">  

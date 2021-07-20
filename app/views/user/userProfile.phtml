@@ -1,4 +1,7 @@
+<?php require_once("./app/views/header-footer/header.phtml"); ?>
 <?php require_once "./app/config.php";?>
+<div class="container-fluid text-center" style="background-color: #cccccc">
+    <div class="row content">
         <div class="col-sm-2 sidenav">
             <p style="background-color:moccasin;"><a href="#"><b>Topic</b></a></p>
             <p><a href="#"><b>Technology</b></a></p>
@@ -148,7 +151,7 @@
                   <?php if (isset($question) && count($question) > 0) {
                     foreach ($question as $ques) { ?>
                     <div class="col-sm-6" style="margin-top:1%; ">
-                      <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
+                      <div class="card" style="width: width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
                         <div class="card-body" style="padding:1%">
                           <div class="row">
                             <div class="col-md-1">
@@ -220,7 +223,8 @@
             </div>
             
         </div>
-  
+    </div>
+</div>
 <!-- Modal change profile -->
 <div class="modal fade" id="changeprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -507,3 +511,4 @@ $(document).ready(function(){
 
 </script>
 
+<?php require_once("./app/views/header-footer/footer.phtml"); ?>

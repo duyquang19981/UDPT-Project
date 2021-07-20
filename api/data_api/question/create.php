@@ -132,6 +132,7 @@ if(
                     $admin_noti = new notification_admin($db);
                     $admin_noti->admin_id =  $user_arr["data"][$i]["id_admin"];
                     $admin_noti->noti_id = $noti_id;
+                    $admin_noti->status = 1;
                     $tenn = $admin_noti->create();
                 }
                 http_response_code(200);

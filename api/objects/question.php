@@ -335,7 +335,7 @@ class question
         $query = "SELECT * FROM 
                     " . $this->table_name . " where owner_id = " . $id . " ORDER BY
                     mod_id ASC,
-                    created ASC";
+                    created DESC";
         $stmt = $this->conn->prepare($query);
 
         $stmt->execute();
@@ -373,5 +373,14 @@ class question
         $this->likes = $row['likes'];
         $this->status = $row['status'];
         $this->created = $row['created'];
+    }
+
+    function get_maxid_ques($id)
+    {
+        $query = 'SELECT count(id_question) as max FROM ' . $this->table_name.' where id_question = '.$id.' and status = 1 and mod_id is not null' ;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['max'];
     }
 }

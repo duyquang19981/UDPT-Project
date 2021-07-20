@@ -75,6 +75,34 @@ class notification
 
         return 0;
   }
+  function create_ans()
+  {
+    $query = "INSERT INTO
+                    " . $this->table_name . " 
+                set
+                id_answer = :id_answer,
+                content = :content,
+                created = :created";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->created = htmlspecialchars(strip_tags($this->created));
+        
+        // bind values
+        $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
+        $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
+        $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+        }
+
+        return 0;
+  }
   function getid()
   {
     $query= "SELECT id_noti 
@@ -93,6 +121,35 @@ class notification
         
         // bind values
         $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+        $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
+        $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+
+        $stmt->execute();
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $row['id_noti'];
+        
+  }
+
+  function getid_byanser()
+  {
+    $query= "SELECT id_noti 
+                FROM
+                " . $this->table_name . "
+                WHERE
+                id_answer= :id_answer and
+                content = :content and
+                created = :created" ;
+        
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->created = htmlspecialchars(strip_tags($this->created));
+        
+        // bind values
+        $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
         $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
         $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
 

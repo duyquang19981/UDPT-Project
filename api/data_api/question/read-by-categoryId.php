@@ -12,6 +12,7 @@ include_once '../../config/database.php';
 // instantiate product object
 include_once '../../objects/question.php';
 include_once '../../objects/answer.php';
+include_once '../../objects/tag.php';
 include_once '../../objects/category_ques.php';
 
 $database = new Database();
@@ -46,9 +47,22 @@ if (
         "accept_day" => $ACCEPT_DAY,
         "status" => $STATUS,
         "comment" => 0,
+        "tags" =>[]
       );
       $cate = new category_ques($db);
       $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
+
+      $tag = new tag($db);
+      $temp = $tag->getbyquesid($ques["id_question"]);
+      $tags = array();
+      while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
+        $tag = array(
+          "DESCRIPTION" => $DESCRIPTION,
+        );
+
+        array_push($ques["tags"], $tag);
+      }
 
       $answer = new answer($db);
       $answer->id_question =  $ques["id_question"];

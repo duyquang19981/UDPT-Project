@@ -62,18 +62,20 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-1"></div>
-
                                     <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
                                         foreach ($question["tags"] as $tag) { ?>
-                                            <div class="col-md-1" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"]; ?></div>
+                                            <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                <?php echo $tag["DESCRIPTION"]; ?>
+                                            </button>
                                     <?php
                                         }
                                     }
                                     ?>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <button type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem</button>
+                                    <div class="col-md-9" >
+                                        <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem chi tiết >></button>
                                     </div>
                                     <div>
                                         <p style="text-align: center;font-size: 15px;">

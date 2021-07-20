@@ -18,9 +18,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-nav">
                 <div class="header-search w56 fl search-type-2 not-logins" style="margin-top: 7px;margin-left: 30px;">
-                    <form action="/search" class="search search-top" style="border-radius: 5px;">
-                        <input type="search" name="keyword" class="searchTerm" placeholder="Input Search Text" style="box-sizing: unset; padding-right: 50px;height: 30px;padding-left: 5px;width: 480px; border-radius: 5px;">
-                        <button type="submit" class="searchButton" style="height: 33px; width:80px; border-radius: 5px;">
+                    <form method="POST" action="<?php echo _WEB_ROOT . "/Home/Search" ?>" class="search search-top" style="border-radius: 5px;">
+                        <input <?php if (isset($data['Keyword'])) echo "value='" . $data['Keyword'] . "'" ?> type="search" name="keyword" class="searchTerm" placeholder="Input Search Text" style="box-sizing: unset; padding-right: 50px;height: 30px;padding-left: 5px;width: 480px; border-radius: 5px;">
+                        <button name='submitSearch' type="submit" class="searchButton" style="height: 33px; width:80px; border-radius: 5px;">
                             <span style="font-size: medium;">Search</span>
                         </button>
                     </form>

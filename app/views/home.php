@@ -1,0 +1,122 @@
+<div class="container-fluid text-center" style="background-color: #cccccc">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            
+            <h2 style="color: #b55656;">Danh mục câu hỏi</h2>
+            <p <?php
+                if ($data["cateActive"] == -1) {
+                    echo " style=\"background-color:moccasin;\"";
+                }
+                ?>>
+                <a href="<?php echo _WEB_ROOT . "/Home/index/" . "-1/" . $data["Page"]; ?>">
+                    <b>Tất cả</b>
+                </a>
+            </p>
+            <?php
+            if (isset($data["Categories"]) && count($data["Categories"]) > 0) {
+                foreach ($data["Categories"] as $category) {
+                    if ($category["status"] != 0) {
+            ?>
+                        <p <?php
+                            if ($data["cateActive"] == $category["category_id"]) {
+                                echo " style=\"background-color:moccasin;\"";
+                            }
+                            ?>>
+                            <a href="<?php echo _WEB_ROOT . "/Home/index/" . $category["category_id"] . "/" . $data["Page"]; ?>">
+                                <b><?php echo trim($category["name"]); ?></b>
+                            </a>
+                        </p>
+            <?php  }
+                }
+            }
+            ?>
+        </div>
+        <div class="col-sm-7" style=" text-align: left; margin:0px  0px; padding:1% 30px">
+            <div class="row">
+                <!-- DS CAU HOI -->
+                <?php
+                if (isset($data["Questions"]) && count($data["Questions"]) > 0) {
+                    foreach ($data["Questions"] as $question) { ?>
+                        <div class="card question-card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1%; margin-top:2% ">
+                            <div class="card-body" style="padding:1%">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img src="<?php if ($question["image"] != null) {
+                                                        echo $question["image"];
+                                                    } else {
+                                                        echo _PUBLIC . '/images/User.png';
+                                                    }  ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <b style="font-size: 20px;">
+                                            <?php echo $question["username"] ?> </b>
+                                        <p><?php echo $question["created"] ?> </p>
+                                        <b><?php echo $question["category_name"] ?> </b>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <p><?php echo $question["description"] ?></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+
+                                    <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
+                                        foreach ($question["tags"] as $tag) { ?>
+                                            <div class="col-md-1" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"]; ?></div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <button type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem</button>
+                                    </div>
+                                    <div>
+                                        <p style="text-align: center;font-size: 15px;"><?php echo $question["likes"] ?><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up"></span><?php echo $question["answer"] ?> <span class="glyphicon glyphicon-comment"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                <?php }
+                } else {
+                    echo "<h1 style='color:#225f9e;'>Không có kết quả</h1>";
+                }
+                ?>
+            </div>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <?php
+                    if (isset($data["TotalPages"])) {
+                        for ($x = 1; $x <= $data["TotalPages"]; $x++) {
+                            if ($x == $data["Page"]) {
+                                echo ' <li class="active " ><a>' . $x . ' </a></li>';
+                            } else {
+                                echo ' <li><a href="' . _WEB_ROOT . '/Home/index/' . $data["cateActive"] . '/' . $x . '">' . $x . ' </a></li>';
+                            }
+                        }
+                    }
+                    ?>
+
+
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-sm-2" style="text-align: left; padding-top:1%">
+            <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
+                <div class="card-body" style="padding:1%">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

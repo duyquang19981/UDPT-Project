@@ -1,230 +1,229 @@
-<?php require_once("./app/views/header-footer/header.phtml"); ?>
-<?php require_once "./app/config.php";?>
-<div class="container-fluid text-center" style="background-color: #cccccc">
-    <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <p style="background-color:moccasin;"><a href="#"><b>Topic</b></a></p>
-            <p><a href="#"><b>Technology</b></a></p>
-            <p><a href="#"><b>Society</b></a></p>
-        </div>
-        <div class="col-sm-10" style="padding:1%">
-            <div class="row" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%;  background-color: #f1f1f1">
-                <div class="col-md-4">      
-                    <div class="profile-img">
-                    <form id="upfile" method="POST">
-                        <?php if(isset($user["image"])):?>
-                        <img src="<?php echo $user["image"]?>" />
-                        <?php else : ?>
-                          <img src="<?php  echo _PUBLIC ?>/images/User.png" />
-                        <?php endif; ?>
+<?php require_once "./app/config.php"; ?>
+<div class="col-sm-10" style="padding:1%">
+  <div class="row" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%;  background-color: #f1f1f1">
+    <div class="col-md-4">
+      <div class="profile-img">
+        <form id="upfile" method="POST">
+          <?php if (isset($user["image"])) : ?>
+            <img src="<?php echo $user["image"] ?>" />
+          <?php else : ?>
+            <img src="<?php echo _PUBLIC ?>/images/User.png" />
+          <?php endif; ?>
 
-                        <?php if($user["id"] == $_SESSION["user_id"]):?>
-                        <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file"  name="fileupload" id="fileupload"/>
-                        </div>
-                        <input type="hidden"  name="jwt" id="jwt" value="<?php echo $_SESSION["jwt"]?>"/>  
-                        <input type="hidden"  name="id_user" id="id_user" value="<?php echo $_SESSION["user_id"]?>"/>       
-                        <?php endif; ?>
-                    </form>
-                    </div>
-                </div>
-                <div class="col-md-6" style="text-align:left">
-                    <div class="profile-head">
-                        <h3><b>
-                            <?php if(isset($user["name"]))
-                              echo $user["name"]
-                            ?>
-                        </b></h3>
-                        <h6>
-                          <?php  echo $user["created"]?> Join
-                        </h6>
-                        <div class="row" style="margin-top:2%">
-                            <div class="col-md-6"><b>Email : </b>
-                            <?php if(isset($user["email"])):?>
-                            <span><?php echo $user["email"]?></span></div>
-                            <?php else : ?>
-                              <span>Null</span></div>
-                              <?php endif; ?>
-                            <div class="col-md-6"><b>Phone : </b>
-                            <?php if(isset($user["phone"])):?>
-                            <span><?php echo$user["phone"]?></span></div>
-                            <?php else : ?>
-                              <span>Null</span></div>
-                              <?php endif; ?>
-                        </div>
-                        <div class="row" style="margin-top:2%">
-                            <div class="col-md-6"><b>Birth : </b>
-                            <?php if(isset($user["birth"])):?>
-                            <span><?php echo$user["birth"]?></span></div>
-                            <?php else : ?>
-                              <span>Null</span></>
-                              <?php endif; ?>
-                        </div>
-                        <div class="row" style="margin-top:2%">
-                            <div class="col-md-4"><b style="font-size: 18px">Questions : 
-                            <?php if(isset($user["ques"])):?>
-                            <span><?php echo$user["ques"]?></span>
-                            <?php else : ?>
-                              <span>0</span>
-                            <?php endif; ?>
-                            </b></div>
-                            <div class="col-md-4"><b style="font-size: 18px">Aswers : 
-                            <?php if(isset($user["answer"])):?>
-                            <span><?php echo$user["answer"]?></span>
-                            <?php else : ?>
-                              <span>0</span>
-                            <?php endif; ?>
-                            </b></div>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <div class="col-md-2">
-                <?php if($user["id"] == $_SESSION["user_id"]):?>
-                
-                <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changeprofile">Change profile</button>
-                <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changepass">Change Pass</button>
-                <?php endif; ?>
-                </div>
+          <?php if ($user["id"] == $_SESSION["user_id"]) : ?>
+            <div class="file btn btn-lg btn-primary">
+              Change Photo
+              <input type="file" name="fileupload" id="fileupload" />
             </div>
-            <div class="row" style="padding:1%">
-              <div class="tabs">
-                <div class="container">
-                  <div role="tablist" class="tabs__control">
-                    <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Make a Questions</button>
-                    <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Your Questions</button>
-                  </div>
-                </div>
-                <div class="tabs__contents" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%; min-height:500px; max-height:800px; background-color: #f1f1f1;overflow-y: scroll;overflow-x:hidden">
-                  <div data-tab-content="1" role="tabpanel" tabindex="0" id="tab-1" class="tabs__content tabs__content--current">
-                    <div class="container">
-                    <div class="row" >
-                      
-                      <div class="col-md-11" style="text-align: left;">
-                      <div style="text-align: center;"> 
-                      <b style="font-size: 35px;">Đặt câu hỏi</b>
-                      </div>
-                        
-                        <div class="form-group">
-                          <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu hỏi</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" name= "exampleFormControlTextarea1" rows="8"></textarea>
-                        </div>
-                        <div class="row"> 
-                          <div class="form-group col-md-4">
-                            <label for="exampleFormControlSelect1" style="font-size: 20px;">Danh mục câu hỏi</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="exampleFormControlSelect1">
-                              <?php if (isset($category) && count($category) > 0) {
-                              foreach ($category as $categorys) { 
-                              if($categorys["status"] == 1 ) 
-                              {
-                                ?>
-                              <option value="<?php echo $categorys["category_id"]?>"><?php echo $categorys["name"]?></option>
-                              <?php
-                              }
-                            }
-                            
-                            } ?>
-                            </select>
-                          </div>
-                          <div class="form-group col-md-8">
-                            <label for="exampleFormControlSelect1" style="font-size: 20px;">Gắn tag</label>
-                            <div></div>
-                            <input type="text"  data-role="tagsinput" placeholder="Add tags" name="tag" id="tag"/>
-                          </div>
-                        </div>
+            <input type="hidden" name="jwt" id="jwt" value="<?php echo $_SESSION["jwt"] ?>" />
+            <input type="hidden" name="id_user" id="id_user" value="<?php echo $_SESSION["user_id"] ?>" />
+          <?php endif; ?>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6" style="text-align:left">
+      <div class="profile-head">
+        <h3><b>
+            <?php if (isset($user["name"]))
+              echo $user["name"]
+            ?>
+          </b></h3>
+        <h6>
+          <?php echo $user["created"] ?> Join
+        </h6>
+        <div class="row" style="margin-top:2%">
+          <div class="col-md-6"><b>Email : </b>
+            <?php if (isset($user["email"])) : ?>
+              <span><?php echo $user["email"] ?></span>
+          </div>
+        <?php else : ?>
+          <span>Null</span>
+        </div>
+      <?php endif; ?>
+      <div class="col-md-6"><b>Phone : </b>
+        <?php if (isset($user["phone"])) : ?>
+          <span><?php echo $user["phone"] ?></span>
+      </div>
+    <?php else : ?>
+      <span>Null</span>
+      </div>
+    <?php endif; ?>
+    </div>
+    <div class="row" style="margin-top:2%">
+      <div class="col-md-6"><b>Birth : </b>
+        <?php if (isset($user["birth"])) : ?>
+          <span><?php echo $user["birth"] ?></span>
+      </div>
+    <?php else : ?>
+      <span>Null</span></>
+    <?php endif; ?>
+    </div>
+    <div class="row" style="margin-top:2%">
+      <div class="col-md-4"><b style="font-size: 18px">Questions :
+          <?php if (isset($user["ques"])) : ?>
+            <span><?php echo $user["ques"] ?></span>
+          <?php else : ?>
+            <span>0</span>
+          <?php endif; ?>
+        </b></div>
+      <div class="col-md-4"><b style="font-size: 18px">Aswers :
+          <?php if (isset($user["answer"])) : ?>
+            <span><?php echo $user["answer"] ?></span>
+          <?php else : ?>
+            <span>0</span>
+          <?php endif; ?>
+        </b></div>
+    </div>
 
-                        <div style="text-align: right;">
-                          <button type="submit" class="btn btn-primary" id="createQues">Đăng câu hỏi</button>
-                        </div>
-                    </div>
-                  </div>
-               
-                    </div>
-                  </div>
-                  <div data-tab-content="2" role="tabpanel" tabindex="0" id="tab-2" class="tabs__content" hidden style="text-align: left;">
-                  <div class="row">
-                  
-                  <div class="col-md-12">
-                  <div class="row">
-                  <?php if (isset($question) && count($question) > 0) {
-                    foreach ($question as $ques) { ?>
-                    <div class="col-sm-6" style="margin-top:1%; ">
-                      <div class="card" style="width: width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
-                        <div class="card-body" style="padding:1%">
-                          <div class="row">
-                            <div class="col-md-1">
-                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />  
-                            </div>
-                            <div class="col-md-9" >
-                            <b style="font-size: 20px;">
-                            <?php echo $_SESSION['name']; ?>
-                            </b>
-                            <P><?php echo $ques["created"]?> <span style="color: <?php if ($ques["mod_id"] != null) { echo "#01a324";}else{echo "#e70303";}?>;"> <?php if ($ques["mod_id"] != null) { echo "(Đã duyệt)";}else{echo "(Chờ duyệt)";}?> </span></P>
-                            <b><?php echo $ques["category_id"]?> </b>
-                            <p ></p>
-                            </div>
-                            <div class="col-md-2" style="text-align: right;font-size: 15px;">
-                            <?php if ($ques["mod_id"] != null) { 
-                              echo '<a href="'._WEB_ROOT.'/questions/'.$ques["id_question"].'" target="_blank"><span  class="glyphicon glyphicon-info-sign"></span></a>';
-                              }
-                              else
-                              { 
-                              
-                              echo '<span  class="glyphicon glyphicon-edit"></span>';
+  </div>
+</div>
 
-                              }?>
-                            
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-11">
-                            <p><?php echo $ques["description"]?></p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-1" ></div>
-                            <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
-                            foreach ($ques["tags"] as $tag) { ?> 
-                              <div class="col-md-1"  style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"];?></div>                      
-                               <?php
-                                }
-                              }
-                              ?> 
-                          </div>
-                          <div class="row">
-                            <div class="col-md-9"></div>
-                            <div >
-                            <p style="text-align: center;font-size: 15px;"><?php echo $ques["likes"]?><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up"></span><?php echo $ques["comment"]?> <span  class="glyphicon glyphicon-comment"></span></p>
-                            </div>
-                          </div>
-                        </div>
+<div class="col-md-2">
+  <?php if ($user["id"] == $_SESSION["user_id"]) : ?>
 
-                      </div>
-                    </div>
+    <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changeprofile">Change profile</button>
+    <button type="button" class="btn btn-info" style="width:90%;margin:2%" data-toggle="modal" data-target="#changepass">Change Pass</button>
+  <?php endif; ?>
+</div>
+</div>
+<div class="row" style="padding:1%">
+  <div class="tabs">
+    <div class="container">
+      <div role="tablist" class="tabs__control">
+        <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Make a Questions</button>
+        <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Your Questions</button>
+      </div>
+    </div>
+    <div class="tabs__contents" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%; min-height:500px; max-height:800px; background-color: #f1f1f1;overflow-y: scroll;overflow-x:hidden">
+      <div data-tab-content="1" role="tabpanel" tabindex="0" id="tab-1" class="tabs__content tabs__content--current">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-md-11" style="text-align: left;">
+              <div style="text-align: center;">
+                <b style="font-size: 35px;">Đặt câu hỏi</b>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu hỏi</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="exampleFormControlTextarea1" rows="8"></textarea>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="exampleFormControlSelect1" style="font-size: 20px;">Danh mục câu hỏi</label>
+                  <select class="form-control" id="exampleFormControlSelect1" name="exampleFormControlSelect1">
+                    <?php if (isset($category) && count($category) > 0) {
+                      foreach ($category as $categorys) {
+                        if ($categorys["status"] == 1) {
+                    ?>
+                          <option value="<?php echo $categorys["category_id"] ?>"><?php echo $categorys["name"] ?></option>
                     <?php
+                        }
                       }
-                    }
-                    else
-                    {
-                      echo "Bạn chưa đặt câu hỏi nào hết!";
                     } ?>
-
-                    
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-                  
+                  </select>
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="exampleFormControlSelect1" style="font-size: 20px;">Gắn tag</label>
+                  <div></div>
+                  <input type="text" data-role="tagsinput" placeholder="Add tags" name="tag" id="tag" />
                 </div>
               </div>
+
+              <div style="text-align: right;">
+                <button type="submit" class="btn btn-primary" id="createQues">Đăng câu hỏi</button>
+              </div>
             </div>
-            
+          </div>
+
         </div>
+      </div>
+      <div data-tab-content="2" role="tabpanel" tabindex="0" id="tab-2" class="tabs__content" hidden style="text-align: left;">
+        <div class="row">
+          <div style="text-align: center;">
+            <b style="font-size: 35px;">Các câu hỏi của bạn</b>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <?php if (isset($question) && count($question) > 0) {
+                foreach ($question as $ques) { ?>
+                  <div class="col-sm-12" style="margin-top:2%; ">
+                    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
+                      <div class="card-body" style="padding:1%">
+                        <div class="row">
+                          <div class="col-md-1">
+                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                          </div>
+                          <div class="col-md-9">
+                            <b style="font-size: 20px;">
+                              <?php echo $_SESSION['name']; ?>
+                            </b>
+                            <P><?php echo $ques["created"] ?> <span style="color: <?php if ($ques["mod_id"] != null) {
+                                                                                    echo "#01a324";
+                                                                                  } else {
+                                                                                    echo "#e70303";
+                                                                                  } ?>;"> <?php if ($ques["mod_id"] != null) {
+                                                                                            echo "(Đã duyệt)";
+                                                                                          } else {
+                                                                                            echo "(Chờ duyệt)";
+                                                                                          } ?> </span></P>
+                            <b><?php echo $ques["category_id"] ?> </b>
+                            <p></p>
+                          </div>
+                          <div class="col-md-2" style="text-align: right;font-size: 15px;">
+                            <?php if ($ques["mod_id"] != null) {
+                              echo '<a href="' . _WEB_ROOT . '/questions/' . $ques["id_question"] . '" target="_blank"><span  class="glyphicon glyphicon-info-sign"></span></a>';
+                            } else {
+
+                              echo '<span  class="glyphicon glyphicon-edit"></span>';
+                            } ?>
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1"></div>
+                          <div class="col-md-11">
+                            <p><?php echo $ques["description"] ?></p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-1"></div>
+                          <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
+                            foreach ($ques["tags"] as $tag) { ?>
+                              <div class="col-md-1" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"]; ?></div>
+                          <?php
+                            }
+                          }
+                          ?>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-9"></div>
+                          <div>
+                            <p style="text-align: center;font-size: 15px;"><?php echo $ques["likes"] ?><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up"></span><?php echo $ques["comment"] ?> <span class="glyphicon glyphicon-comment"></span></p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+              <?php
+                }
+              } else {
+                echo "Bạn chưa đặt câu hỏi nào hết!";
+              } ?>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
+
+</div>
+
 <!-- Modal change profile -->
 <div class="modal fade" id="changeprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -236,13 +235,13 @@
         </button>
       </div>
       <div class="modal-body" style="text-align: center;">
-      <form method="get">
-      <input type="text"  class="fadeIn third" name="name" placeholder="Name" value="<?php echo $user["name"]?>">
-        <input type="email"  class="fadeIn third" name="email" placeholder="Email" value="<?php echo $user["email"]?>">
-        <input type="date"  class="fadeIn third" name="birth" placeholder="Birth" value="<?php echo $user["birth"]?>">
-        <input type="text"  class="fadeIn third" name="phone" placeholder="Phone" value="<?php echo $user["phone"]?>">
-      </form>
-        </div>
+        <form method="get">
+          <input type="text" class="fadeIn third" name="name" placeholder="Name" value="<?php echo $user["name"] ?>">
+          <input type="email" class="fadeIn third" name="email" placeholder="Email" value="<?php echo $user["email"] ?>">
+          <input type="date" class="fadeIn third" name="birth" placeholder="Birth" value="<?php echo $user["birth"] ?>">
+          <input type="text" class="fadeIn third" name="phone" placeholder="Phone" value="<?php echo $user["phone"] ?>">
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="changeinfo">Save changes</button>
@@ -261,205 +260,188 @@
         </button>
       </div>
       <div class="modal-body" style="text-align: center;">
-        <input type="password"  class="fadeIn third" name="oldpassword" placeholder="Old Password">
+        <input type="password" class="fadeIn third" name="oldpassword" placeholder="Old Password">
         <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-        <input type="password"  class="fadeIn third" name="repassword" placeholder="Repassword">
+        <input type="password" class="fadeIn third" name="repassword" placeholder="Repassword">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="changepasss" >Save changes</button>
+        <button type="button" class="btn btn-primary" id="changepasss">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-  
-  $("#changepasss").on("click", function(e){    
-    e.preventDefault();
-    $("#changepass").modal("hide");
-    $("#loadMe").modal({
-      backdrop: "static", //remove ability to close modal with click
-      keyboard: false, //remove option to close with keyboard
-      show: true //Display loader!
-    });
-    if($("input[name=password]").val() != $("input[name=repassword]").val())
-    {
-      $("#loadMe").modal("hide");
-      alert("Password and Repassword do not match");
-    }
-    else
-    {
-      var pass = {
-      jwt:`<?php echo $_SESSION['jwt']?>`,
-      password:$("input[name=password]").val(),
-      oldpassword:$("input[name=oldpassword]").val(),
-      id_user:<?php echo $_SESSION['user_id']?>
-      };
-      $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        type : "POST",
-        url  : "<?php echo (_API_ROOT.'user_account/changepass.php')?>",
-        dataType: "json",
-        success:function(result, status, xhr){
-          $("input[name=password]").val('')
-          $("input[name=oldpassword]").val('')
-          $("input[name=repassword]").val('')
-          $("#loadMe").modal("hide");
-          alert("Change Password Success");
-          
-        },
-        error: function (xhr, status, error) {
-          if(xhr.status == 401)
-          {
-            $("#loadMe").modal("hide");
-            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
-          }
-          else
-          {
-            $("#loadMe").modal("hide");
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-          }
-          
-        },
-        data : JSON.stringify(pass)
-      });  
-    }
+  $(document).ready(function() {
 
-  });   
-
-  $("#changeinfo").on("click", function(e){   
-    e.preventDefault();
-    $("#changeprofile").modal("hide");
-    $("#loadMe").modal({
-      backdrop: "static", //remove ability to close modal with click
-      keyboard: false, //remove option to close with keyboard
-      show: true //Display loader!
-    });
-    if($("input[name=name]").val() == "" || $("input[name=email]").val()== "" || $("input[name=phone]").val()== "" || $("input[name=birth]").val()== "")
-    {
-      $("#loadMe").modal("hide");
-      alert("Xin vui lòng nhập đủng thông tin");
-    }
-    else
-    {
-      var user = {
-      jwt:`<?php echo $_SESSION['jwt']?>`,
-      email:$("input[name=email]").val(),
-      name:$("input[name=name]").val(),
-      phone:$("input[name=phone]").val(),
-      birth:$("input[name=birth]").val(),
-      id_user:<?php echo $_SESSION['user_id']?>
-      };
-      $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        type : "POST",
-        url  : "<?php echo (_API_ROOT.'user_account/update.php')?>",
-        dataType: "json",
-        success:function(result, status, xhr){
-          $("#loadMe").modal("hide");
-          alert("Change Profile Success");
-          window.location="<?php echo _WEB_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
-        },
-        error: function (xhr, status, error) {
-          if(xhr.status == 401)
-          {
-            $("#loadMe").modal("hide");
-            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
-          }
-          else
-          {
-            $("#loadMe").modal("hide");
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-          }
-          
-        },
-        data : JSON.stringify(user)
-      });  
-    }
-
-  }); 
-
-  $("#fileupload").change(function(e) { 
-    e.preventDefault();
-    $("#loadMe").modal({
-      backdrop: "static", //remove ability to close modal with click
-      keyboard: false, //remove option to close with keyboard
-      show: true //Display loader!
-    });
-    let myForm = document.getElementById('upfile');
-    let formData = new FormData(myForm);
-    $.ajax({
-      url  : "<?php echo (_API_ROOT.'user_account/uploadavata.php')?>",
-      type : "POST",
-      processData: false,
-      contentType: false,
-      success:function(result, status, xhr){
-        var obj = jQuery.parseJSON( result );
+    $("#changepasss").on("click", function(e) {
+      e.preventDefault();
+      $("#changepass").modal("hide");
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      if ($("input[name=password]").val() != $("input[name=repassword]").val()) {
         $("#loadMe").modal("hide");
-        alert("Change Avatar Success");
-        window.location="<?php echo _WEB_ROOT."/userProfile/".$_SESSION['user_id'] ;?>";
-      },
-      error: function (xhr, status, error) {
-        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-      },
-      data : formData,
-    });  
-  });
+        alert("Password and Repassword do not match");
+      } else {
+        var pass = {
+          jwt: `<?php echo $_SESSION['jwt'] ?>`,
+          password: $("input[name=password]").val(),
+          oldpassword: $("input[name=oldpassword]").val(),
+          id_user: <?php echo $_SESSION['user_id'] ?>
+        };
+        $.ajax({
+          contentType: 'application/json; charset=utf-8',
+          type: "POST",
+          url: "<?php echo (_API_ROOT . 'user_account/changepass.php') ?>",
+          dataType: "json",
+          success: function(result, status, xhr) {
+            $("input[name=password]").val('')
+            $("input[name=oldpassword]").val('')
+            $("input[name=repassword]").val('')
+            $("#loadMe").modal("hide");
+            alert("Change Password Success");
 
-  $("#createQues").on("click", function(e){  
-    $("#loadMe").modal({
-      backdrop: "static", //remove ability to close modal with click
-      keyboard: false, //remove option to close with keyboard
-      show: true //Display loader!
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status == 401) {
+              $("#loadMe").modal("hide");
+              alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+              window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+            } else {
+              $("#loadMe").modal("hide");
+              alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+
+          },
+          data: JSON.stringify(pass)
+        });
+      }
+
     });
-    var datas = {
-      "category_id":$('#exampleFormControlSelect1').val(),
-      "description":$('#exampleFormControlTextarea1').val(),
-      "tags":$('#tag').val(),
-      "owner_id":"<?php echo $_SESSION["user_id"]?>",
-      "jwt": "<?php echo $_SESSION["jwt"]?>"
-    }
-    $.ajax({
+
+    $("#changeinfo").on("click", function(e) {
+      e.preventDefault();
+      $("#changeprofile").modal("hide");
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      if ($("input[name=name]").val() == "" || $("input[name=email]").val() == "" || $("input[name=phone]").val() == "" || $("input[name=birth]").val() == "") {
+        $("#loadMe").modal("hide");
+        alert("Xin vui lòng nhập đủng thông tin");
+      } else {
+        var user = {
+          jwt: `<?php echo $_SESSION['jwt'] ?>`,
+          email: $("input[name=email]").val(),
+          name: $("input[name=name]").val(),
+          phone: $("input[name=phone]").val(),
+          birth: $("input[name=birth]").val(),
+          id_user: <?php echo $_SESSION['user_id'] ?>
+        };
+        $.ajax({
+          contentType: 'application/json; charset=utf-8',
+          type: "POST",
+          url: "<?php echo (_API_ROOT . 'user_account/update.php') ?>",
+          dataType: "json",
+          success: function(result, status, xhr) {
+            $("#loadMe").modal("hide");
+            alert("Change Profile Success");
+            window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status == 401) {
+              $("#loadMe").modal("hide");
+              alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+              window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+            } else {
+              $("#loadMe").modal("hide");
+              alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+
+          },
+          data: JSON.stringify(user)
+        });
+      }
+
+    });
+
+    $("#fileupload").change(function(e) {
+      e.preventDefault();
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      let myForm = document.getElementById('upfile');
+      let formData = new FormData(myForm);
+      $.ajax({
+        url: "<?php echo (_API_ROOT . 'user_account/uploadavata.php') ?>",
+        type: "POST",
+        processData: false,
+        contentType: false,
+        success: function(result, status, xhr) {
+          var obj = jQuery.parseJSON(result);
+          $("#loadMe").modal("hide");
+          alert("Change Avatar Success");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+        },
+        error: function(xhr, status, error) {
+          alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+        },
+        data: formData,
+      });
+    });
+
+    $("#createQues").on("click", function(e) {
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      var datas = {
+        "category_id": $('#exampleFormControlSelect1').val(),
+        "description": $('#exampleFormControlTextarea1').val(),
+        "tags": $('#tag').val(),
+        "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+        "jwt": "<?php echo $_SESSION["jwt"] ?>"
+      }
+      $.ajax({
         contentType: 'application/json; charset=utf-8',
-        type : "POST",
-        url  : "<?php echo (_API_ROOT.'question/create.php')?>",
+        type: "POST",
+        url: "<?php echo (_API_ROOT . 'question/create.php') ?>",
         dataType: "json",
-        success:function(result, status, xhr){
+        success: function(result, status, xhr) {
           $("#loadMe").modal("hide");
           alert("Đăng câu hỏi thành công");
           $('#exampleFormControlSelect1').val("");
           $('#exampleFormControlTextarea1').val("");
           $('#tag').val("");
         },
-        error: function (xhr, status, error) {
-          if(xhr.status == 401)
-          {
+        error: function(xhr, status, error) {
+          if (xhr.status == 401) {
             $("#loadMe").modal("hide");
             alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location="<?php echo _WEB_ROOT."/login/logout" ;?>";
-          }
-          else
-          {
+            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+          } else {
             $("#loadMe").modal("hide");
             alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
           }
-          
+
         },
-        data : JSON.stringify(datas)
-      });  
-                
-            
+        data: JSON.stringify(datas)
+      });
+
+
+
+
+    });
 
 
   });
-
-
-});
-
-
 </script>
 
 <script>
@@ -467,7 +449,7 @@ $(document).ready(function(){
   var tabs_items = document.querySelectorAll(".tabs");
 
   // Loop through all tabs
-  tabs_items.forEach(function (tabs) {
+  tabs_items.forEach(function(tabs) {
     // Set variable
     var controls = tabs.querySelector(".tabs__control");
     var tab = controls.querySelectorAll(".tabs__tab");
@@ -475,40 +457,37 @@ $(document).ready(function(){
     var content = contents.querySelectorAll(".tabs__content");
 
     // Loop through all tabs
-    tab.forEach(function (item) {
-      item.onclick = function (e) {
+    tab.forEach(function(item) {
+      item.onclick = function(e) {
         e.preventDefault();
 
         // Get clicked tab ID
         var tabId = item.dataset.tab;
 
         // Set current tab
-        tab.forEach(function (item) {
+        tab.forEach(function(item) {
           if (tabId == item.dataset.tab) {
             item.classList.add("tabs__tab--current");
-            item.setAttribute('aria-selected','true');
-            item.removeAttribute('tabindex','-1');
+            item.setAttribute('aria-selected', 'true');
+            item.removeAttribute('tabindex', '-1');
           } else {
             item.classList.remove("tabs__tab--current");
-            item.setAttribute('aria-selected','false');
-            item.setAttribute('tabindex','-1');
+            item.setAttribute('aria-selected', 'false');
+            item.setAttribute('tabindex', '-1');
           }
         });
 
         // Set current content
-        content.forEach(function (item) {
+        content.forEach(function(item) {
           if (tabId == item.dataset.tabContent) {
             item.classList.add("tabs__content--current");
-            item.removeAttribute('hidden','hidden');
+            item.removeAttribute('hidden', 'hidden');
           } else {
             item.classList.remove("tabs__content--current");
-            item.setAttribute('hidden','hidden');
+            item.setAttribute('hidden', 'hidden');
           }
         });
       };
     });
   });
-
 </script>
-
-<?php require_once("./app/views/header-footer/footer.phtml"); ?>

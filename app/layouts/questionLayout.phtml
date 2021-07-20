@@ -1,40 +1,74 @@
+<?php
+//get category
+$url =  _API_ROOT . "/category/read-all.php";
+$responseData =  $callapi->callAPI("GET", $url, 0);
+$responseData = $responseData["data"];
+$res = $responseData["res"];
+$categoriesRender = $res["categories"];
+// print_r($categories);
+?>
+
 <!DOCTYPE html>
 <html lang="en" style="background-color: #cccccc">
 
 <head>
-    <title>Question And Answer</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/LoginSignup.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/style.css">
+  <title>Question And Answer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/LoginSignup.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/style.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-      
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
 
 </head>
 
 <body>
   <?php require_once("./app/views/header-footer/header.phtml"); ?>
-<div class="container-fluid text-center" style="background-color: #cccccc">
+  <div class="container-fluid text-center" style="background-color: #cccccc">
     <div class="row content" style="background-color: #cccccc">
+      <div class="col-sm-2 sidenav">
+        <h2 style="color: #b55656;">Danh mục câu hỏi</h2>
+        <p>
+          <a href="<?php echo _WEB_ROOT . "/Home/index/" . "-1/1" ?>">
+            <b>Tất cả</b>
+          </a>
+        </p>
+        <?php
+        if (isset($categoriesRender) && count($categoriesRender) > 0) {
+          for ($i = 0; $i < count($categoriesRender); $i++) {
+            if ($categoriesRender[$i]["status"] != 0) {
+        ?>
+              <p>
+                <a href="<?php echo _WEB_ROOT . "/Home/index/" .$categoriesRender[$i]["category_id"] . "/1" ?>">
+                  <b><?php echo trim($categoriesRender[$i]["name"]); ?></b>
+                </a>
+              </p>
+        <?php  }
+          }
+        }
+        ?>
+      </div>
       <?php require($VIEW); ?>
     </div>
-</div>
-<?php require_once("./app/views/header-footer/footer.phtml"); ?>
-<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-body row" >
-        <div id="loader" ></div>
-        <div style="margin-left:5%; font-size: 30px;">Loading..........</div> 
+  </div>
+  <?php require_once("./app/views/header-footer/footer.phtml"); ?>
+  <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body row">
+          <div id="loader"></div>
+          <div style="margin-left:5%; font-size: 30px;">Loading..........</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
 </body>
+
 </html>

@@ -29,6 +29,7 @@ class QuestionsController
         else
         {
             $question["anser"] = 0;
+            $answer = null;
         }
         
 

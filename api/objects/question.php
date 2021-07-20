@@ -1,7 +1,7 @@
 <?php
 class question
 {
- 
+
     // database connection and table name
     private $conn;
     private $table_name = "question";
@@ -16,6 +16,9 @@ class question
     public $created;
     public $accept_day;
     public $status;
+    // for pagination
+    public $limit = 8;     //the number of questions per page
+    public $offset = 0;
 
     // constructor with $db as database connection
     public function __construct($db)
@@ -58,8 +61,10 @@ class question
 
     function readAll()
     {
+        //for admin site
         $query = "SELECT * FROM 
-                    " . $this->table_name;
+                    " . $this->table_name .
+            " ORDER BY `CREATED` DESC";
         $stmt = $this->conn->prepare($query);
         if ($stmt->execute()) {
             return $stmt;
@@ -67,6 +72,89 @@ class question
 
         return 0;
     }
+
+    function readByCategoryId()
+    {
+        //for user site
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        if ($this->category_id != -1) {
+            $query = "SELECT * FROM 
+            " . $this->table_name .
+                " WHERE category_id = :category_id" .
+                " AND status = 1" .
+                " AND mod_id is not NULL" .
+                " ORDER BY `CREATED` DESC" .
+                " LIMIT " . $this->limit .
+                " OFFSET " . $this->offset;
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        } else {
+            $query = "SELECT * FROM 
+            " . $this->table_name .
+                " WHERE status = 1" .
+                " AND mod_id is not NULL" .
+                " ORDER BY `CREATED` DESC" .
+                " LIMIT " . $this->limit .
+                " OFFSET " . $this->offset;
+            $stmt = $this->conn->prepare($query);
+        }
+        // bind values
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
+    function readAcceptedAndNotDeleted()
+    {
+        //for user site
+        $query = "SELECT * FROM 
+            " . $this->table_name .
+            " WHERE status = 1" .
+            " AND mod_id is not NULL" .
+            " ORDER BY `CREATED` DESC";
+
+        $stmt = $this->conn->prepare($query);
+        // bind values
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
+    function countByCategoryId()
+    {
+        //count total questions by cate id
+        //for user site
+
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        if ($this->category_id != -1) {
+            $query = "SELECT COUNT(*) FROM 
+            " . $this->table_name .
+                " WHERE category_id = :category_id" .
+                " AND status = 1" .
+                " AND mod_id is not NULL";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        } else {
+            $query = "SELECT COUNT(*) FROM 
+            " . $this->table_name .
+                " WHERE status = 1" .
+                " AND mod_id is not NULL";
+            $stmt = $this->conn->prepare($query);
+        }
+        // bind values
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
+    }
+
 
     function update()
     {
@@ -235,24 +323,23 @@ class question
 
         // execute query
         $stmt->execute();
-    
+
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         return $row['id_question'];
     }
 
     function getlist($id)
     {
         $query = "SELECT * FROM 
-                    " . $this->table_name. " where owner_id = " .$id. " ORDER BY
+                    " . $this->table_name . " where owner_id = " . $id . " ORDER BY
                     mod_id ASC,
-                    created ASC" ;
+                    created ASC";
         $stmt = $this->conn->prepare($query);
-        
+
         $stmt->execute();
         return $stmt;
-        
     }
 
     function read_one()
@@ -266,19 +353,19 @@ class question
                     p.id_question = ? and p.status = 1
                 LIMIT
                     0,1";
-    
+
         // prepare query statement
-        $stmt = $this->conn->prepare( $query );
-    
+        $stmt = $this->conn->prepare($query);
+
         // bind id of product to be updated
         $stmt->bindParam(1, $this->id_question);
-    
+
         // execute query
         $stmt->execute();
-    
+
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         // set values to object properties
         $this->owner_id = $row['owner_id'];
         $this->category_id = $row['category_id'];
@@ -287,6 +374,4 @@ class question
         $this->status = $row['status'];
         $this->created = $row['created'];
     }
-
-
 }

@@ -99,8 +99,12 @@ class User_account extends Controller
     }
     else {
       $callapi = new callapi();
-      $url =  _API_ROOT . "/user_account/search.php?name=".$keyword."&page=".$page;
-      $responseData =  $callapi->callAPI("GET", $url, 0);
+      $data = [
+        "name" => $keyword,
+        "page" => $page
+      ];
+      $url =  _API_ROOT . "/user_account/search.php";
+      $responseData =  $callapi->callAPI("POST", $url, json_encode($data));
       $responseData = $responseData["data"];
       $res = $responseData;
       if ($res!= "false" && isset($res["data"])) 

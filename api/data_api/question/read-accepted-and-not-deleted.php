@@ -11,6 +11,7 @@ include_once '../../config/database.php';
 
 // instantiate product object
 include_once '../../objects/question.php';
+include_once '../../objects/answer.php';
 include_once '../../objects/category_ques.php';
 
 $database = new Database();
@@ -40,19 +41,23 @@ if ($num > 0) {
     );
     $cate = new category_ques($db);
     $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
+    $answer = new answer($db);
+    $answer->id_question =  $ques["id_question"];
+    $stmt1 =  $answer->readByQuesID();
+    $ques["comment"] = $stmt1->rowCount();
 
     array_push($res["questions"], $ques);
   }
 
   $res["result"] = "true";
-  http_response_code(201);
+  http_response_code(200);
   // tell the user
   echo json_encode(array(
     "message" => "done",
     "res" => $res
   ));
 } else {
-  http_response_code(201);
+  http_response_code(200);
 
   echo json_encode(array(
     "message" => "No record",

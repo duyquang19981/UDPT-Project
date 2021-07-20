@@ -11,6 +11,7 @@ include_once '../../config/database.php';
 
 // instantiate product object
 include_once '../../objects/question.php';
+include_once '../../objects/answer.php';
 include_once '../../objects/category_ques.php';
 
 $database = new Database();
@@ -44,9 +45,15 @@ if (
         "created" => $CREATED,
         "accept_day" => $ACCEPT_DAY,
         "status" => $STATUS,
+        "comment" => 0,
       );
       $cate = new category_ques($db);
       $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
+
+      $answer = new answer($db);
+      $answer->id_question =  $ques["id_question"];
+      $stmt1 =  $answer->readByQuesID();
+      $ques["comment"] = $stmt1->rowCount();
 
       array_push($res["questions"], $ques);
     }

@@ -188,7 +188,9 @@
                           <div class="col-md-1"></div>
                           <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
                             foreach ($ques["tags"] as $tag) { ?>
-                              <div class="col-md-1" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"]; ?></div>
+                              <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                <?php echo $tag["DESCRIPTION"]; ?>
+                              </button>
                           <?php
                             }
                           }

@@ -134,4 +134,33 @@ class Home extends Controller
       $data
     );
   }
+
+  public function Ranking($none1, $none2)
+  {
+    $callapi = new callapi();
+
+    //get category
+    $url =  _API_ROOT . "/category/read-all.php";
+    $responseData =  $callapi->callAPI("GET", $url, 0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    $categories = $res["categories"];
+
+
+    $url =  _API_ROOT . "/user_account/ranking-in-month.php";
+    $responseData =  $callapi->callAPI("GET", $url,  0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    $users = $res["user_accounts"];
+
+    $data =  [
+      "View" => "ranking",
+      "Categories" => $categories,
+      "Users" => $users,
+    ];
+    self::layout(
+      "main",
+      $data
+    );
+  }
 }

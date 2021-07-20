@@ -72,8 +72,6 @@ class Home extends Controller
   {
     if (isset($_POST["submitSearch"])) {
       $keyword = $_POST["keyword"];
-    } else {
-      $keyword = '';
     }
     if (empty(trim($keyword))) {
       header('Location:' . _WEB_ROOT . '/Home');

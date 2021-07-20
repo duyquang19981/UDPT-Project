@@ -80,21 +80,29 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-1"></div>
-
                                     <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
                                         foreach ($question["tags"] as $tag) { ?>
-                                            <div class="col-md-1" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%"><?php echo $tag["DESCRIPTION"]; ?></div>
+                                            <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                <?php echo $tag["DESCRIPTION"]; ?>
+                                            </button>
                                     <?php
                                         }
                                     }
                                     ?>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <button type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem</button>
+                                    <div class="col-md-9" >
+                                        <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem chi tiết >></button>
                                     </div>
                                     <div>
-                                        <p style="text-align: center;font-size: 15px;"><?php echo $question["likes"] ?><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up"></span><?php echo $question["answer"] ?> <span class="glyphicon glyphicon-comment"></span></p>
+                                        <p style="text-align: center;font-size: 15px;">
+                                            <span id="likes_of_<?php echo $question["id_question"] ?>"><?php echo $question["likes"] ?></span>
+                                            <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
+                                            </span>
+                                            <span id="answers_of_<?php echo $question["id_question"] ?>"><?php echo $question["comment"] ?></span>
+                                            <span class="glyphicon glyphicon-comment"></span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -168,5 +176,35 @@
         </div>
     </div>
 </div>
-    </div>
-</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        <?php
+        $url =  _API_ROOT . "/question/read-accepted-and-not-deleted.php";
+        ?>
+        setInterval(() => {
+            fetch('<?php echo $url ?>')
+                .then(
+                    function(response) {
+                        if (response.status !== 200) {
+                            console.log('Lỗi, mã lỗi ' + response.status);
+                            return;
+                        }
+                        // parse response data
+                        response.json().then(data => {
+                            var questions = data['res']['questions'];
+                            for (var question of questions) {
+                                $('#likes_of_' + question["id_question"]).text(question['likes']);
+                                $('#answers_of_' + question["id_question"]).text(question['comment']);
+                            }
+                        })
+                    }
+                )
+                .catch(err => {
+                    console.log('Error :-S', err)
+                });
+        }, 3000);
+
+    }, );
+</script>

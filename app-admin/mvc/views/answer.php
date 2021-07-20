@@ -69,7 +69,7 @@
       <div class="table-title">
         <div class="row">
           <div class="col-sm-6">
-            <h2>Bảng <b>Câu hỏi</b></h2>
+            <h2>Bảng <b>Câu trả lời</b></h2>
           </div>
         </div>
       </div>

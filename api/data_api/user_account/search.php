@@ -25,13 +25,17 @@ $utilities = new Utilities();
 $user = new user_account($db);
   
 // get keywords
-$keywords=isset($_GET["name"]) ? $_GET["name"] : "";
-$page=isset($_GET["page"]) ? $_GET["page"] : "";
+// $keywords=isset($_GET["name"]) ? $_GET["name"] : "";
+// $page=isset($_GET["page"]) ? $_GET["page"] : "";
+$data = json_decode(file_get_contents("php://input"));
+$keywords = $data->name;
+$page = $data->page;
+
 if($page <0)
 {
     $page = 1;
 }
-$from_record_num = 1;
+$from_record_num = 0;
 if ($page > 1)
 {
     $from_record_num = ($page-1)*$records_per_page;

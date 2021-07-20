@@ -140,13 +140,15 @@
       </div>
       <div data-tab-content="2" role="tabpanel" tabindex="0" id="tab-2" class="tabs__content" hidden style="text-align: left;">
         <div class="row">
-
+          <div style="text-align: center;">
+            <b style="font-size: 35px;">Các câu hỏi của bạn</b>
+          </div>
           <div class="col-md-12">
             <div class="row">
               <?php if (isset($question) && count($question) > 0) {
                 foreach ($question as $ques) { ?>
-                  <div class="col-sm-6" style="margin-top:1%; ">
-                    <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
+                  <div class="col-sm-12" style="margin-top:2%; ">
+                    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
                       <div class="card-body" style="padding:1%">
                         <div class="row">
                           <div class="col-md-1">
@@ -423,9 +425,7 @@
         success: function(result, status, xhr) {
           $("#loadMe").modal("hide");
           alert("Đăng câu hỏi thành công");
-          $('#exampleFormControlSelect1').val("");
-          $('#exampleFormControlTextarea1').val("");
-          $('#tag').val("");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
         },
         error: function(xhr, status, error) {
           if (xhr.status == 401) {

@@ -26,7 +26,75 @@ class answer
 
     function create()
     {
-        //
+        $query = "INSERT INTO
+        " . $this->table_name . " 
+        set
+        id_question = :id_question,
+        id_user = :id_user,
+        content = :content,
+        referencelink = :referencelink,
+        referenceimage = :referenceimage,
+        created = :created,
+        status = 1 ";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        $this->id_user = htmlspecialchars(strip_tags($this->id_user));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->referencelink = htmlspecialchars(strip_tags($this->referencelink));
+        $this->referenceimage = htmlspecialchars(strip_tags($this->referenceimage));
+        $this->created = htmlspecialchars(strip_tags($this->created));
+        // bind values
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+        $stmt->bindParam(":id_user", $this->id_user, PDO::PARAM_INT);
+        $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
+        $stmt->bindParam(":referencelink", $this->referencelink, PDO::PARAM_STR);
+        $stmt->bindParam(":referenceimage", $this->referenceimage, PDO::PARAM_STR);
+        $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+
+        // execute query
+        if ($stmt->execute()) {
+        return 1;
+        }
+
+        return 0;
+    }
+
+    function getIDafterCreate()
+    {
+        $query = "SELECT id_answer FROM 
+        " . $this->table_name .
+            " WHERE id_question = :id_question and
+            id_user = :id_user and
+            content = :content and
+            referencelink = :referencelink and
+            referenceimage = :referenceimage and
+            created = :created limit 0,1";
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        $this->id_user = htmlspecialchars(strip_tags($this->id_user));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->referencelink = htmlspecialchars(strip_tags($this->referencelink));
+        $this->referenceimage = htmlspecialchars(strip_tags($this->referenceimage));
+        $this->created = htmlspecialchars(strip_tags($this->created));
+        // bind values
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+        $stmt->bindParam(":id_user", $this->id_user, PDO::PARAM_INT);
+        $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
+        $stmt->bindParam(":referencelink", $this->referencelink, PDO::PARAM_STR);
+        $stmt->bindParam(":referenceimage", $this->referenceimage, PDO::PARAM_STR);
+        $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['id_answer'];
     }
 
     function readAll()

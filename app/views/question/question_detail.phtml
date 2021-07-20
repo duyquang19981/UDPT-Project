@@ -1,5 +1,5 @@
 <div class="col-sm-7" style="text-align: left; padding:1%">
-    <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
+    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
         <div class="card-body" style="padding:1%">
             <div class="row">
                 <div class="col-md-1">
@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
-                    <p><?php echo $question["description"] ?></p>
+                    <p style="background-color: #f6f6f6; padding:2%"><?php echo $question["description"] ?></p>
                 </div>
             </div>
             <div class="row">
@@ -49,7 +49,36 @@
             </div>
         </div>
     </div>
-    <div class="card" style="width: calc(100% - 48px);height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow:1%; margin-top:2% ">
+    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1%; margin-top:2% ">
+        <div class="card-body" style="padding:1%">
+            <div style="text-align: left;">
+                <div style="text-align: center;">
+                    <b style="font-size: 30px;">Trả lời câu hỏi</b>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu trả lời</label>
+                    <textarea class="form-control" id="answer_des" name="answer_des" rows="5"></textarea>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlSelect1" style="font-size: 20px;">Link tham khảo</label>
+                        <input type="text" placeholder="Link tham khỏa" name="link_tt" id="link_tt" />
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlSelect1" style="font-size: 20px;">Link hình</label>
+                        <input type="text" placeholder="Link hình" name="link_hinh" id="link_hinh" />
+
+                    </div>
+                </div>
+
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-primary" id="createAns">Đăng câu trả lời</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="width:100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow:1%; margin-top:2% ">
         <div class="card-body" style="padding:1%">
             <div class="row">
                 <b style="font-size: 35px; margin-left:2%">Trả lời</b>
@@ -58,7 +87,7 @@
             <?php if (isset($answer) && count($answer) > 0) {
                 foreach ($answer as $ans) { ?>
                     <div>
-                        <hr style="width:30%; size:10px; align:center;" />
+                        <hr style="width:100%; size:10px; align:center " />
                         <div class="row">
                             <div class="col-md-1">
                                 <img src="<?php if ($ans["user_image"] != null) {
@@ -75,8 +104,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="col-md-10">
-                                <p><?php echo $ans["content"] ?></p>
+                            <div class="col-md-11">
+                                <p style="background-color: #f6f6f6; padding:2%"><?php echo $ans["content"] ?></p>
 
                                 <?php
                                 if ($ans["referencelink"] != null) {
@@ -108,8 +137,46 @@
         </div>
     </div>
 </div>
-<div class="col-sm-3">
+<div class="col-sm-3" style="text-align: left; padding:1%">
+    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
+        <div class="card-body" style="padding:2%">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="/UDPT-PROJECT/image/430945avatar.jpg" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">
+                </div>
+                <div class="col-md-9" style="margin-left:1%">
+                    <div class="row">
+                        <b style="font-size: 16px;">Nguyễn Phạm Anh Tú</b>
+                        <p style="font-size: 12px;">tubato1999@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:2%">
+                <p class="col-md-12" style="font-size: 15px;">Số câu hỏi: </p>
+                <p class="col-md-12" style="font-size: 15px;">Số câu trả lời: </p>
+                <p class="col-md-12" style="font-size: 15px;"></span><b>Thứ hạng (tuần): </b> 500 <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-signal"></p>
+                <p class="col-md-12" style="color:#db9b00;text-align: center;">Hãy tích cực trả lời câu hỏi để tăng thứ hạng của mình bạn nhé!!</p>
+            </div>
+        </div>
+    </div>
 
+    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2% ">
+        <div class="card-body" style="padding:2%">
+            <div style="text-align: center; font-size: 20px;color:#db9b00;">
+                <a href="" style="color:#db9b00;"><B>THÀNH VIÊN HĂNG HÁI NHẤT</B></a>
+            </div>
+
+        </div>
+    </div>
+    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2%">
+        <div class="card-body" style="padding:2%">
+            <div style="text-align: center; font-size: 20px;">
+                <B>Bạn muốn hỏi điều gì?</B>
+            </div>
+            <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -140,5 +207,47 @@
                 });
         }, 3000);
 
-    }, );
+
+        $("#createAns").on("click", function(e) {
+            $("#loadMe").modal({
+                backdrop: "static", //remove ability to close modal with click
+                keyboard: false, //remove option to close with keyboard
+                show: true //Display loader!
+            });
+            var datas = {
+                "id_question": <?php echo $question["id_question"] ?>,
+                "content": $('#answer_des').val(),
+                "referencelink": $('#link_tt').val(),
+                "referenceimage": $('#link_hinh').val(),
+                "id_user": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            }
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'answer/create.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    $("#loadMe").modal("hide");
+                    alert("Gửi câu trả lời thành công. Đợi admin xét duyệt bạn nhé.");
+                    $('#answer_des').val("");
+                    $('#link_tt').val("");
+                    $('#link_hinh').val("");
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(datas)
+            });
+
+        });
+    });
 </script>

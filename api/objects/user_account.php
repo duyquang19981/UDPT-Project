@@ -514,4 +514,13 @@ class user_account{
 
         return 0;
     }
+
+    function get_maxid_user($id)
+    {
+        $query = 'SELECT count(ID_USER) as max FROM ' . $this->table_name.' where ID_USER = '. $id. ' and status = 1';
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['max'];
+    }
 }

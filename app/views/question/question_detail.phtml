@@ -56,7 +56,7 @@
                     
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="exampleFormControlSelect1" style="font-size: 20px;">Link tham khảo</label>
+                        <label for="exampleFormControlSelect1" style="font-size: 20px;">Link hình</label>
                         <input type="text"  placeholder="Link hình" name="link_hinh" id="link_hinh" />
                     
                     </div>
@@ -141,6 +141,8 @@
             <div class="row" style="margin-top:2%">
                 <p class="col-md-12" style="font-size: 15px;">Số câu hỏi: </p>
                 <p class="col-md-12" style="font-size: 15px;">Số câu trả lời: </p>
+                <p class="col-md-12" style="font-size: 15px;"></span><b>Thứ hạng (tuần): </b> 500 <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-signal"></p>
+                <p class="col-md-12" style="color:#db9b00;text-align: center;">Hãy tích cực trả lời câu hỏi để tăng thứ hạng của mình bạn nhé!!</p>
             </div>
         </div>
     </div>
@@ -158,10 +160,12 @@
         <div style="text-align: center; font-size: 20px;">
             <B >Bạn muốn hỏi điều gì?</B>
         </div>
-        <a class="btn-add-ques" style="background-color: #db9b00;padding: 12px;display: block;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%"><span>Đặt câu hỏi</span></a>
+        <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
+        
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -186,7 +190,7 @@
         dataType: "json",
         success: function(result, status, xhr) {
           $("#loadMe").modal("hide");
-          alert("Gửi câu trả lời thành công");
+          alert("Gửi câu trả lời thành công. Đợi admin xét duyệt bạn nhé.");
           $('#answer_des').val("");
           $('#link_tt').val("");
           $('#link_hinh').val("");

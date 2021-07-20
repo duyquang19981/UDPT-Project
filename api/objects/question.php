@@ -216,7 +216,8 @@ class question
     {
         $query = "SELECT * FROM 
         " . $this->table_name .
-            " WHERE accept_day is not NULL AND mod_id is not NULL";
+            " WHERE accept_day is not NULL AND mod_id is not NULL" .
+            " ORDER BY `CREATED` DESC";
         $stmt = $this->conn->prepare($query);
         if ($stmt->execute()) {
             return $stmt;
@@ -229,7 +230,8 @@ class question
     {
         $query = "SELECT * FROM 
         " . $this->table_name .
-            " WHERE accept_day is NULL ";
+            " WHERE accept_day is NULL " .
+            " ORDER BY `CREATED` DESC";
         $stmt = $this->conn->prepare($query);
         if ($stmt->execute()) {
             return $stmt;
@@ -242,7 +244,8 @@ class question
     {
         $query = "SELECT * FROM 
         " . $this->table_name .
-            " WHERE status = 0 ";
+            " WHERE status = 0 " .
+            " ORDER BY `CREATED` DESC";
         $stmt = $this->conn->prepare($query);
         if ($stmt->execute()) {
             return $stmt;

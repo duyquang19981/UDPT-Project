@@ -151,7 +151,7 @@
     </div>
 
     <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2% ">
-        <div class="card-body" style="padding:2%">
+        <div class="card-body" style="padding:2%; ">
             <div style="text-align: center; font-size: 20px;color:#db9b00;">
                 <a href="" style="color:#db9b00;"><B>THÀNH VIÊN HĂNG HÁI NHẤT</B></a>
             </div>

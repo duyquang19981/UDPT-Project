@@ -45,7 +45,6 @@ class QuestionsController
         }
         else
         {
-            
             require("./app/views/error/404.php");
         }
         

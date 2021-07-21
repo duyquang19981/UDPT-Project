@@ -16,6 +16,7 @@ class answer
     public $accept_day;
     public $referencelink;
     public $referenceimage;
+    public $likes;
     public $status;
 
     // constructor with $db as database connection
@@ -35,7 +36,8 @@ class answer
         referencelink = :referencelink,
         referenceimage = :referenceimage,
         created = :created,
-        status = 1 ";
+        status = 1,
+        likes = 0 ";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -226,7 +228,7 @@ class answer
 
     function readByQuesID()
     {
-        $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.status
+        $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.likes,p.status
          FROM 
         " . $this->table_name . " as p" .
             " WHERE p.id_question = :id_question and p.status = 1 and p.mod_id is not null";
@@ -237,5 +239,37 @@ class answer
 
         $stmt->execute();
         return $stmt;
+    }
+
+    function get_like()
+    {
+        $query ="SELECT likes FROM " . $this->table_name." WHERE id_answer = :id_answer limit 0,1";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
+        
+        // bind values
+        $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
+    
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)$row['likes'];
+    }
+
+    function update_like($like)
+    {
+        $query ="UPDATE " . $this->table_name." SET LIKES = ".$like." WHERE id_answer = :id_answer";
+
+        $stmt = $this->conn->prepare($query);
+        $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
+        // bind values
+        $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+            }
+    
+            return 0;
     }
 }

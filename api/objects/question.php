@@ -386,4 +386,37 @@ class question
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['max'];
     }
+
+    function get_like()
+    {
+        $query ="SELECT likes FROM " . $this->table_name." WHERE id_question = :id_question limit 0,1";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        
+        // bind values
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+    
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)$row['likes'];
+    }
+
+    function update_like($like)
+    {
+        $query ="UPDATE " . $this->table_name." SET LIKES = ".$like." WHERE id_question = :id_question";
+
+        $stmt = $this->conn->prepare($query);
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        // bind values
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+            }
+    
+            return 0;
+    }
+
 }

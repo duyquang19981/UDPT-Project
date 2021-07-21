@@ -108,9 +108,10 @@
                                     </div>
                                     <div>
                                         <p style="text-align: center;font-size: 15px;">
+                                            <span style="color:#00000000"><?php echo $question["id_question"]?></span>
                                             <span id="likes_of_<?php echo $question["id_question"] ?>"><?php echo $question["likes"] ?></span>
-                                            <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
-                                            </span>
+                                            <button type="submit" id="like_ans_<?php echo $question["id_question"] ?>"  class="like_ques" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
+                                            </span></button>
                                             <span id="answers_of_<?php echo $question["id_question"] ?>"><?php echo $question["comment"] ?></span>
                                             <span class="glyphicon glyphicon-comment"></span>
                                         </p>
@@ -216,7 +217,56 @@
                 .catch(err => {
                     console.log('Error :-S', err)
                 });
-        }, 3000);
+        }, 100);
+
+        $(".like_ques").on("click", function() {
+            const td = $(this).closest('p').find('span');
+            var i = td[0].innerHTML;
+            var data = {
+                "question_id": i ,
+                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            };
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'likes/create_ques.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    
+                    if(result.check == 1)
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "#db9b00";
+                        var result1 = document.getElementById("likes_of_"+i);
+                        result1.style.color = "#db9b00";
+                    }
+                    else
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "black";
+                        var result1 = document.getElementById("likes_of_"+i);
+                        result1.style.color = "black";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(data)
+            });
+
+        });
+
+
 
     }, );
 </script>

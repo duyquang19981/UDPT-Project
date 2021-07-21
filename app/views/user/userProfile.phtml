@@ -190,9 +190,12 @@
                           <div class="col-md-1"></div>
                           <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
                             foreach ($ques["tags"] as $tag) { ?>
-                              <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
-                                <?php echo $tag["DESCRIPTION"]; ?>
-                              </button>
+                              <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
+                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
+                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                  <?php echo $tag["DESCRIPTION"]; ?>
+                                </button>
+                              </form>
                           <?php
                             }
                           }

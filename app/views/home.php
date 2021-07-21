@@ -52,6 +52,14 @@
                 </div>
                 <!-- DS CAU HOI -->
                 <?php
+                if (isset($data["tagname"])) { ?>
+                    <b style="margin:20px 0; display:block">Tìm kiếm theo Tag:
+                        <b style="color: #3ece1b;"> <?php echo $data["tagname"]; ?></b>
+                    </b>
+                <?php
+                }
+                ?>
+                <?php
                 if (isset($data["Questions"]) && count($data["Questions"]) > 0) {
                     foreach ($data["Questions"] as $question) { ?>
                         <div class="card question-card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1%; margin-top:2% ">
@@ -82,9 +90,12 @@
                                     <div class="col-md-1"></div>
                                     <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
                                         foreach ($question["tags"] as $tag) { ?>
-                                            <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
-                                                <?php echo $tag["DESCRIPTION"]; ?>
-                                            </button>
+                                            <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
+                                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
+                                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                    <?php echo $tag["DESCRIPTION"]; ?>
+                                                </button>
+                                            </form>
                                     <?php
                                         }
                                     }

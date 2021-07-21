@@ -22,7 +22,7 @@ $id = $data->id;
 // read the details of product to be edited
 if($user->get_maxid_ques($id) == 1)
 {
-    $max =[
+    $max =[ 
         "max" => true
     ]  ;
 }

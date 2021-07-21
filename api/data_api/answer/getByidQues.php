@@ -12,6 +12,7 @@ include_once '../../config/database.php';
 // instantiate product object
 include_once '../../objects/answer.php';
 include_once '../../objects/user_account.php';
+include_once '../../objects/likes.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -29,29 +30,30 @@ if ($num > 0) {
     // products array
     $anss = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    // extract row
-    // this will make $row['name'] to
-    // just $name only
-    extract($row);
-    $ans = array(
-    "id_answer" => $id_answer,
-    "id_question" => $id_question,
-    "id_user" => $id_user,
-    "content" => $content,
-    "created" => $created,
-    "referencelink" => $referencelink,
-    "referenceimage" => $referenceimage,
-    "status" => $status,
-    
-    );
-    $user = new user_account($db);
-    $user->id_user = $ans["id_user"];
-    $user->readOne();
+        // extract row
+        // this will make $row['name'] to
+        // just $name only
+        extract($row);
+        $ans = array(
+        "id_answer" => $id_answer,
+        "id_question" => $id_question,
+        "id_user" => $id_user,
+        "content" => $content,
+        "created" => $created,
+        "referencelink" => $referencelink,
+        "referenceimage" => $referenceimage,
+        "likes" => $likes,
+        "status" => $status,
+        
+        );
+        $user = new user_account($db);
+        $user->id_user = $ans["id_user"];
+        $user->readOne();
 
-    $ans["username"] = $user->name;
-    $ans["user_image"] = $user->image;
+        $ans["username"] = $user->name;
+        $ans["user_image"] = $user->image;
 
-      array_push($anss, $ans );
+        array_push($anss, $ans );
     }
 
 

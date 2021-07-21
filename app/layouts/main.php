@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE >
+<html lang="en" html style="background-color: #cccccc">
 
 <head>
   <title>Questions And Answers</title>
@@ -34,7 +34,7 @@
   </div>
 </div>
   <!-- Modal make a question -->
-  <div class="modal fade" id="makequestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="makequestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -83,17 +83,17 @@
     </div>
   </div>
 </div>
-  <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-body row">
-          <div id="loader"></div>
-          <div style="margin-left:5%; font-size: 30px;">Loading..........</div>
-        </div>
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body row">
+        <div id="loader"></div>
+        <div style="margin-left:5%; font-size: 30px;">Loading..........</div>
       </div>
     </div>
   </div>
-  <script type="text/javascript">
+</div>
+<script type="text/javascript">
   $(document).ready(function() {
 
     $("#createQues1").on("click", function(e) {

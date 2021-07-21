@@ -39,9 +39,8 @@
                 <div class="col-md-9"></div>
                 <div>
                     <p style="text-align: center;font-size: 15px;">
-                        <span id="likes_of_<?php echo $question["id_question"] ?>"><?php echo $question["likes"] ?></span>
-                        <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
-                        </span>
+                        <span class="like" id="likes_of_<?php echo $question["id_question"] ?>"><?php echo $question["likes"] ?></span>
+                        <button type="submit"  id="like_ques" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class=" glyphicon glyphicon-thumbs-up" data-toggle="tooltip"></span></button>
                         <span id="answers_of_<?php echo $question["id_question"] ?>"><?php echo $question["anser"] ?></span>
                         <span class="glyphicon glyphicon-comment"></span>
                     </p>
@@ -102,6 +101,7 @@
                             </div>
 
                         </div>
+                        
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-11">
@@ -118,6 +118,7 @@
                                 </b>
                             </div>
                         </div>
+                        
                         <?php if ($ans["referenceimage"] != null) : ?>
                             <div class="row" style=" margin-top:3%">
                                 <div class="col-md-1"></div>
@@ -128,7 +129,17 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div>
+                                <p style="text-align: right;font-size: 15px; margin-right:2%">
+                                    <span style="color:#00000000"><?php echo $ans["id_answer"]?></span>
+                                    <span id="likes_ans_of_<?php echo $ans["id_answer"] ?>"><?php echo $ans["likes"] ?></span>
+                                    <button id="like_ans_<?php echo $ans["id_answer"] ?>" type="submit"  class="like_ans" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
+                                    </span></button>
+                                </p>
+                            </div>
+                        </div>
 
                     </div>
             <?php
@@ -205,8 +216,37 @@
                 .catch(err => {
                     console.log('Error :-S', err)
                 });
-        }, 3000);
-
+        }, 100);
+        
+        setInterval(() => {
+            var data = {ques_id: <?php echo $question["id_question"];?>};
+            fetch("<?php echo _API_ROOT.'answer/getByidQues.php' ?>", {
+            method: 'POST', 
+            body: JSON.stringify(data), 
+            headers:{
+                'Content-Type': 'application/json'
+            }
+            })
+            .then(
+                    function(response) {
+                        if (response.status !== 200) {
+                            console.log('Lỗi, mã lỗi ' + response.status);
+                            return;
+                        }
+                        // parse response data
+                        response.json().then(data => {
+                            var ans = data;
+                            for (var answer of ans  ) {
+                                $("#likes_ans_of_"+answer["id_answer"]).text(answer['likes']);
+                                
+                            }
+                        })
+                    }
+                )
+                .catch(err => {
+                    console.log('Error :-S', err)
+                });
+        }, 100);
 
         $("#createAns").on("click", function(e) {
             $("#loadMe").modal({
@@ -246,6 +286,101 @@
 
                 },
                 data: JSON.stringify(datas)
+            });
+
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $("#like_ques").on("click", function() {
+            var data = {
+                "question_id": <?php echo $question["id_question"] ?>,
+                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            };
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'likes/create_ques.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    
+                    if(result.check == 1)
+                    {
+                        var result = document.getElementById("like_ques");
+                        result.style.color = "#db9b00";
+                        var result1 = document.getElementById("likes_of_<?php echo $question["id_question"] ?>");
+                        result1.style.color = "#db9b00";
+                    }
+                    else
+                    {
+                        var result = document.getElementById("like_ques");
+                        result.style.color = "black";
+                        var result1 = document.getElementById("likes_of_<?php echo $question["id_question"] ?>");
+                        result1.style.color = "black";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(data)
+            });
+
+        });
+
+        $(".like_ans").on("click", function() {
+            const td = $(this).closest('p').find('span');
+            var i = td[0].innerHTML;
+
+            var data = {
+                "answer_id": i,
+                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            };
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'likes/create_ans.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    if(result.check == 1)
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "#db9b00";
+                        
+                        var result1 = document.getElementById("likes_ans_of_"+i);
+                        result1.style.color = "#db9b00";
+                    }
+                    else
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "black";
+                        var result1 = document.getElementById("likes_ans_of_"+i);
+                        result1.style.color = "black";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(data)
             });
 
         });

@@ -97,9 +97,10 @@
                                     </div>
                                     <div>
                                         <p style="text-align: center;font-size: 15px;">
+                                            <span style="color:#00000000"><?php echo $question["id_question"]?></span>
                                             <span id="likes_of_<?php echo $question["id_question"] ?>"><?php echo $question["likes"] ?></span>
-                                            <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
-                                            </span>
+                                            <button type="submit" id="like_ans_<?php echo $question["id_question"] ?>"  class="like_ques" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
+                                            </span></button>
                                             <span id="answers_of_<?php echo $question["id_question"] ?>"><?php echo $question["comment"] ?></span>
                                             <span class="glyphicon glyphicon-comment"></span>
                                         </p>
@@ -136,47 +137,48 @@
 
         </div>
         <div class="col-sm-3" style="text-align: left; padding:1%">
-    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
-        <div class="card-body" style="padding:2%">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="/UDPT-PROJECT/image/430945avatar.jpg" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">  
-                </div>
-                <div class="col-md-9" style="margin-left:1%">
+            <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: 1% ">
+                <div class="card-body" style="padding:2%">
                     <div class="row">
-                        <b style="font-size: 16px;">Nguyễn Phạm Anh Tú</b>
-                        <p style="font-size: 12px;">tubato1999@gmail.com</p>
+                        <div class="col-md-2">
+                            <img src="/UDPT-PROJECT/image/430945avatar.jpg" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">  
+                        </div>
+                        <div class="col-md-9" style="margin-left:1%">
+                            <div class="row">
+                                <b style="font-size: 16px;">Nguyễn Phạm Anh Tú</b>
+                                <p style="font-size: 12px;">tubato1999@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:2%">
+                        <p class="col-md-12" style="font-size: 15px;">Số câu hỏi: </p>
+                        <p class="col-md-12" style="font-size: 15px;">Số câu trả lời: </p>
+                        <p class="col-md-12" style="font-size: 15px;"></span><b>Thứ hạng (tuần): </b> 500 <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-signal"></p>
+                        <p class="col-md-12" style="color:#db9b00;text-align: center;">Hãy tích cực trả lời câu hỏi để tăng thứ hạng của mình bạn nhé!!</p>
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-top:2%">
-                <p class="col-md-12" style="font-size: 15px;">Số câu hỏi: </p>
-                <p class="col-md-12" style="font-size: 15px;">Số câu trả lời: </p>
-                <p class="col-md-12" style="font-size: 15px;"></span><b>Thứ hạng (tuần): </b> 500 <span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-signal"></p>
-                <p class="col-md-12" style="color:#db9b00;text-align: center;">Hãy tích cực trả lời câu hỏi để tăng thứ hạng của mình bạn nhé!!</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2% ">
-        <div class="card-body" style="padding:2%; ">
-            <div style="text-align: center; font-size: 20px;color:#db9b00;">
-                <a href="" style="color:#db9b00;"><B>THÀNH VIÊN HĂNG HÁI NHẤT</B></a>
+            <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2% ">
+                <div class="card-body" style="padding:2%; ">
+                    <div style="text-align: center; font-size: 20px;color:#db9b00;">
+                        <a href="" style="color:#db9b00;"><B>THÀNH VIÊN HĂNG HÁI NHẤT</B></a>
+                    </div>
+                    
+                </div>  
             </div>
-            
-        </div>  
-    </div>
-    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2%">
-        <div class="card-body" style="padding:2%">
-        <div style="text-align: center; font-size: 20px;">
-            <B >Bạn muốn hỏi điều gì?</B>
-        </div>
-        <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
-        
+            <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2%">
+                <div class="card-body" style="padding:2%">
+                <div style="text-align: center; font-size: 20px;">
+                    <B >Bạn muốn hỏi điều gì?</B>
+                </div>
+                <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
+                
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -204,7 +206,57 @@
                 .catch(err => {
                     console.log('Error :-S', err)
                 });
-        }, 3000);
+        }, 100);
+
+        $(".like_ques").on("click", function() {
+            const td = $(this).closest('p').find('span');
+            var i = td[0].innerHTML;
+            var data = {
+                "question_id": i ,
+                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            };
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'likes/create_ques.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    
+                    if(result.check == 1)
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "#db9b00";
+                        var result1 = document.getElementById("likes_of_"+i);
+                        result1.style.color = "#db9b00";
+                    }
+                    else
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "black";
+                        var result1 = document.getElementById("likes_of_"+i);
+                        result1.style.color = "black";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(data)
+            });
+
+        });
+
+
 
     }, );
+    
 </script>

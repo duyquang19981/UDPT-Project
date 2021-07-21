@@ -1,7 +1,7 @@
 <div class="container-fluid text-center" style="background-color: #cccccc">
     <div class="row content">
         <div class="col-sm-2 sidenav">
-            
+
             <h2 style="color: #b55656;">Danh mục câu hỏi</h2>
             <p <?php
                 if ($data["cateActive"] == -1) {
@@ -38,19 +38,27 @@
                         <div class="row" style="text-align: center; font-size: 30px">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
-                               <b>Bạn có điều khúc mắc? Hãy đặt câu hỏi ngay để nhận được đáp án của mình.</b> 
+                                <b>Bạn có điều khúc mắc? Hãy đặt câu hỏi ngay để nhận được đáp án của mình.</b>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-6">
-                                <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
+                                <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- DS CAU HOI -->
+                <?php
+                if (isset($data["tagname"])) { ?>
+                    <b style="margin:20px 0; display:block">Tìm kiếm theo Tag:
+                        <b style="color: #3ece1b;"> <?php echo $data["tagname"]; ?></b>
+                    </b>
+                <?php
+                }
+                ?>
                 <?php
                 if (isset($data["Questions"]) && count($data["Questions"]) > 0) {
                     foreach ($data["Questions"] as $question) { ?>
@@ -82,9 +90,12 @@
                                     <div class="col-md-1"></div>
                                     <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
                                         foreach ($question["tags"] as $tag) { ?>
-                                            <button onclick='window.location.href="<?php echo _WEB_ROOT . "/Home/Search/" . trim($tag["DESCRIPTION"]) . '/1' ?>"' type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
-                                                <?php echo $tag["DESCRIPTION"]; ?>
-                                            </button>
+                                            <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
+                                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
+                                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                    <?php echo $tag["DESCRIPTION"]; ?>
+                                                </button>
+                                            </form>
                                     <?php
                                         }
                                     }
@@ -92,8 +103,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-9" >
-                                        <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Xem chi tiết >></button>
+                                    <div class="col-md-9">
+                                        <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Trả lời >></button>
                                     </div>
                                     <div>
                                         <p style="text-align: center;font-size: 15px;">
@@ -141,7 +152,7 @@
                 <div class="card-body" style="padding:2%">
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="/UDPT-PROJECT/image/430945avatar.jpg" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">  
+                            <img src="/UDPT-PROJECT/image/430945avatar.jpg" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">
                         </div>
                         <div class="col-md-9" style="margin-left:1%">
                             <div class="row">
@@ -160,26 +171,26 @@
             </div>
 
             <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2% ">
-                <div class="card-body" style="padding:2%; ">
+                <div class="card-body" style="padding:2%">
                     <div style="text-align: center; font-size: 20px;color:#db9b00;">
                         <a href="" style="color:#db9b00;"><B>THÀNH VIÊN HĂNG HÁI NHẤT</B></a>
                     </div>
-                    
-                </div>  
+
+                </div>
             </div>
             <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #00000000;border-radius: 5px;box-shadow: 1%; margin-top: 2%">
                 <div class="card-body" style="padding:2%">
-                <div style="text-align: center; font-size: 20px;">
-                    <B >Bạn muốn hỏi điều gì?</B>
-                </div>
-                <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img  src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
-                
+                    <div style="text-align: center; font-size: 20px;">
+                        <B>Bạn muốn hỏi điều gì?</B>
+                    </div>
+                    <button style="width:100%;background-color: #db9b00;padding: 12px;text-align: center;color: #fff;border-radius: 5px;text-transform: uppercase;font-weight: 700;margin-top:3%" data-toggle="modal" data-target="#makequestion"><img src="https://hoidap247.com/static/img/icon-question.png" style="margin-right:2%">Đặt câu hỏi</button>
+
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function() {
         <?php
@@ -258,5 +269,4 @@
 
 
     }, );
-    
 </script>

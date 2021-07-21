@@ -134,4 +134,98 @@ class Home extends Controller
       $data
     );
   }
+
+  public function Ranking($none1, $none2)
+  {
+    $callapi = new callapi();
+
+    //get category
+    $url =  _API_ROOT . "/category/read-all.php";
+    $responseData =  $callapi->callAPI("GET", $url, 0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    $categories = $res["categories"];
+
+
+    $url =  _API_ROOT . "/user_account/ranking-in-month.php";
+    $responseData =  $callapi->callAPI("GET", $url,  0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    $users = $res["user_accounts"];
+
+    $data =  [
+      "View" => "ranking",
+      "Categories" => $categories,
+      "Users" => $users,
+    ];
+    self::layout(
+      "main",
+      $data
+    );
+  }
+
+  public function SearchByTag($tagname, $page)
+  {
+    if (isset($_POST["submitSearchTagName"])) {
+      $tagname = $_POST["tagname"];
+    }
+    if (empty(trim($tagname))) {
+      header('Location:' . _WEB_ROOT . '/Home');
+      return;
+    }
+    $callapi = new callapi();
+    //get category
+    $url =  _API_ROOT . "category/read-all.php";
+    $responseData =  $callapi->callAPI("GET", $url, 0);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+    $categories = $res["categories"];
+    //get questions
+    $requestData = [
+      "tagname" =>  $tagname
+    ];
+
+    $requestData = json_encode($requestData);
+    $url =  _API_ROOT . "question/read-by-tagname.php";
+    $responseData =  $callapi->callAPI("POST", $url,  $requestData);
+    $responseData = $responseData["data"];
+    $res = $responseData["res"];
+
+    //get all information
+    $questionsFilter = $res["questions"];
+    $questions = [];
+    foreach ($questionsFilter as $question) {
+      $id = $question["owner_id"];
+      $response = $callapi->callAPI('GET', _API_ROOT . 'user_account/read_one.php?id_user=' . $id, null);
+      if ($response["code"] >= 400) {
+        echo $response["data"]["message"];
+      } else {
+        $responseQuesNum = $callapi->callAPI('GET', _API_ROOT . 'user_account/getNumQues.php?id_user=' . $id, null);
+        if ($responseQuesNum["code"] >= 400) {
+          echo $responseQuesNum["data"]["message"];
+        } else {
+          $user = [
+            "id" => $response["data"]["id_user"],
+            "username" => $response["data"]["name"],
+            "image" => $response["data"]["image"],
+            "answer" => $responseQuesNum["data"]["answer"],
+          ];
+          $question = array_merge($question, $user);
+          array_push($questions, $question);
+        }
+      }
+    }
+    $data =  [
+      "View" => "home",
+      "Categories" => $categories,
+      "Questions" => $questions,
+      "Page" => $page,
+      "cateActive" => -1,
+      "tagname" => $tagname
+    ];
+    self::layout(
+      "main",
+      $data
+    );
+  }
 }

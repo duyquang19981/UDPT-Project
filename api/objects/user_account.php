@@ -523,4 +523,33 @@ class user_account{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['max'];
     }
+
+    public function getnumquesInMonth($id, $month)
+    {
+        $start = '2021-' . $month . '-1';
+        $end = '2021-' . $month + 1 . '-1';
+
+        $query = "SELECT COUNT(*) as total_rows FROM question 
+        WHERE owner_id = " . $id .
+            " AND  CREATED >= '" . $start . "' " .
+            " AND CREATED < '" . $end . "'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_rows'];
+    }
+
+    public function getnumansInMonth($id, $month)
+    {
+        $start = '2021-' . $month . '-1';
+        $end = '2021-' . $month + 1 . '-1';
+        $query = "SELECT COUNT(DISTINCT ID_QUESTION) as total_rows FROM answer 
+        WHERE ID_USER =  " . $id .
+            " AND  CREATED >= '" . $start . "' " .
+            " AND CREATED < '" . $end . "'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_rows'];
+    }
 }

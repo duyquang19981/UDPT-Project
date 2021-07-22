@@ -32,11 +32,11 @@
                         <a href="<?php echo _WEB_ROOT ?>/userProfile/<?php echo $_SESSION["user_id"] ?>">
                             <?php
                             if ($_SESSION['image'] != null) : ?>
-                                <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                                <img src="<?php echo $data["user_profile"]["image"] ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
                             <?php else : ?>
                                 <img src="<?php echo _PUBLIC ?>/images/User.png" height="40px" width="40px" style="background-color: transparent;margin-top: -5px;border-radius: 50%;" />
                             <?php endif; ?>
-                            <span><?php echo $_SESSION['name']; ?></span>
+                            <span><?php echo $data["user_profile"]["name"] ?></span>
                         </a>
                     </li>
                     <li><a href="<?php echo _WEB_ROOT ?>/login/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

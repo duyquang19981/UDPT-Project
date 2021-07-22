@@ -39,6 +39,20 @@ class QuestionsController
                 $question["anser"] = 0;
                 $answer = null;
             }
+
+            $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', null);
+            $top =  $response2["data"]["res"];
+
+            $user_profile = null;
+            if(isset($_SESSION["jwt"]))
+            {
+            $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+            $user_profile =  $response3["data"];  
+            }
+
+            $data =  [
+                "user_profile" => $user_profile,
+              ];
             
             $VIEW = "./app/views/question/question_detail.phtml";
             require("./app/layouts/questionLayout.phtml");

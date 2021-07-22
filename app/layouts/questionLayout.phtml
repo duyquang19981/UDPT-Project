@@ -123,6 +123,7 @@ $categoriesRender = $res["categories"];
   $(document).ready(function() {
 
     $("#createQues1").on("click", function(e) {
+      
       $("#loadMe").modal({
         backdrop: "static", //remove ability to close modal with click
         keyboard: false, //remove option to close with keyboard
@@ -158,10 +159,13 @@ $categoriesRender = $res["categories"];
         },
         data: JSON.stringify(datas)
       });
-    });
 
+    });
+    
 
   });
+
+  
 </script>
 
 </body>

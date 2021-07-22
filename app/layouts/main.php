@@ -97,41 +97,42 @@
   $(document).ready(function() {
 
     $("#createQues1").on("click", function(e) {
-      $("#loadMe").modal({
-        backdrop: "static", //remove ability to close modal with click
-        keyboard: false, //remove option to close with keyboard
-        show: true //Display loader!
-      });
-      var datas = {
-        "category_id": $('#exampleFormControlSelect1').val(),
-        "description": $('#exampleFormControlTextarea1').val(),
-        "tags": $('#tag').val(),
-        "owner_id": "<?php echo $_SESSION["user_id"] ?>",
-        "jwt": "<?php echo $_SESSION["jwt"] ?>"
-      }
-      $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        type: "POST",
-        url: "<?php echo (_API_ROOT . 'question/create.php') ?>",
-        dataType: "json",
-        success: function(result, status, xhr) {
-          $("#loadMe").modal("hide");
-          alert("Đăng câu hỏi thành công. Vào Tab Your Question để xem trại thái câu hỏi của bạn.");
-          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
-        },
-        error: function(xhr, status, error) {
-          if (xhr.status == 401) {
+      
+        $("#loadMe").modal({
+          backdrop: "static", //remove ability to close modal with click
+          keyboard: false, //remove option to close with keyboard
+          show: true //Display loader!
+        });
+        var datas = {
+          "category_id": $('#exampleFormControlSelect1').val(),
+          "description": $('#exampleFormControlTextarea1').val(),
+          "tags": $('#tag').val(),
+          "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+          "jwt": "<?php echo $_SESSION["jwt"] ?>"
+        }
+        $.ajax({
+          contentType: 'application/json; charset=utf-8',
+          type: "POST",
+          url: "<?php echo (_API_ROOT . 'question/create.php') ?>",
+          dataType: "json",
+          success: function(result, status, xhr) {
             $("#loadMe").modal("hide");
-            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
-          } else {
-            $("#loadMe").modal("hide");
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-          }
+            alert("Đăng câu hỏi thành công. Vào Tab Your Question để xem trại thái câu hỏi của bạn.");
+            window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status == 401) {
+              $("#loadMe").modal("hide");
+              alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+              window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+            } else {
+              $("#loadMe").modal("hide");
+              alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
 
-        },
-        data: JSON.stringify(datas)
-      });
+          },
+          data: JSON.stringify(datas)
+        });
     });
 
 

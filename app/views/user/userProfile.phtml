@@ -92,6 +92,8 @@
       <div role="tablist" class="tabs__control">
         <button data-tab="1" role="tab" aria-selected="true" aria-controls="tab-1" class="tabs__tab tabs__tab--current" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Make a Questions</button>
         <button data-tab="2" role="tab" aria-selected="false" aria-controls="tab-2" class="tabs__tab" tabindex="-1" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Your Questions</button>
+        <button data-tab="3" role="tab" aria-selected="false" aria-controls="tab-3" class="tabs__tab" tabindex="-1" style="background-color: #4CAF50;border: none;color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Your Answer</button>
+      
       </div>
     </div>
     <div class="tabs__contents" style="border-radius: 10px;border-style: solid;padding:1%;border-color: #8f8d8d50; margin-left:1%;margin-right:1%;margin-botton:1%; min-height:500px; max-height:800px; background-color: #f1f1f1;overflow-y: scroll;overflow-x:hidden">
@@ -103,7 +105,7 @@
               <div style="text-align: center;">
                 <b style="font-size: 35px;">Đặt câu hỏi</b>
               </div>
-
+    
               <div class="form-group">
                 <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu hỏi</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" name="exampleFormControlTextarea1" rows="8"></textarea>
@@ -165,7 +167,14 @@
                                                                                   } ?>;"> <?php if ($ques["mod_id"] != null) {
                                                                                             echo "(Đã duyệt)";
                                                                                           } else {
-                                                                                            echo "(Chờ duyệt)";
+                                                                                            if($ques["status"] == 0)
+                                                                                            {
+                                                                                              echo "Đã xóa";
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                              echo "(Chờ duyệt)";
+                                                                                            }
                                                                                           } ?> </span></P>
                             <b><?php echo $ques["category_id"] ?> </b>
                             <p></p>
@@ -229,7 +238,117 @@
           </div>
         </div>
       </div>
+      <div data-tab-content="3" role="tabpanel" tabindex="0" id="tab-3" class="tabs__content" hidden style="text-align: left;">
+        <div class="row">
+          <div style="text-align: center;">
+            <b style="font-size: 35px;">Các câu trả lời của bạn</b>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <?php if (isset($answers) && count($answers) > 0) {
+                foreach ($answers as $ques) { ?>
+                  <div class="col-sm-12" style="margin-top:2%; ">
+                    <div class="card" style="width: 100%;height: auto;overflow: hidden;padding: 1%;background-color: #fff;border-radius: 5px;box-shadow: ">
+                      <div class="card-body" style="padding:1%">
+                        <div class="row">
+                          <div class="col-md-1">
+                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                          </div>
+                          <div class="col-md-9">
+                            <b style="font-size: 20px;">
+                              <?php echo $_SESSION['name']; ?>
+                            </b>
+                            <P><?php echo $ques["created"] ?> 
+                            <span style="color: <?php if ($ques["mod_id"] != null) {
+                                                                                    echo "#01a324";
+                                                                                  } else {
+                                                                                    echo "#e70303";
+                                                                                  } ?>;"> <?php if ($ques["mod_id"] != null) {
+                                                                                            echo "(Đã duyệt)";
+                                                                                          } else {
+                                                                                            if($ques["status"] == 0)
+                                                                                            {
+                                                                                              echo "Đã xóa";
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                              echo "(Chờ duyệt)";
+                                                                                            }
+                                                                                            
+                                                                                          } ?> </span></P>
+                            <b> Câu hỏi :</b> <span><a href="<?php echo _WEB_ROOT."/questions/".$ques["id_question"]?>">click here</a></span>
+                            <p></p>
+                          </div>
+                          <div class="col-md-2" style="text-align: right;font-size: 15px;">
+                            <?php if ($ques["mod_id"] != null) {
+                              echo '<a href="' . _WEB_ROOT . '/questions/' . $ques["id_question"] . '" target="_blank"><span  class="glyphicon glyphicon-info-sign"></span></a>';
+                            } else {
+                              if($ques["status"] == 0)
+                                {
+                                }
+                                else
+                                {
+                                  echo '<span  class="glyphicon glyphicon-edit"></span>';
+                                }
+                              
+                            } ?>
 
+                          </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+                                <p style="background-color: #f6f6f6; padding:2%"><?php echo $ques["content"] ?></p>
+
+                                <?php
+                                if ($ques["referencelink"] != null) {
+                                    echo '<b style="font-size: 15px; margin-top:1%"> Nguồn tham khảo:<a href="' . $ques["referencelink"] . '" style="text-decoration: none;" target="_blank">Click here!!</a>';
+                                }
+
+                                ?>
+
+
+                                </b>
+                            </div>
+                        </div>
+                        
+                        <?php if ($ques["referenceimage"] != null) : ?>
+                            <div class="row" style=" margin-top:3%">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <b style="font-size: 15px; margin-top:3%"> Hình ảnh: </b>
+                                    <a type="button" class="btn btn-info" href="<?php echo $ques["referenceimage"] ?>" style="width:100px; height:100px;margin:2%;background-image: url('<?php echo $ques["referenceimage"] ?>'); background-size: 100px 100px;   " target="_blank"></a>
+                                    (click vào hình để mở bằng trang khác)
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="row">
+                          <div class="col-md-9"></div>
+                          <div>
+                              <p style="text-align: right;font-size: 15px; margin-right:2%">
+                                  <span style="color:#00000000"><?php echo $ques["id_answer"]?></span>
+                                  <span id="likes_ans_of_<?php echo $ques["id_answer"] ?>"><?php echo $ques["likes"] ?></span>
+                                  <button id="like_ans_<?php echo $ques["id_answer"] ?>" type="submit"  class="like_ans" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
+                                  </span></button>
+                              </p>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+              <?php
+                }
+              } else {
+                echo "Bạn chưa trả lời câu hỏi nào hết!";
+              } ?>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -497,6 +616,53 @@
 
         });
   });
+  $(".like_ans").on("click", function() {
+            const td = $(this).closest('p').find('span');
+            var i = td[0].innerHTML;
+
+            var data = {
+                "answer_id": i,
+                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+                "jwt": "<?php echo $_SESSION["jwt"] ?>"
+            };
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo (_API_ROOT . 'likes/create_ans.php') ?>",
+                dataType: "json",
+                success: function(result, status, xhr) {
+                    if(result.check == 1)
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "#db9b00";
+                        
+                        var result1 = document.getElementById("likes_ans_of_"+i);
+                        result1.style.color = "#db9b00";
+                    }
+                    else
+                    {
+                        var result = document.getElementById("like_ans_"+i);
+                        result.style.color = "black";
+                        var result1 = document.getElementById("likes_ans_of_"+i);
+                        result1.style.color = "black";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 401) {
+                        $("#loadMe").modal("hide");
+                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+                    } else {
+                        $("#loadMe").modal("hide");
+                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+
+                },
+                data: JSON.stringify(data)
+            });
+
+        });
 </script>
 
 <script>

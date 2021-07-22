@@ -30,7 +30,7 @@ class LoginController
                     $user = [
                         "jwt" => $response["data"]["jwt"],
                         "id" => $response1["data"]["data"]["id"],
-                        "username" => $response1["data"]["data"]["username"],
+                        "email" => $response1["data"]["data"]["email"],
                         "name" => $response1["data"]["data"]["name"],
                         "image" => $response1["data"]["data"]["image"]
                     ];
@@ -74,6 +74,7 @@ class LoginController
         $_SESSION['user_id'] = $user["id"];
         $_SESSION['username'] = $user["haha"];
         $_SESSION['name'] = $user["name"];
+        $_SESSION['email'] = $user["email"];
         $_SESSION['image'] = $user["image"];
         $_SESSION['jwt'] = $user["jwt"];
 

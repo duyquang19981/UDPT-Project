@@ -315,7 +315,7 @@ class user_account{
     public function login()
     {
         $query = "SELECT
-                     p.id_user,p.name,p.image,p.status
+                     p.id_user,p.name,p.image,p.status,p.email
                 FROM
                     " . $this->table_name . " p
                 WHERE
@@ -342,6 +342,7 @@ class user_account{
         $this->name = $row['name'];
         $this->image = $row['image'];
         $this->status = $row['status'];
+        $this->email = $row['email'];
         }
         
         
@@ -552,4 +553,6 @@ class user_account{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_rows'];
     }
+
+    
 }

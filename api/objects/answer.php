@@ -240,6 +240,20 @@ class answer
         $stmt->execute();
         return $stmt;
     }
+    function readByUserID()
+    {
+        $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.likes,p.status,p.mod_id
+         FROM 
+        " . $this->table_name . " as p" .
+            " WHERE p.id_user = :id_user ";
+        $stmt = $this->conn->prepare($query);
+
+        $this->id_user = htmlspecialchars(strip_tags($this->id_user));
+        $stmt->bindParam(":id_user", $this->id_user, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
 
     function get_like()
     {

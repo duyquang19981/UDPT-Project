@@ -54,6 +54,17 @@ class Home extends Controller
         }
       }
     }
+    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $top =  $response2["data"]["res"];
+    
+    $user_profile = null;
+    if(isset($_SESSION["jwt"]))
+    {
+      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];  
+    }
+    
+
     $data =  [
       "View" => "home",
       "Categories" => $categories,
@@ -61,6 +72,8 @@ class Home extends Controller
       "Page" => $page,
       "TotalPages" => $totalPages,
       "cateActive" => $category_id,
+      "Top" => $top,
+      "user_profile" => $user_profile,
     ];
     self::layout(
       "main",
@@ -121,6 +134,16 @@ class Home extends Controller
         }
       }
     }
+    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $top =  $response2["data"]["res"];
+
+    $user_profile = null;
+    if(isset($_SESSION["jwt"]))
+    {
+      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];  
+    }
+
     $data =  [
       "View" => "home",
       "Categories" => $categories,
@@ -128,6 +151,8 @@ class Home extends Controller
       "Page" => $page,
       "cateActive" => -1,
       "Keyword" => $keyword,
+      "Top" => $top,
+      "user_profile" => $user_profile,
     ];
     self::layout(
       "main",
@@ -153,10 +178,18 @@ class Home extends Controller
     $res = $responseData["res"];
     $users = $res["user_accounts"];
 
+    $user_profile = null;
+    if(isset($_SESSION["jwt"]))
+    {
+      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];  
+    }
+
     $data =  [
       "View" => "ranking",
       "Categories" => $categories,
       "Users" => $users,
+      "user_profile" => $user_profile,
     ];
     self::layout(
       "main",
@@ -215,13 +248,25 @@ class Home extends Controller
         }
       }
     }
+    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $top =  $response2["data"]["res"];
+
+    $user_profile = null;
+    if(isset($_SESSION["jwt"]))
+    {
+      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];  
+    }
+
     $data =  [
       "View" => "home",
       "Categories" => $categories,
       "Questions" => $questions,
       "Page" => $page,
       "cateActive" => -1,
-      "tagname" => $tagname
+      "tagname" => $tagname,
+      "Top" => $top,
+      "user_profile" => $user_profile,
     ];
     self::layout(
       "main",

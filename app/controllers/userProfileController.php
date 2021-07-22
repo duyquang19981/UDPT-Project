@@ -59,7 +59,24 @@ class userProfileController
                                 {
                                     $question = null; 
                                 }
+                                
+                                $data = [
+                                    "id_user" => $_SESSION["user_id"],
+                                    "jwt" => $_SESSION["jwt"]
+                                ];
+                                $response4 = $callapi->callAPI('POST', _API_ROOT.'answer/getByiduser.php', json_encode($data));
+                                $answers = $response4["data"];
+                            
+                                $user_profile = null;
+                                if(isset($_SESSION["jwt"]))
+                                {
+                                $response5 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+                                $user_profile =  $response5["data"];  
+                                }
 
+                                $data =  [
+                                    "user_profile" => $user_profile,
+                                ];
                                 $VIEW = "./app/views/user/userProfile.phtml";
                                 require("./app/layouts/questionLayout.phtml");
                             }

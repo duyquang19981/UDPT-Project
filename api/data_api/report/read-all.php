@@ -15,31 +15,31 @@ include_once '../../objects/report.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$category = new report($db);
+$report = new report($db);
 
 $data = json_decode(file_get_contents("php://input"));
-$res =  ["result" => "true", "categories" => []];
+$res =  ["result" => "true", "reports" => []];
 
-$stmt = $category->readAll();
+$stmt = $report->readAll();
 $num = $stmt->rowCount();
 
 if ($num > 0) {
   // products array
-  $category = array();
+  $report = array();
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // extract row
     // this will make $row['name'] to
     // just $name only
     extract($row);
-    $category = array(
-      "category_id" => $CATEGORY_ID,
-      "mod_id" => $MOD_ID,
-      "name" => $NAME,
-      "status" => $STATUS,
+    $report = array(
+      "id_report" => $ID_REPORT,
+      "id_owner" => $ID_OWNER,
+      "id_question" => $ID_QUESTION,
+      "reason" => $REASON,
       "created" => $CREATED,
     );
 
-    array_push($res["categories"], $category);
+    array_push($res["reports"], $report);
   }
 
   $res["result"] = "true";

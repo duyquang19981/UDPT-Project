@@ -158,7 +158,28 @@ class question
 
     function update()
     {
-        //
+        $query ="UPDATE " . $this->table_name." 
+        SET 
+        category_id = :category_id,
+        description = :description
+        WHERE id_question = :id_question";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        $this->description = htmlspecialchars(strip_tags($this->description));
+        $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+        // bind values
+        $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        $stmt->bindParam(":description", $this->description, PDO::PARAM_STR);
+        $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+            }
+    
+            return 0;
+
     }
 
     function accept()
@@ -253,7 +274,7 @@ class question
 
         return 0;
     }
-
+ 
     function readById()
     {
         $query = "SELECT * FROM 
@@ -338,7 +359,8 @@ class question
         $query = "SELECT * FROM 
                     " . $this->table_name . " where owner_id = " . $id . " ORDER BY
                     mod_id ASC,
-                    created DESC";
+                    created ASC,
+                    status DESC";
         $stmt = $this->conn->prepare($query);
 
         $stmt->execute();

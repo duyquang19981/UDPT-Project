@@ -43,4 +43,43 @@ class ques_tag
 
         return 0;
     }
+
+    public function checktag_ques()
+    {
+        $query = "SELECT * FROM ".$this->table_name." Where question_id = :question_id and tag_id = :tag_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->question_id = htmlspecialchars(strip_tags($this->question_id));
+        $this->tag_id = htmlspecialchars(strip_tags($this->tag_id));
+        
+        // bind values
+        $stmt->bindParam(":question_id", $this->question_id, PDO::PARAM_INT);
+        $stmt->bindParam(":tag_id", $this->tag_id, PDO::PARAM_INT);
+
+        // execute query
+        $stmt->execute();
+        
+        return $stmt;
+    }
+
+    public function drop()
+    {
+        $query = "DELETE FROM ".$this->table_name. " WHERE question_id = :question_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // sanitize
+        $this->question_id = htmlspecialchars(strip_tags($this->question_id));
+        
+        // bind values
+        $stmt->bindParam(":question_id", $this->question_id, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return 1;
+        }
+
+        return 0;
+    }
 }

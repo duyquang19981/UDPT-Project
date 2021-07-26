@@ -18,31 +18,28 @@ include_once '../../config/database.php';
 // instantiate product object
 include_once '../../objects/admin.php';
 include_once '../../objects/question.php';
-include_once '../../objects/tag.php';
-include_once '../../objects/ques_tag.php';
+include_once '../../objects/answer.php';
 include_once '../../objects/notification.php';
 include_once '../../objects/notification_admin.php';
 $database = new Database();
 $db = $database->getConnection();
   
-$ques = new question($db);
+$answer = new answer($db);
   
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
 if(
-    !empty($data->category_id) &&
-    !empty($data->description) &&
-    !empty($data->tags)&&
-    !empty($data->jwt) &&
-    !empty($data->ques_id)
+    !empty($data->id_answer) &&
+    !empty($data->content) &&
+    !empty($data->jwt)
 ){
 
-    $ques->category_id = $data->category_id;
-    $ques->description = $data->description;
-    $ques->id_question = $data->ques_id;
-    $tags = $data->tags;
+    $answer->content = $data->content;
+    $answer->referencelink = $data->referencelink;
+    $answer->referenceimage = $data->referenceimage;
+    $answer->id_answer = $data->id_answer;
     $jwt = $data->jwt;
 
     if($jwt){
@@ -53,70 +50,22 @@ if(
             // decode jwt
             $decoded = JWT::decode($jwt, $key, array('HS256'));
             try {
-            $check = $ques->update();
+                $check = $answer->update();
             if($check == 1)
             {
-                $ques_tag = new ques_tag($db);
-                $ques_tag->question_id = $ques->id_question;
-                $oke = $ques_tag->drop();
-                
-                $tagss = explode(",",filter_var(trim($tags,",")));
-                $nums = count($tagss);
-                //tạo tag, ques_tag
-                for ($i = 0; $i < $nums; $i++)
-                {
-                    $tag = new tag($db);
-                    $tag ->description = $tagss[$i];
-                    $tag ->status = 1;
-                    $tag -> mod_id = 1;
-                    $stmt = $tag->fillbydescription();
-                    $num = $stmt->rowCount();
-                    if($num>0)
-                    {
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        extract($row);
-                        $user_item=array(
-                            "id_tag" => $id_tag
-                        );
-                        $tag ->id_tag = $user_item["id_tag"];
-
-                        
-                        $ques_tag->tag_id = $tag ->id_tag;
-                        $temp2 = $ques_tag->create();
-                        
-                    }else
-                    {
-                        $temp = $tag->create();
-                        $tem = $tag->fillbydescription();
-
-                        $row = $tem->fetch(PDO::FETCH_ASSOC);
-                        extract($row);
-                        $user_item=array(
-                            "id_tag" => $id_tag
-                        );
-                        $tag ->id_tag = $user_item["id_tag"];
-                        $ques_tag->tag_id = $tag ->id_tag;
-                        $temp1 = $ques_tag->create();
-                    }
-                }
                 http_response_code(200);
                     // tell the user
                 echo json_encode(array(
                     "message" => "Update câu hỏi thành công"
                     
                 ));
-
             }
             else
             {
-                // set response code
-                http_response_code(404);
-                            
-                // show error message
-                echo json_encode(array(
-                    "message" => "Access denied.",
-                    "error" => $e->getMessage(),
-                ));
+                http_response_code(503);
+                
+                // tell the user
+                echo json_encode(array("message" => "Unable to create question."));
             }
             }
             catch (Exception $e){

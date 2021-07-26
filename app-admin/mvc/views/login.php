@@ -47,9 +47,6 @@
                   </form>
                   <hr>
 
-                  <div class="text-center">
-                    <a class="small" href="<?php echo _WEB_ROOT ?>/Register">Tạo tài khoản</a>
-                  </div>
                 </div>
               </div>
             </div>

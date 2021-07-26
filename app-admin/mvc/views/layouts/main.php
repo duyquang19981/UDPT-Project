@@ -112,8 +112,9 @@ Session::checkSession();
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Tag/Read">Tag</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Question/Read">Câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Answer/Read">Câu trả lời</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Report/Read">Báo cáo</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Notification/Read">Thông báo của tôi</a>
-
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Register">Tạo tài khoản Admin</a>
 
                     </div>
                 </div>

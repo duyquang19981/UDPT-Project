@@ -112,9 +112,21 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-9">
-                                        <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Trả lời >></button>
+                                    <div style="margin-left: 10px;" class="col-md-9">
+                                        <div class="row" style="display:flex">
+                                            <button style="margin-left:9%; margin-top: 15px;" type="button" class="btn btn-info" onclick="window.location.href='<?php echo _WEB_ROOT . '/questions/' . $question['id_question']; ?>'">Trả lời >></button>
+                                            <?php if (!isset($_SESSION["jwt"])) {
+                                                echo '<a href="' . _WEB_ROOT . '/login" style="width:100%">';
+                                            } ?>
+                                            <button style="margin-left:4%; margin-top: 15px;" class="btn btn-danger report-btn" <?php if (isset($_SESSION["jwt"])) {
+                                                                                                                                    echo 'data-toggle="modal" data-target="#report"';
+                                                                                                                                } ?>>Báo cáo <span style="display:none;"><?php echo $question["id_question"] ?></span></button>
+                                            <?php if (!isset($_SESSION["jwt"])) {
+                                                echo "</a>";
+                                            } ?>
+                                        </div>
                                     </div>
+
                                     <div>
                                         <p style="text-align: center;font-size: 15px;">
                                             <span style="color:#00000000"><?php echo $question["id_question"] ?></span>
@@ -229,6 +241,32 @@
 
     </div>
 </div>
+
+<div id="report" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="sendForm2">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm nhãn</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Lý do: </label>
+                        <input id="owner_id_input" value="<?php echo $_SESSION["user_id"] ?>" type="text" class="form-control" style="display:none">
+                        <input id="question_id_input" name="question_id" type="text" class="form-control" style="display:none">
+                        <textarea required id="reason_input" name="report_content" type="text" class="form-control" required maxlength="200" rows="3"> </textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input id="send_btn" style="margin: 0px 5px; background-color:#286090; " name="submitAddLabelFormBtn" type="submit" class="btn btn-success" value="Send">
+                    <input style="margin:0px 5px;" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function() {
         <?php
@@ -301,7 +339,35 @@
 
         });
 
+        $(".report-btn").on("click", function() {
+            var question_id = $(this).children('span').html();
+            const question_id_input = $('#question_id_input');
+            question_id_input[0].value = question_id;
+            $("#send_btn").css("visibility", "visible");
 
+        });
 
+        $("#sendForm2").submit(function(event) {
+            var formData = {
+                id_owner: $("#owner_id_input").val(),
+                id_question: $("#question_id_input").val(),
+                reason: $("#reason_input").val(),
+                created: new Date($.now())
+            };
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                url: "<?php echo  _API_ROOT . 'report/create.php' ?>",
+                data: JSON.stringify(formData),
+                dataType: "json",
+                encode: true,
+
+            }).done(function(data) {
+                $("#send_btn").css("visibility", "hidden");
+                alert('Cảm ơn bạn đã gửi báo cáo. Hệ thống đã tiếp nhận và sẽ xử lý.');
+            });
+
+            event.preventDefault();
+        });
     }, );
 </script>

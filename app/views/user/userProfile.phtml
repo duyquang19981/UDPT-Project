@@ -86,6 +86,7 @@
   <?php endif; ?>
 </div>
 </div>
+<?php if ($user["id"] == $_SESSION["user_id"]) : ?>
 <div class="row" style="padding:1%">
   <div class="tabs">
     <div class="container">
@@ -100,8 +101,8 @@
       <div data-tab-content="1" role="tabpanel" tabindex="0" id="tab-1" class="tabs__content tabs__content--current">
         <div class="container">
           <div class="row">
-
-            <div class="col-md-11" style="text-align: left;">
+            <div class="col-md-1"></div>
+            <div class="col-md-10" style="text-align: left;">
               <div style="text-align: center;">
                 <b style="font-size: 35px;">Đặt câu hỏi</b>
               </div>
@@ -154,37 +155,59 @@
                       <div class="card-body" style="padding:1%">
                         <div class="row">
                           <div class="col-md-1">
-                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                            <img src="<?php if($data["user_profile"]["image"] !=null){echo $data["user_profile"]["image"];}else{echo _PUBLIC."/images/User.png";} ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
                           </div>
                           <div class="col-md-9">
                             <b style="font-size: 20px;">
                               <?php echo $_SESSION['name']; ?>
                             </b>
-                            <P><?php echo $ques["created"] ?> <span style="color: <?php if ($ques["mod_id"] != null) {
-                                                                                    echo "#01a324";
+                            <P><?php echo $ques["created"] ?> <span style="color: <?php if ($ques["mod_id"] == null && $ques["status"] == 1) {
+                                                                                    echo "#db9b00";
+                                                                                    
                                                                                   } else {
-                                                                                    echo "#e70303";
-                                                                                  } ?>;"> <?php if ($ques["mod_id"] != null) {
-                                                                                            echo "(Đã duyệt)";
-                                                                                          } else {
-                                                                                            if($ques["status"] == 0)
-                                                                                            {
-                                                                                              echo "Đã xóa";
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                              echo "(Chờ duyệt)";
-                                                                                            }
+                                                                                    if($ques["mod_id"] != null && $ques["status"] == 1)
+                                                                                      {
+                                                                                        echo "#01a324";
+                                                                                      }
+                                                                                      else
+                                                                                      {
+                                                                                        echo "#e70303";
+                                                                                      }
+                                                                                    
+                                                                                  } ?>;"> <?php if ($ques["status"] == 0 && $ques["mod_id"] == null) {
+                                                                                    echo "Đã xóa";
+                                          
+                                                                                  } else {
+                                                                                    if($ques["mod_id"] != null && $ques["status"] == 0)
+                                                                                    {
+                                                                                      echo "(Đã xóa bởi admin)";
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                      if($ques["mod_id"] != null && $ques["status"] == 1)
+                                                                                    {
+                                                                                      echo "(Đã Duyệt)";
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                      echo "(Chờ duyệt)";
+                                                                                    }
+                                                                                      
+                                                                                    }
                                                                                           } ?> </span></P>
-                            <b><?php echo $ques["category_id"] ?> </b>
-                            <p></p>
+                            <b class="category"><?php echo $ques["category_id"] ?> </b>
+                            
                           </div>
                           <div class="col-md-2" style="text-align: right;font-size: 15px;">
-                            <?php if ($ques["mod_id"] != null) {
+                            <?php if ($ques["mod_id"] != null && $ques["status"] == 1) {
                               echo '<a href="' . _WEB_ROOT . '/questions/' . $ques["id_question"] . '" target="_blank"><span  class="glyphicon glyphicon-info-sign"></span></a>';
                             } else {
-
-                              echo '<span  class="glyphicon glyphicon-edit"></span>';
+                              if($ques["mod_id"] == null && $ques["status"] == 1)
+                                {
+                                  echo '<button type="submit"  data-toggle="modal" data-target="#changeQuestion" class="changeQuestion_button" style="border: none;background-color: #4CAF5000;"><span  class="glyphicon glyphicon-edit" ></span></button>
+                                  <button type="submit"  data-toggle="modal" data-target="#deleteQuestion" class="deleteQuestion_button" style="border: none;background-color: #4CAF5000;"><span style="color: red"  class="glyphicon glyphicon-trash" ></span></button>';
+                                }
+                              
                             } ?>
 
                           </div>
@@ -192,23 +215,24 @@
                         <div class="row">
                           <div class="col-md-1"></div>
                           <div class="col-md-11">
-                            <p><?php echo $ques["description"] ?></p>
+                            <p class="description"><?php echo $ques["description"] ?></p>
+                            <span style="color:#00000000" id="ques_id_change"><?php echo  $ques["id_question"]?></span>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col-md-1"></div>
                           <?php if (isset($ques["tags"]) && count($ques["tags"]) > 0) {
-                            foreach ($ques["tags"] as $tag) { ?>
-                              <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
-                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
-                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
-                                  <?php echo $tag["DESCRIPTION"]; ?>
-                                </button>
-                              </form>
-                          <?php
-                            }
-                          }
-                          ?>
+                                        foreach ($ques["tags"] as $tag) { ?>
+                                            <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
+                                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
+                                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                    <?php echo $tag["DESCRIPTION"]; ?>
+                                                </button>
+                                            </form>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                         </div>
                         <div class="row">
                           <div class="col-md-9"></div>
@@ -252,43 +276,58 @@
                       <div class="card-body" style="padding:1%">
                         <div class="row">
                           <div class="col-md-1">
-                            <img src="<?php echo $_SESSION["image"]; ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
+                            <img src="<?php if($data["user_profile"]["image"] !=null){echo $data["user_profile"]["image"];}else{echo _PUBLIC."/images/User.png";} ?>" height="40px" width="40px" style="background-color: transparent;margin-top: -5px; border-radius: 50%;" />
                           </div>
                           <div class="col-md-9">
                             <b style="font-size: 20px;">
                               <?php echo $_SESSION['name']; ?>
                             </b>
                             <P><?php echo $ques["created"] ?> 
-                            <span style="color: <?php if ($ques["mod_id"] != null) {
-                                                                                    echo "#01a324";
+                            <span style="color: <?php if ($ques["mod_id"] == null && $ques["status"] == 1) {
+                                                                                    echo "#db9b00";
+                                                                                    
                                                                                   } else {
-                                                                                    echo "#e70303";
-                                                                                  } ?>;"> <?php if ($ques["mod_id"] != null) {
-                                                                                            echo "(Đã duyệt)";
-                                                                                          } else {
-                                                                                            if($ques["status"] == 0)
-                                                                                            {
-                                                                                              echo "Đã xóa";
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                              echo "(Chờ duyệt)";
-                                                                                            }
-                                                                                            
+                                                                                    if($ques["mod_id"] != null && $ques["status"] == 1)
+                                                                                      {
+                                                                                        echo "#01a324";
+                                                                                      }
+                                                                                      else
+                                                                                      {
+                                                                                        echo "#e70303";
+                                                                                      }
+                                                                                    
+                                                                                  } ?>;"> <?php if ($ques["status"] == 0 && $ques["mod_id"] == null) {
+                                                                                    echo "Đã xóa";
+                                          
+                                                                                  } else {
+                                                                                    if($ques["mod_id"] != null && $ques["status"] == 0)
+                                                                                    {
+                                                                                      echo "(Đã xóa bởi admin)";
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                      if($ques["mod_id"] != null && $ques["status"] == 1)
+                                                                                    {
+                                                                                      echo "(Đã Duyệt)";
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                      echo "(Chờ duyệt)";
+                                                                                    }
+                                                                                      
+                                                                                    }
                                                                                           } ?> </span></P>
                             <b> Câu hỏi :</b> <span><a href="<?php echo _WEB_ROOT."/questions/".$ques["id_question"]?>">click here</a></span>
                             <p></p>
                           </div>
                           <div class="col-md-2" style="text-align: right;font-size: 15px;">
-                            <?php if ($ques["mod_id"] != null) {
+                            <?php if ($ques["mod_id"] != null && $ques["status"] == 1) {
                               echo '<a href="' . _WEB_ROOT . '/questions/' . $ques["id_question"] . '" target="_blank"><span  class="glyphicon glyphicon-info-sign"></span></a>';
                             } else {
-                              if($ques["status"] == 0)
+                              if($ques["mod_id"] == null && $ques["status"] == 1)
                                 {
-                                }
-                                else
-                                {
-                                  echo '<span  class="glyphicon glyphicon-edit"></span>';
+                                  echo '<button type="submit" data-toggle="modal" data-target="#changeAnswer" class="changeAnswer_button" style="border: none;background-color: #4CAF5000;"><span  class="glyphicon glyphicon-edit"  ></span></button>
+                                  <button type="submit"  data-toggle="modal" data-target="#deleteAnswer" class="deleteAnswer_button" style="border: none;background-color: #4CAF5000;"><span style="color: red"  class="glyphicon glyphicon-trash" ></span></button>';
                                 }
                               
                             } ?>
@@ -299,11 +338,11 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-11">
-                                <p style="background-color: #f6f6f6; padding:2%"><?php echo $ques["content"] ?></p>
+                                <p class="content" style="background-color: #f6f6f6; padding:2%"><?php echo $ques["content"] ?></p>
 
                                 <?php
                                 if ($ques["referencelink"] != null) {
-                                    echo '<b style="font-size: 15px; margin-top:1%"> Nguồn tham khảo:<a href="' . $ques["referencelink"] . '" style="text-decoration: none;" target="_blank">Click here!!</a>';
+                                    echo '<b style="font-size: 15px; margin-top:1%"> Nguồn tham khảo:<a class="link_TT" href="' . $ques["referencelink"] . '" style="text-decoration: none;" target="_blank">Click here!!</a>';
                                 }
 
                                 ?>
@@ -318,7 +357,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
                                     <b style="font-size: 15px; margin-top:3%"> Hình ảnh: </b>
-                                    <a type="button" class="btn btn-info" href="<?php echo $ques["referenceimage"] ?>" style="width:100px; height:100px;margin:2%;background-image: url('<?php echo $ques["referenceimage"] ?>'); background-size: 100px 100px;   " target="_blank"></a>
+                                    <a type="button" class="btn btn-info link_hinh" href="<?php echo $ques["referenceimage"] ?>" style="width:100px; height:100px;margin:2%;background-image: url('<?php echo $ques["referenceimage"] ?>'); background-size: 100px 100px;   " target="_blank"></a>
                                     (click vào hình để mở bằng trang khác)
                                 </div>
                             </div>
@@ -327,7 +366,7 @@
                           <div class="col-md-9"></div>
                           <div>
                               <p style="text-align: right;font-size: 15px; margin-right:2%">
-                                  <span style="color:#00000000"><?php echo $ques["id_answer"]?></span>
+                                  <span class="id_answer" style="color:#00000000"><?php echo $ques["id_answer"]?></span>
                                   <span id="likes_ans_of_<?php echo $ques["id_answer"] ?>"><?php echo $ques["likes"] ?></span>
                                   <button id="like_ans_<?php echo $ques["id_answer"] ?>" type="submit"  class="like_ans" style="border: none;background-color: #4CAF5000;"><span style="margin-left:1%;margin-right:1%; " class="glyphicon glyphicon-thumbs-up">
                                   </span></button>
@@ -341,7 +380,7 @@
               <?php
                 }
               } else {
-                echo "Bạn chưa trả lời câu hỏi nào hết!";
+                echo "<div>Bạn chưa trả lời câu hỏi nào hết!</div>";
               } ?>
 
 
@@ -352,7 +391,7 @@
     </div>
   </div>
 </div>
-
+<?php endif; ?>
 </div>
 
 <!-- Modal change profile -->
@@ -402,8 +441,136 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
+<!-- Modal change ques infor -->
+<div class="modal fade" id="changeQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Change question infor</b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: left;">
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu hỏi</label>
+          <textarea class="form-control" id="description_change" name="description_change" rows="8"></textarea>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-5">
+            <label for="exampleFormControlSelect1" style="font-size: 20px;">Danh mục câu hỏi</label>
+            <select class="form-control" id="category_change" name="category_change">
+              <?php if (isset($category) && count($category) > 0) {
+                foreach ($category as $categorys) {
+                  if ($categorys["status"] == 1) {
+              ?>
+                    <option value="<?php echo $categorys["category_id"] ?>"><?php echo $categorys["name"] ?></option>
+              <?php
+                  }
+                }
+              } ?>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="exampleFormControlSelect1" style="font-size: 20px;">Gắn tag</label>
+            <div></div>
+            <input type="text" data-role="tagsinput" placeholder="Add tags" name="tag_change" id="tag_change" />
+          </div>
+        </div>
+        <input type="text" class="hidden" id="id_ques_chang">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="chang_ques">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal delete ques  -->
+<div class="modal fade" id="deleteQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Delete question </b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p class="noti">Are you sure you want to delete these Records?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+        <input type="text" class="hidden" id="id_ques_delete">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="delete_ques">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal change ans infor -->
+<div class="modal fade" id="changeAnswer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Change answer infor</b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: left;">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1" style="font-size: 20px;">Câu trả lời</label>
+            <textarea class="form-control" id="answer_des" name="answer_des" rows="5"></textarea>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="exampleFormControlSelect1" style="font-size: 20px;">Link tham khảo</label>
+                <input type="text" placeholder="Link tham khảo" name="link_tt" id="link_tt" />
+
+            </div>
+            <div class="form-group col-md-6">
+                <label for="exampleFormControlSelect1" style="font-size: 20px;">Link hình</label>
+                <input type="text" placeholder="Link hình" name="link_hinh" id="link_hinh" />
+
+            </div>
+        </div>
+        <input type="text" class="hidden" id="id_ans_chang">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="chang_ans">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal delete ans  -->
+<div class="modal fade" id="deleteAnswer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle" style="color:#000000"><b>Delete Answer </b></h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p class="noti">Are you sure you want to delete these Records?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+        <input type="text" class="hidden" id="id_ans_delete">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="delete_ans">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" >
   $(document).ready(function() {
+    
+    $('[data-toggle="tooltip"]').tooltip();
 
     $("#changepasss").on("click", function(e) {
       e.preventDefault();
@@ -615,54 +782,266 @@
             });
 
         });
-  });
-  $(".like_ans").on("click", function() {
-            const td = $(this).closest('p').find('span');
-            var i = td[0].innerHTML;
+    });
 
-            var data = {
-                "answer_id": i,
-                "owner_id": "<?php echo $_SESSION["user_id"] ?>",
-                "jwt": "<?php echo $_SESSION["jwt"] ?>"
-            };
+    $(".like_ans").on("click", function() {
+      const td = $(this).closest('p').find('span');
+      var i = td[0].innerHTML;
 
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                type: "POST",
-                url: "<?php echo (_API_ROOT . 'likes/create_ans.php') ?>",
-                dataType: "json",
-                success: function(result, status, xhr) {
-                    if(result.check == 1)
-                    {
-                        var result = document.getElementById("like_ans_"+i);
-                        result.style.color = "#db9b00";
-                        
-                        var result1 = document.getElementById("likes_ans_of_"+i);
-                        result1.style.color = "#db9b00";
-                    }
-                    else
-                    {
-                        var result = document.getElementById("like_ans_"+i);
-                        result.style.color = "black";
-                        var result1 = document.getElementById("likes_ans_of_"+i);
-                        result1.style.color = "black";
-                    }
-                },
-                error: function(xhr, status, error) {
-                    if (xhr.status == 401) {
-                        $("#loadMe").modal("hide");
-                        alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
-                        window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
-                    } else {
-                        $("#loadMe").modal("hide");
-                        alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
-                    }
+      var data = {
+          "answer_id": i,
+          "owner_id": "<?php echo $_SESSION["user_id"] ?>",
+          "jwt": "<?php echo $_SESSION["jwt"] ?>"
+      };
 
-                },
-                data: JSON.stringify(data)
-            });
+      $.ajax({
+          contentType: 'application/json; charset=utf-8',
+          type: "POST",
+          url: "<?php echo (_API_ROOT . 'likes/create_ans.php') ?>",
+          dataType: "json",
+          success: function(result, status, xhr) {
+              if(result.check == 1)
+              {
+                  var result = document.getElementById("like_ans_"+i);
+                  result.style.color = "#db9b00";
+                  
+                  var result1 = document.getElementById("likes_ans_of_"+i);
+                  result1.style.color = "#db9b00";
+              }
+              else
+              {
+                  var result = document.getElementById("like_ans_"+i);
+                  result.style.color = "black";
+                  var result1 = document.getElementById("likes_ans_of_"+i);
+                  result1.style.color = "black";
+              }
+          },
+          error: function(xhr, status, error) {
+              if (xhr.status == 401) {
+                  $("#loadMe").modal("hide");
+                  alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+                  window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+              } else {
+                  $("#loadMe").modal("hide");
+                  alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+              }
 
-        });
+          },
+          data: JSON.stringify(data)
+      });
+
+    });
+
+    $(".deleteQuestion_button").on("click", function(){
+      const ques_id = $(this).closest('div.card-body').find('span#ques_id_change')
+      $('input#id_ques_delete').val(ques_id[0].innerHTML);
+    });
+
+    $("#delete_ques").on("click",function(e){
+      
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      var datas = {
+        "id_question": $('#id_ques_delete').val(),
+      }
+      console.log(datas);
+      $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        type: "POST",
+        url: "<?php echo (_API_ROOT . 'question/delete.php') ?>",
+        dataType: "json",
+        success: function(result, status, xhr) {
+          $("#loadMe").modal("hide");
+          alert("Xóa câu hỏi thành công");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+        },
+        error: function(xhr, status, error) {
+          if (xhr.status == 401) {
+            $("#loadMe").modal("hide");
+            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+          } else {
+            $("#loadMe").modal("hide");
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+          }
+
+        },
+        data: JSON.stringify(datas)
+      });
+    });
+
+    $(".changeQuestion_button").on("click", function(){
+      // lấy thông tin của câu hỏi
+      const b = $(this).closest('div.card-body').find('b.category');
+      const category = b[0].innerHTML.trim();
+      const p = $(this).closest('div.card-body').find('p.description');
+      const desription = p[0].innerHTML;
+      const d = $(this).closest('div.card-body').find('p.tag');
+      const ques_id = $(this).closest('div.card-body').find('span#ques_id_change')
+      $('input#id_ques_chang').val(ques_id[0].innerHTML);
+      
+      $('textarea#description_change').val(desription);
+
+      for (i = 0; i<d.length;i++)
+      {
+        $('input#tag_change').tagsinput('add',d[i].innerHTML);        
+      }
+      
+      $('select#category_change option:contains("'+category+'")').prop('selected',true);
+       
+      
+    });
+
+    $("#chang_ques").on("click", function(e) {
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      var datas = {
+        "category_id": $('#category_change').val(),
+        "description": $('#description_change').val(),
+        "tags": $('#tag_change').val(),
+        "ques_id": $('#id_ques_chang').val(),
+        "jwt": "<?php echo $_SESSION["jwt"] ?>"
+      }
+      $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        type: "POST",
+        url: "<?php echo (_API_ROOT . 'question/update.php') ?>",
+        dataType: "json",
+        success: function(result, status, xhr) {
+          $("#loadMe").modal("hide");
+          alert("Cập nhật câu hỏi thành công");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+        },
+        error: function(xhr, status, error) {
+          if (xhr.status == 401) {
+            $("#loadMe").modal("hide");
+            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+          } else {
+            $("#loadMe").modal("hide");
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+          }
+
+        },
+        data: JSON.stringify(datas)
+      });
+    });
+
+    $(".changeAnswer_button").on("click", function(){
+      // lấy thông tin của câu trả lời
+      const p = $(this).closest('div.card-body').find('p.content');
+      const content = p[0].innerHTML;
+      const d = $(this).closest('div.card-body').find('span.id_answer')
+      const id_answer = d[0].innerHTML;
+      const a = $(this).closest('div.card-body').find('a.link_TT')
+      const link_tt = a[0].href;
+      const b = $(this).closest('div.card-body').find('a.link_hinh');
+      const link_hinh = b[0].href;
+      
+      $('textarea#answer_des').val(content);
+      $('input#link_tt').val(link_tt);
+      $('input#link_hinh').val(link_hinh);
+      $('input#id_ans_chang').val(id_answer);
+    });
+
+    $("#chang_ans").on("click",function(){
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      var referencelink = "";
+      var referenceimage = "";
+      if($('#link_tt').val() != null || $('#link_tt').val() != "")
+      {
+        referencelink = $('input#link_tt').val();
+      }
+
+      if($('#link_hinh').val() != null || $('#link_hinh').val() != "")
+      {
+        referenceimage = $('#link_hinh').val();
+      }
+
+      var datas = {
+        "content": $('#answer_des').val(),
+        "referencelink": referencelink,
+        "referenceimage": referenceimage,
+        "id_answer": $('#id_ans_chang').val(),
+        "jwt": "<?php echo $_SESSION["jwt"] ?>"
+      }
+      $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        type: "POST",
+        url: "<?php echo (_API_ROOT . 'answer/update.php') ?>",
+        dataType: "json",
+        success: function(result, status, xhr) {
+          $("#loadMe").modal("hide");
+          alert("Cập nhật câu hỏi thành công");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+        },
+        error: function(xhr, status, error) {
+          if (xhr.status == 401) {
+            $("#loadMe").modal("hide");
+            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+          } else {
+            $("#loadMe").modal("hide");
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+          }
+        },
+        data: JSON.stringify(datas)
+      });
+
+    })
+    
+    $("#delete_ans").on("click",function(e){
+      
+      $("#loadMe").modal({
+        backdrop: "static", //remove ability to close modal with click
+        keyboard: false, //remove option to close with keyboard
+        show: true //Display loader!
+      });
+      var datas = {
+        "id_answer": $('#id_ans_delete').val(),
+      }
+      console.log(datas);
+      $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        type: "POST",
+        url: "<?php echo (_API_ROOT . 'answer/delete.php') ?>",
+        dataType: "json",
+        success: function(result, status, xhr) {
+          $("#loadMe").modal("hide");
+          alert("Xóa câu hỏi thành công");
+          window.location = "<?php echo _WEB_ROOT . "/userProfile/" . $_SESSION['user_id']; ?>";
+        },
+        error: function(xhr, status, error) {
+          if (xhr.status == 401) {
+            $("#loadMe").modal("hide");
+            alert("Phiên đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại");
+            window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+          } else {
+            $("#loadMe").modal("hide");
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+          }
+
+        },
+        data: JSON.stringify(datas)
+      });
+    });
+
+    $(".deleteAnswer_button").on("click", function(){
+      const ques_id = $(this).closest('div.card-body').find('span.id_answer')
+      $('input#id_ans_delete').val(ques_id[0].innerHTML);
+      console.log(ques_id[0].innerHTML)
+    });
+
 </script>
 
 <script>
@@ -740,6 +1119,7 @@
           console.log('Error :-S', err)
         });
     }, 100);
-
+    
+    
   }, );
 </script>

@@ -106,6 +106,7 @@ Session::checkSession();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh sách bảng:</h6>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/user_account/Read/1">Danh sách user</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Send_mail/index">Email nhận thông báo</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Category/Read">Danh mục câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Label/Read">Nhãn câu hỏi</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Tag/Read">Tag</a>

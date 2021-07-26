@@ -114,7 +114,31 @@ class answer
 
     function update()
     {
-        //
+        $query ="UPDATE " . $this->table_name." 
+        SET 
+        referencelink = :referencelink,
+        content = :content,
+        referenceimage = :referenceimage
+        WHERE id_answer = :id_answer";
+
+        $stmt = $this->conn->prepare($query);
+
+        $this->referencelink = htmlspecialchars(strip_tags($this->referencelink));
+        $this->referenceimage = htmlspecialchars(strip_tags($this->referenceimage));
+        $this->content = htmlspecialchars(strip_tags($this->content));
+        $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
+        // bind values
+
+        $stmt->bindParam(":referencelink", $this->referencelink, PDO::PARAM_STR);
+        $stmt->bindParam(":referenceimage", $this->referenceimage, PDO::PARAM_STR);
+        $stmt->bindParam(":content", $this->content, PDO::PARAM_STR);
+        $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
+        // execute query
+        if ($stmt->execute()) {
+            return 1;
+            }
+    
+            return 0;
     }
 
     function accept()
@@ -245,7 +269,10 @@ class answer
         $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.likes,p.status,p.mod_id
          FROM 
         " . $this->table_name . " as p" .
-            " WHERE p.id_user = :id_user ";
+            " WHERE p.id_user = :id_user ORDER BY
+            mod_id ASC,
+            created ASC, 
+            status ASC";
         $stmt = $this->conn->prepare($query);
 
         $this->id_user = htmlspecialchars(strip_tags($this->id_user));

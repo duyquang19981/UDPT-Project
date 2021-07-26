@@ -135,6 +135,29 @@
         });
     });
 
+    var token = "<?php if(isset($_SESSION['jwt'])){echo $_SESSION['jwt'];}?>";
+    if (token != "")
+    {
+      var jwt = {jwt:"<?php echo $_SESSION['jwt']?>"}
+      setInterval(() => {
+      fetch('<?php echo _API_ROOT."/validate_token.php" ?>', {
+      method: 'POST', 
+      body: JSON.stringify(jwt), 
+      headers:{
+          'Content-Type': 'application/json'
+      }
+      })
+      .then(
+        function(response) {
+            if (response.status !== 200) {
+              window.location = "<?php echo _WEB_ROOT . "/login/logout"; ?>";
+            }
+        })
+          .catch(err => {
+              console.log('Error :-S', err)
+          });
+    }, 10000);
+    }
 
   });
 </script>

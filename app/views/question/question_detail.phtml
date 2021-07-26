@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="exampleFormControlSelect1" style="font-size: 20px;">Link tham khảo</label>
-                        <input type="text" placeholder="Link tham khỏa" name="link_tt" id="link_tt" />
+                        <input type="text" placeholder="Link tham khảo" name="link_tt" id="link_tt" />
 
                     </div>
                     <div class="form-group col-md-6">
@@ -360,7 +360,7 @@
         });
 
         $(".like_ans").on("click", function() {
-            const td = $(this).closest('p').find('span');
+            const td = $(this).parent('div').find('span');
             var i = td[0].innerHTML;
 
             var data = {

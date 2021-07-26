@@ -95,19 +95,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
-                                        foreach ($question["tags"] as $tag) { ?>
-                                            <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
-                                                <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
-                                                <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
-                                                    <?php echo $tag["DESCRIPTION"]; ?>
-                                                </button>
-                                            </form>
-                                    <?php
+                                    <div style="margin-left:70px">
+                                        <?php if (isset($question["tags"]) && count($question["tags"]) > 0) {
+                                            foreach ($question["tags"] as $tag) { ?>
+                                                <form method="POST" action="<?php echo _WEB_ROOT . "/Home/SearchByTag/tagname/1" ?>">
+                                                    <input name="tagname" value="<?php echo $tag["DESCRIPTION"]; ?>" hidden />
+                                                    <button name="submitSearchTagName" type="submit" class="col-md-1 btn" style="padding:1%; background-color: #028317; color: white;width: auto; margin-right:1%">
+                                                        <?php echo $tag["DESCRIPTION"]; ?>
+                                                    </button>
+                                                </form>
+                                        <?php
+                                            }
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
 
                                 <div class="row">

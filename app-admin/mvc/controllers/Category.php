@@ -12,7 +12,7 @@ class Category extends Controller
     if (isset($_POST["submitAddCategoryFormBtn"])) {
       $id_admin = $_POST["id_admin"];
       $cate_name = $_POST["cate_name"];
-      $today = date("Y-m-d");
+      $today = date("Y-m-d h:i:s");
       $requestData = [
         "mod_id" =>  $id_admin,
         "name" => $cate_name,

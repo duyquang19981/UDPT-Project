@@ -65,7 +65,15 @@ class userProfileController
                                     "jwt" => $_SESSION["jwt"]
                                 ];
                                 $response4 = $callapi->callAPI('POST', _API_ROOT.'answer/getByiduser.php', json_encode($data));
-                                $answers = $response4["data"];
+                                if($response4["code"] >= 400)
+                                {
+                                    $answers = null;
+                                }
+                                else
+                                {
+                                    $answers = $response4["data"];
+                                }
+                                
                             
                                 $user_profile = null;
                                 if(isset($_SESSION["jwt"]))

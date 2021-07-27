@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<!-- <script src="<?php echo _PUBLIC ?>/js/admin-crud/admin-crud-sendmail.js"></script> -->
+<script src="<?php echo _PUBLIC ?>/js/admin-crud/admin-crud-sendmail.js"></script>
 
 
 
@@ -101,27 +101,25 @@
 </div>
 <!-- add Modal HTML -->
 
-<div id="editRecord" class="modal fade">
+<div id="addRecord" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="edit_form" method="POST" action="<?php echo _WEB_ROOT ?>/Question/Accept">
+      
         <div class="modal-header">
-          <h4 class="modal-title">Duyệt câu hỏi</h4>
+          <h4 class="modal-title">Add email</h4>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>Mã</label>
-            <input id="edit_input_id" readonly name="id_question" type="text">
-            <input id="edit_input_id_mod" style="display:none" value="<?php echo Session::get("admin-id"); ?>" name="mod_id" type="text">
-
+            <label>Email</label>
+            <input id="email" style="width: 100%;border: 3px solid #435d7d;padding: 5px;height: 40px;border-radius: 5px;outline: none;" name="email" type="text">
           </div>
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input id="saveButton" name="submitAcceptQuestion" type="submit" class="btn btn-info" value="Save">
         </div>
-      </form>
+      
     </div>
   </div>
 </div>
@@ -129,7 +127,7 @@
 <div id="deleteRecord" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form name="deleteForm" method="POST" action="<?php echo _WEB_ROOT ?>/Question/Delete">
+      
         <div class="modal-header">
           <h4 class="modal-title">Delete Record</h4>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -139,23 +137,31 @@
           <p class="text-warning"><small>This action cannot be undone.</small></p>
         </div>
         <div class="modal-footer">
-          <input id="delete_input_id" name="id_question" type="text" style="display: none;">
+          <input id="id_email" name="id_email" type="text" style="display: none;">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input id="deleteButton" name="submitDeleteQuestion" type="submit" class="btn btn-danger" value="Delete">
         </div>
-      </form>
+      
     </div>
   </div>
 </div>
 <script>
 $(document).ready(function() {
-  $("#send_mail").on("click", function() {
+  $("#send_mail").on("click", function(e) {
+    $("#loadMe").modal({
+              backdrop: "static", //remove ability to close modal with click
+              keyboard: false, //remove option to close with keyboard
+              show: true //Display loader!
+          });
+
     $.ajax({
       contentType: 'application/json; charset=utf-8',
       type: "GET",
       url: "<?php echo (_API_ROOT . '/sendmail/mailCheck.php') ?>",
       success: function(result, status, xhr) {
+        $("#loadMe").modal("hide");
         alert("Gửi mail thành công");
+
       },
       error: function(xhr, status, error) {
         $("#loadMe").modal("hide");
@@ -163,6 +169,62 @@ $(document).ready(function() {
       },
       
     });
+  });
+
+  $("#deleteButton").on("click", function(e) {
+      
+      console.log($("input#id_email").val())
+      var data = {
+          id_email: $("input#id_email").val()
+      };
+      
+      $.ajax({
+          contentType: 'application/json; charset=utf-8',
+          type: "PUT",
+          url: "<?php echo (_API_ROOT . '/sendmail/delete.php') ?>",
+          dataType: "json",
+          success: function(result, status, xhr) {
+              
+              alert("Delete email Success");
+              window.location = "<?php echo _WEB_ROOT . "/Send_mail/index"; ?>";
+          },
+          error: function(xhr, status, error) {
+              
+              alert("Result: " + status + " " + error + " " + xhr.status + " " +
+                  xhr.statusText);
+          },
+          data: JSON.stringify(data),
+      });
+  });
+  $("#saveButton").on("click", function(e) {
+    
+    if($("input#email").val() == "" || $("input#email").val() == null)
+    {
+      alert("Email Null!!!");
+    }
+    else
+    {
+      var data = {
+        email: $("input#email").val()
+    };
+    $.ajax({
+      contentType: 'application/json; charset=utf-8',
+      type: "POST",
+      url: "<?php echo (_API_ROOT . '/sendmail/create.php') ?>",
+      dataType: "json",
+      success: function(result, status, xhr) {
+          
+          alert("Create email Success");
+          window.location = "<?php echo _WEB_ROOT . "/Send_mail/index"; ?>";
+      },
+      error: function(xhr, status, error) {
+          alert("Result: " + status + " " + error + " " + xhr.status + " " +
+              xhr.statusText);
+      },
+      data: JSON.stringify(data),
+    });
+    }
+    
   });
 });
 </script>

@@ -29,4 +29,33 @@ class report
     }
     return 0;
   }
+
+  function create()
+  {
+    $query = "INSERT INTO
+                  " . $this->table_name . "
+              VALUES(
+              NULL, :id_owner, :id_question, :reason, :created )";
+
+    // prepare query
+    $stmt = $this->conn->prepare($query);
+    // sanitize
+    $this->id_owner = htmlspecialchars(strip_tags($this->id_owner));
+    $this->id_question = htmlspecialchars(strip_tags($this->id_question));
+    $this->reason = htmlspecialchars(strip_tags($this->reason));
+    $this->created = htmlspecialchars(strip_tags($this->created));
+
+    // bind values
+    $stmt->bindParam(":id_owner", $this->id_owner, PDO::PARAM_INT);
+    $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
+    $stmt->bindParam(":reason", $this->reason, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+
+    // execute query
+    if ($stmt->execute()) {
+      return 1;
+    }
+
+    return 0;
+  }
 }

@@ -58,7 +58,7 @@ class answer
 
         // execute query
         if ($stmt->execute()) {
-        return 1;
+            return 1;
         }
 
         return 0;
@@ -284,15 +284,15 @@ class answer
 
     function get_like()
     {
-        $query ="SELECT likes FROM " . $this->table_name." WHERE id_answer = :id_answer limit 0,1";
+        $query = "SELECT likes FROM " . $this->table_name . " WHERE id_answer = :id_answer limit 0,1";
 
         $stmt = $this->conn->prepare($query);
 
         $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
-        
+
         // bind values
         $stmt->bindParam(":id_answer", $this->id_answer, PDO::PARAM_INT);
-    
+
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$row['likes'];
@@ -300,7 +300,7 @@ class answer
 
     function update_like($like)
     {
-        $query ="UPDATE " . $this->table_name." SET LIKES = ".$like." WHERE id_answer = :id_answer";
+        $query = "UPDATE " . $this->table_name . " SET LIKES = " . $like . " WHERE id_answer = :id_answer";
 
         $stmt = $this->conn->prepare($query);
         $this->id_answer = htmlspecialchars(strip_tags($this->id_answer));
@@ -309,8 +309,26 @@ class answer
         // execute query
         if ($stmt->execute()) {
             return 1;
-            }
-    
-            return 0;
+        }
+
+        return 0;
+    }
+
+    function readAcceptedAndNotDeleted()
+    {
+        //for user site
+        $query = "SELECT * FROM 
+            " . $this->table_name .
+            " WHERE status = 1" .
+            " AND mod_id is not NULL" .
+            " ORDER BY `CREATED` DESC";
+
+        $stmt = $this->conn->prepare($query);
+        // bind values
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+
+        return 0;
     }
 }

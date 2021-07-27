@@ -361,7 +361,16 @@ Session::checkSession();
 
             <!-- Custom scripts for all pages-->
             <script src="<?php echo _PUBLIC ?>/js/sb-admin-2.min.js"></script>
-
+<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" >
+    <div class="modal-dialog modal-sm" role="document" >
+      <div class="modal-content" style="background-color: #cccccc10;">
+        <div class="modal-body row" >
+          <div id="loader" style="color: red;"></div>
+          <div style="margin-left:5%; font-size: 30px;color: white "><b>Loading..........</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

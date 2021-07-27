@@ -10,10 +10,11 @@ require_once "../SendOTP/class.smtp.php";
 include_once '../../config/database.php';
 include_once '../../objects/question.php';
 include_once '../../objects/mail_send.php';
+include_once '../../../app/config.php';
 $num = 0;
 $database = new Database();
 $db = $database->getConnection();
-  
+
 // prepare product object
 $ques = new question($db);
 $num = $ques->countQuesCheck() - 3;
@@ -50,7 +51,7 @@ $last = '
     </tr>
     <tr>
     <td align="middle">
-        <a href="" style="color:#3b5998;text-decoration:none" target="_blank">
+        <a href="'._WEB_ROOT."/app-admin/Question/Read".'" style="color:#3b5998;text-decoration:none" target="_blank">
             <table border="0" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
                 <tbody>
                     <tr>

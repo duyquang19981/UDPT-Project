@@ -296,7 +296,7 @@
         }, 100);
 
         $('[data-toggle="tooltip"]').tooltip();
-
+        
         $(".like_ques").on("click", function() {
             const td = $(this).closest('p').find('span');
             var i = td[0].innerHTML;

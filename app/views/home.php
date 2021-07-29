@@ -174,7 +174,7 @@
                     <div class="card-body" style="padding:2%">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="<?php echo $data["user_profile"]["image"] ? $data["user_profile"]["image"] : _PUBLIC . "/images/User.png"  ?>" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">
+                                <img src="<?php if($data["user_profile"]["image"] !=null){echo $data["user_profile"]["image"];}else{echo _PUBLIC."/images/User.png";} ?>" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">
                             </div>
                             <div class="col-md-9" style="margin-left:3%">
                                 <div class="row">
@@ -294,6 +294,8 @@
                     console.log('Error :-S', err)
                 });
         }, 100);
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         $(".like_ques").on("click", function() {
             const td = $(this).closest('p').find('span');

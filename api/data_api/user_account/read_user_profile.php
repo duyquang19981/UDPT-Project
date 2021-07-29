@@ -74,7 +74,7 @@ if($user->name!=null){
             $users[$max] = $temp;
         }
 
-        for ($i = 0; $i < count($users) - 1; $i++)
+        for ($i = 0; $i < count($users); $i++)
         {
             if($users[$i]['id_user'] == $user->id_user)
             {

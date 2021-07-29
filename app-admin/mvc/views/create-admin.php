@@ -65,7 +65,7 @@ if (isset($_POST['name'])) {
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="<?php echo _WEB_ROOT ?>/Login">Về trang Đăng nhập </a>
+                <a class="small" href="<?php echo _WEB_ROOT ?>/Home">Về Dashborad </a>
               </div>
 
             </div>

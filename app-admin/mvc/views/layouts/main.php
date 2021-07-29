@@ -114,7 +114,6 @@ Session::checkSession();
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Answer/Read">Câu trả lời</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Report/Read">Báo cáo</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Notification/Read">Thông báo của tôi</a>
-                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Register">Tạo tài khoản Admin</a>
 
                     </div>
                 </div>
@@ -135,6 +134,7 @@ Session::checkSession();
                         <a class="collapse-item" href="#addTagRecord" data-toggle="modal">Tạo Tag</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/AutoAccept">Duyệt tự động</a>
                         <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Home/Export">Export dữ liệu</a>
+                        <a class="collapse-item" href="<?php echo _WEB_ROOT ?>/Register">Tạo tài khoản Admin</a>
 
                     </div>
                 </div>
@@ -361,16 +361,16 @@ Session::checkSession();
 
             <!-- Custom scripts for all pages-->
             <script src="<?php echo _PUBLIC ?>/js/sb-admin-2.min.js"></script>
-<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel" >
-    <div class="modal-dialog modal-sm" role="document" >
-      <div class="modal-content" style="background-color: #cccccc10;">
-        <div class="modal-body row" >
-          <div id="loader" style="color: red;"></div>
-          <div style="margin-left:5%; font-size: 30px;color: white "><b>Loading..........</b></div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content" style="background-color: #cccccc10;">
+                        <div class="modal-body row">
+                            <div id="loader" style="color: red;"></div>
+                            <div style="margin-left:5%; font-size: 30px;color: white "><b>Loading..........</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </body>
 
 </html>

@@ -98,7 +98,7 @@
                 <td><?php echo $answer["mod_id"]; ?></td>
                 <td>
                   <button onclick="(
-                      function(){alert('<?php echo trim($answer['content']); ?>'); 
+                      () =>{alert('<?php echo $answer['content']; ?>'); 
                       return false;})(); return false; " style="  
                       white-space: nowrap; 
                       width: 400px; 

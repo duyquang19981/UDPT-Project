@@ -3,16 +3,18 @@
 define('_DIR_ROOT', __DIR__);
 
 //xu ly root
-if (!empty($_SERVER['HTTPS']) && $_SERVER('HTTP') == "on") {
-    $web_root = 'https://' . $_SERVER['HTTP_HOST'];
-} else {
-    $web_root = 'http://' . $_SERVER['HTTP_HOST'];
-}
-$temp = str_replace("\\", "/", strtolower(_DIR_ROOT));
-$folder = str_replace(strtolower($_SERVER['DOCUMENT_ROOT']), '', $temp);
+// if (!empty($_SERVER['HTTPS']) && $_SERVER('HTTP') == "on") {
+//     $web_root = 'https://' . $_SERVER['HTTP_HOST'];
+// } else {
+//     $web_root = 'http://' . $_SERVER['HTTP_HOST'];
+// }
+$web_root = 'https://' . $_SERVER['HTTP_HOST'];
+echo $web_root;
+// $temp = str_replace("\\", "/", strtolower(_DIR_ROOT));
+// $folder = str_replace(strtolower($_SERVER['DOCUMENT_ROOT']), '', $temp);
 
-$web_root = $web_root . $folder;
-$web_root = str_replace("/app", '', $web_root);
+// $web_root = $web_root . $folder;
+// $web_root = str_replace("/app", '', $web_root);
 
 
 define('_WEB_ROOT', $web_root);
@@ -22,3 +24,6 @@ define('_PUBLIC', $public);
 
 $api_url = _WEB_ROOT . "/api/data_api/";
 define('_API_ROOT', $api_url);
+// echo $api_url;
+
+

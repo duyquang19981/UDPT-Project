@@ -16,8 +16,7 @@ $folder = '/app-admin';
 $web_root = $web_root . $folder;
 
 define('_WEB_ROOT', $web_root);
-// echo '<hr/>';
-// echo $web_root;
+
 $public = _WEB_ROOT . '/public';
 define('_PUBLIC', $public);
 

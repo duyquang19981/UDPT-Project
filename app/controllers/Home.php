@@ -93,8 +93,6 @@ class Home extends Controller
       echo '<hr/>';
       print_r($res["questions"]);
 
-      return 0;
-
       $stmt = $questionModel->countByCategoryId();
       $totalQues = $stmt->fetch(PDO::FETCH_ASSOC);
       $res["totalPages"] = ceil($totalQues["COUNT(*)"] / $questionModel->limit);
@@ -144,6 +142,7 @@ class Home extends Controller
       $question = array_merge($question, $user);
       array_push($questions, $question);
     }
+    echo '<hr/>';
     print_r($questions);
     return 0;
     // $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);

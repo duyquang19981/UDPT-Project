@@ -1,7 +1,7 @@
 
 <?php
 define('_DIR_ROOT', __DIR__);
-
+echo "   :  congif :     ";
 //xu ly root
 // if (!empty($_SERVER['HTTPS']) && $_SERVER('HTTP') == "on") {
 //     $web_root = 'https://' . $_SERVER['HTTP_HOST'];

@@ -1,4 +1,6 @@
 <?php
+echo "   :  congif :     ";
+
 class app
 {
     protected $Controller = "Home";
@@ -10,6 +12,7 @@ class app
         if ($this->getUrl() != null) {
             $link = $this->getUrl();
             // xử lý controller
+            echo "    :link". $link . "  ..........";
             if (isset($link[0])) {
                 // kiểm tra file controller có tồn tại ko
                 if (file_exists("./app/controllers/" . $link[0] . "Controller.php")) {

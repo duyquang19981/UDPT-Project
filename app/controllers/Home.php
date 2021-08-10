@@ -33,7 +33,7 @@ class Home extends Controller
     print_r($categories);
 
     return 0;
-    //check filter by category or not
+    //check filter by category or not 
     if (empty($category_id)) {
       $category_id = -1;
     }

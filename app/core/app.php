@@ -7,11 +7,9 @@ class app
 
     function __construct()
     {
-        echo " go here app  ";
         if ($this->getUrl() != null) {
             $link = $this->getUrl();
             // xử lý controller
-            echo "    :link". $link . "  ..........";
             if (isset($link[0])) {
                 // kiểm tra file controller có tồn tại ko
                 if (file_exists("./app/controllers/" . $link[0] . "Controller.php")) {
@@ -167,13 +165,9 @@ class app
     }
     function getUrl()
     {   
-        echo "GET: ";
-        print_r( $_GET);
         if (isset($_GET["url"])) {
-            echo  " 1: geturl " . explode("/", filter_var(trim($_GET["url"], "/"))) .":  ";
             return explode("/", filter_var(trim($_GET["url"], "/")));
         }
-        else{ echo " cant get url :";}
 
     }
 }

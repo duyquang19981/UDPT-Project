@@ -30,8 +30,7 @@ class Home extends Controller
       $res["result"] = "true";
     }
     $categories = $res["categories"];
-    print_r($categories);
-    return 0;
+    // return 0;
     //check filter by category or not
     if (empty($category_id)) {
       $category_id = -1;
@@ -39,47 +38,227 @@ class Home extends Controller
     if (!isset($page)) {
       $page = 1;
     }
-    $requestData = [
-      "category_id" =>  $category_id,
-      "page" => $page,
-    ];
-    $requestData = json_encode($requestData);
+    // $requestData = [
+    //   "category_id" =>  $category_id,
+    //   "page" => $page,
+    // ];
+    // $requestData = json_encode($requestData);
 
     //get questions
-    $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-by-categoryId.php";
-    $responseData =  $callapi->callAPI("POST", $url,  $requestData);
-    $responseData = $responseData["data"];
-    $res = $responseData["res"];
+    // $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-by-categoryId.php";
+    // $responseData =  $callapi->callAPI("POST", $url,  $requestData);
+    $res =  ["result" => "true", "questions" => []];
+
     $questions = [];
+    $questionModel = $this->modelAPI('question');
+    $questionModel->category_id = $category_id;
+    $questionModel->offset = ($page - 1) * $questionModel->limit;
+
+    $stmt = $questionModel->readByCategoryId();
+    $num = $stmt->rowCount();
+    if ($num > 0) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
+        $ques = array(
+          "id_question" => $ID_QUESTION,
+          "owner_id" => $OWNER_ID,
+          "category_id" => $CATEGORY_ID,
+          "mod_id" => $MOD_ID,
+          "description" => $DESCRIPTION,
+          "likes" => $LIKES,
+          "created" => $CREATED,
+          "accept_day" => $ACCEPT_DAY,
+          "status" => $STATUS,
+          "comment" => 0,
+          "tags" => []
+        );
+
+        $cateModel = $this->modelAPI('category_ques');
+        $ques["category_name"] = $cateModel->getNamebyid($ques["category_id"]);
+
+        $tagModel = $this->modelAPI('tag');
+        $temp = $tagModel->getbyquesid($ques["id_question"]);
+        while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+          extract($row);
+          $tag = array(
+            "DESCRIPTION" => $DESCRIPTION,
+          );
+
+          array_push($ques["tags"], $tag);
+        }
+
+        $answerModel = $this->modelAPI('answer');
+        $answerModel->id_question =  $ques["id_question"];
+        $stmt1 =  $answerModel->readByQuesID();
+        $ques["comment"] = $stmt1->rowCount();
+
+        array_push($res["questions"], $ques);
+      }
+
+      $stmt = $questionModel->countByCategoryId();
+      $totalQues = $stmt->fetch(PDO::FETCH_ASSOC);
+      $res["totalPages"] = ceil($totalQues["COUNT(*)"] / $questionModel->limit);
+
+      $res["result"] = "true";
+    } else {
+      $stmt = $question->countByCategoryId();
+      $total = $stmt->fetch(PDO::FETCH_ASSOC);
+      $res["totalPages"] = $total["COUNT(*)"];
+    }
+
     $totalPages  = $res["totalPages"];
     foreach ($res["questions"] as $question) {
       $id = $question["owner_id"];
-      $response = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_one.php?id_user=' . $id, null);
-      if ($response["code"] >= 400) {
-        echo $response["data"]["message"];
-      } else {
-        $responseQuesNum = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/getNumQues.php?id_user=' . $id, null);
-        if ($responseQuesNum["code"] >= 400) {
-          echo $responseQuesNum["data"]["message"];
-        } else {
-          $user = [
-            "id" => $response["data"]["id_user"],
-            "username" => $response["data"]["name"],
-            "image" => $response["data"]["image"],
-            "answer" => $responseQuesNum["data"]["answer"],
-          ];
-          $question = array_merge($question, $user);
-          array_push($questions, $question);
+      // $response = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_one.php?id_user=' . $id, null);
+      // $userModel = new user_account($db);
+      $userModel = $this->modelAPI('user_account');
+      $userModel->id_user =  $id;
+      $userModel->readOne();
+      $user_arr = array();
+      if ($userModel->name != null) {
+        $user_arr = array(
+          "id_user" =>  $userModel->id_user,
+          "name" => $userModel->name,
+          "image" => $userModel->image,
+          "email" => $userModel->email,
+          "birth" => $userModel->birth,
+          "phone" => $userModel->phone,
+          "created" => $userModel->created,
+        );
+      }
+      // $responseQuesNum = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/getNumQues.php?id_user=' . $id, null);
+      // echo $userModel['id_user'];
+      $ques = 0;
+      $ans = 0;
+      $ques = $userModel->getnumques($id);
+      $ans = $userModel->getnumans($id);
+      $user_arr["ques"] =  $ques;
+      $user_arr["answer"] =  $ans;
+
+      $user = [
+        "id" => $user_arr["id_user"],
+        "username" => $user_arr["name"],
+        "image" => $user_arr["image"],
+        "answer" => $user_arr["answer"],
+      ];
+      $question = array_merge($question, $user);
+      array_push($questions, $question);
+    }
+    // $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
+    $stmt = $userModel->readAll();
+    $num = $stmt->rowCount();
+
+    $arr = array();
+    if ($num > 0) {
+      $users = array();
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
+        $user = array(
+          "id_user" => $ID_USER,
+          "name" => $NAME,
+          "image" => $IMAGE,
+          "email" => $EMAIL,
+          "birth" => $BIRTH,
+          "phone" => $PHONE,
+          "status" => $STATUS,
+          "created" => $CREATED,
+
+        );
+        $month = date('m');
+        $ques = 0;
+        $ans = 0;
+        $ques = $userModel->getnumquesInMonth($ID_USER, $month);
+        $ans = $userModel->getnumansInMonth($ID_USER, $month);
+        $user['ques'] =  $ques;
+        $user['answer'] =  $ans;
+        array_push($users, $user);
+      }
+
+      for ($i = 0; $i < count($users) - 1; $i++) {
+        $max = $i;
+        for ($j = $i + 1; $j < count($users); $j++) {
+          if ($users[$max]['answer'] < $users[$j]['answer']) {
+            $max = $j;
+          }
         }
+        $temp  = $users[$i];
+        $users[$i] = $users[$max];
+        $users[$max] = $temp;
+      }
+
+
+      for ($i = 0; $i < 5; $i++) {
+        array_push($arr, $users[$i]);
       }
     }
-    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
-    $top =  $response2["data"]["res"];
+    $top =  $arr;
 
     $user_profile = null;
     if (isset($_SESSION["jwt"])) {
-      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
-      $user_profile =  $response3["data"];
+      // $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
+      $userModel->id_user = isset($_GET['id_user']) ? $_GET['id_user'] : die();
+
+      // read the details of product to be edited
+      $userModel->readOne();
+
+      if ($userModel->name != null) {
+        // create array
+        $user_arr = array(
+          "name" => $userModel->name,
+          "image" => $userModel->image,
+          "email" => $userModel->email,
+        );
+
+        $user_arr["ques"] = $userModel->getnumques($userModel->id_user);
+        $user_arr["answer"] = $userModel->getnumans($userModel->id_user);
+
+        $stmt = $userModel->readAll();
+        $num = $stmt->rowCount();
+        $users = array();
+        if ($num > 0) {
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $userss = array(
+              "id_user" => $ID_USER,
+              "name" => $NAME,
+              "image" => $IMAGE,
+              "email" => $EMAIL,
+              "birth" => $BIRTH,
+              "phone" => $PHONE,
+              "status" => $STATUS,
+              "created" => $CREATED,
+
+            );
+            $month = date('m');
+            $ques = 0;
+            $ans = 0;
+            $ques = $userModel->getnumquesInMonth($ID_USER, $month);
+            $ans = $userModel->getnumansInMonth($ID_USER, $month);
+            $userss['ques'] =  $ques;
+            $userss['answer'] =  $ans;
+            array_push($users, $userss);
+          };
+          for ($i = 0; $i < count($users) - 1; $i++) {
+            $max = $i;
+            for ($j = $i + 1; $j < count($users); $j++) {
+              if ($users[$max]['answer'] < $users[$j]['answer']) {
+                $max = $j;
+              }
+            }
+            $temp  = $users[$i];
+            $users[$i] = $users[$max];
+            $users[$max] = $temp;
+          }
+
+          for ($i = 0; $i < count($users); $i++) {
+            if ($users[$i]['id_user'] == $userModel->id_user) {
+              $user_arr['top'] =  $i + 1;
+            }
+          }
+        }
+      }
+
+      $user_profile =  $user_arr;
     }
 
 

@@ -30,7 +30,9 @@ class Home extends Controller
       $res["result"] = "true";
     }
     $categories = $res["categories"];
-    // return 0;
+    print_r($categories);
+
+    return 0;
     //check filter by category or not
     if (empty($category_id)) {
       $category_id = -1;
@@ -38,11 +40,6 @@ class Home extends Controller
     if (!isset($page)) {
       $page = 1;
     }
-    // $requestData = [
-    //   "category_id" =>  $category_id,
-    //   "page" => $page,
-    // ];
-    // $requestData = json_encode($requestData);
 
     //get questions
     // $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-by-categoryId.php";
@@ -95,6 +92,7 @@ class Home extends Controller
         array_push($res["questions"], $ques);
       }
 
+
       $stmt = $questionModel->countByCategoryId();
       $totalQues = $stmt->fetch(PDO::FETCH_ASSOC);
       $res["totalPages"] = ceil($totalQues["COUNT(*)"] / $questionModel->limit);
@@ -144,6 +142,8 @@ class Home extends Controller
       $question = array_merge($question, $user);
       array_push($questions, $question);
     }
+    print_r($questions);
+    return 0;
     // $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
     $stmt = $userModel->readAll();
     $num = $stmt->rowCount();

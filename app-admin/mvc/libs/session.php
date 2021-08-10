@@ -34,9 +34,7 @@ class Session
     self::init();
     if (self::get("admin-login") == false) {
       self::destroy();
-      echo _WEB_ROOT;
-      echo ' :noses slion';
-      // header("Location: " . _WEB_ROOT . "/Login");
+      header("Location: " . _WEB_ROOT . "/Login");
     }
   }
 
@@ -44,13 +42,13 @@ class Session
   {
     self::init();
     if (self::get("admin-login") == true) {
-      header("Location:" . _WEB_ROOT . "Home");
+      header("Location:" . _WEB_ROOT . "/Home");
     }
   }
 
   public static function destroy()
   {
     session_destroy();
-    header("Location:./");
+    header("Location:" . _WEB_ROOT);
   }
 }

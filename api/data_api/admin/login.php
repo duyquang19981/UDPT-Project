@@ -17,7 +17,6 @@ include_once '../../libs/php-jwt/src/ExpiredException.php';
 include_once '../../libs/php-jwt/src/SignatureInvalidException.php';
 include_once '../../libs/php-jwt/src/JWT.php';
 
-use \Firebase\JWT\JWT;
 
 // instantiate database and user_account object
 $database = new Database();
@@ -49,11 +48,9 @@ if ($admin->id_admin != null) {
             )
         );
 
-        $jwt = JWT::encode($token, $key);
         echo json_encode(
             array(
                 "message" => "Successful login.",
-                "jwt" => $jwt,
                 "res" => $res
             )
         );

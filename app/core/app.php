@@ -1,6 +1,4 @@
 <?php
-echo "   :  congif :     ";
-
 class app
 {
     protected $Controller = "Home";
@@ -9,6 +7,7 @@ class app
 
     function __construct()
     {
+        echo " go here app  ";
         if ($this->getUrl() != null) {
             $link = $this->getUrl();
             // xử lý controller
@@ -169,7 +168,10 @@ class app
     function getUrl()
     {
         if (isset($_GET["url"])) {
+            echo  " 1: " . explode("/", filter_var(trim($_GET["url"], "/"))) .":  ";
             return explode("/", filter_var(trim($_GET["url"], "/")));
         }
+        else{ echo " cant get url :";}
+
     }
 }

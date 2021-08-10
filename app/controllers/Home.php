@@ -7,7 +7,8 @@ class Home extends Controller
     $callapi = new callapi();
 
     //get category
-    $url =  _API_ROOT . "/category/read-all.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "category/read-all.php";
+    echo $url;
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -27,7 +28,7 @@ class Home extends Controller
     $requestData = json_encode($requestData);
 
     //get questions
-    $url =  _API_ROOT . "/question/read-by-categoryId.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-by-categoryId.php";
     $responseData =  $callapi->callAPI("POST", $url,  $requestData);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -35,11 +36,11 @@ class Home extends Controller
     $totalPages  = $res["totalPages"];
     foreach ($res["questions"] as $question) {
       $id = $question["owner_id"];
-      $response = $callapi->callAPI('GET', _API_ROOT . 'user_account/read_one.php?id_user=' . $id, null);
+      $response = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_one.php?id_user=' . $id, null);
       if ($response["code"] >= 400) {
         echo $response["data"]["message"];
       } else {
-        $responseQuesNum = $callapi->callAPI('GET', _API_ROOT . 'user_account/getNumQues.php?id_user=' . $id, null);
+        $responseQuesNum = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/getNumQues.php?id_user=' . $id, null);
         if ($responseQuesNum["code"] >= 400) {
           echo $responseQuesNum["data"]["message"];
         } else {
@@ -54,13 +55,13 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
     
     $user_profile = null;
     if(isset($_SESSION["jwt"]))
     {
-      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
       $user_profile =  $response3["data"];  
     }
     
@@ -92,13 +93,13 @@ class Home extends Controller
     }
     $callapi = new callapi();
     //get category
-    $url =  _API_ROOT . "/category/read-all.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "category/read-all.php";
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
     $categories = $res["categories"];
     //get questions
-    $url =  _API_ROOT . "/question/read-accepted-and-not-deleted.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-accepted-and-not-deleted.php";
     $responseData =  $callapi->callAPI("POST", $url,  0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -115,11 +116,11 @@ class Home extends Controller
     $questions = [];
     foreach ($questionsFilter as $question) {
       $id = $question["owner_id"];
-      $response = $callapi->callAPI('GET', _API_ROOT . 'user_account/read_one.php?id_user=' . $id, null);
+      $response = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_one.php?id_user=' . $id, null);
       if ($response["code"] >= 400) {
         echo $response["data"]["message"];
       } else {
-        $responseQuesNum = $callapi->callAPI('GET', _API_ROOT . 'user_account/getNumQues.php?id_user=' . $id, null);
+        $responseQuesNum = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/getNumQues.php?id_user=' . $id, null);
         if ($responseQuesNum["code"] >= 400) {
           echo $responseQuesNum["data"]["message"];
         } else {
@@ -134,13 +135,13 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
 
     $user_profile = null;
     if(isset($_SESSION["jwt"]))
     {
-      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
       $user_profile =  $response3["data"];  
     }
 
@@ -165,14 +166,14 @@ class Home extends Controller
     $callapi = new callapi();
 
     //get category
-    $url =  _API_ROOT . "/category/read-all.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "category/read-all.php";
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
     $categories = $res["categories"];
 
 
-    $url =  _API_ROOT . "/user_account/ranking-in-month.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "user_account/ranking-in-month.php";
     $responseData =  $callapi->callAPI("GET", $url,  0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -181,7 +182,7 @@ class Home extends Controller
     $user_profile = null;
     if(isset($_SESSION["jwt"]))
     {
-      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
       $user_profile =  $response3["data"];  
     }
 
@@ -208,7 +209,7 @@ class Home extends Controller
     }
     $callapi = new callapi();
     //get category
-    $url =  _API_ROOT . "category/read-all.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "category/read-all.php";
     $responseData =  $callapi->callAPI("GET", $url, 0);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -219,7 +220,7 @@ class Home extends Controller
     ];
 
     $requestData = json_encode($requestData);
-    $url =  _API_ROOT . "question/read-by-tagname.php";
+    $url =  'https://measking.herokuapp.com/api/data_api/' . "question/read-by-tagname.php";
     $responseData =  $callapi->callAPI("POST", $url,  $requestData);
     $responseData = $responseData["data"];
     $res = $responseData["res"];
@@ -229,11 +230,11 @@ class Home extends Controller
     $questions = [];
     foreach ($questionsFilter as $question) {
       $id = $question["owner_id"];
-      $response = $callapi->callAPI('GET', _API_ROOT . 'user_account/read_one.php?id_user=' . $id, null);
+      $response = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_one.php?id_user=' . $id, null);
       if ($response["code"] >= 400) {
         echo $response["data"]["message"];
       } else {
-        $responseQuesNum = $callapi->callAPI('GET', _API_ROOT . 'user_account/getNumQues.php?id_user=' . $id, null);
+        $responseQuesNum = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/getNumQues.php?id_user=' . $id, null);
         if ($responseQuesNum["code"] >= 400) {
           echo $responseQuesNum["data"]["message"];
         } else {
@@ -248,13 +249,13 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', _API_ROOT.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
 
     $user_profile = null;
     if(isset($_SESSION["jwt"]))
     {
-      $response3 = $callapi->callAPI('GET', _API_ROOT.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
       $user_profile =  $response3["data"];  
     }
 

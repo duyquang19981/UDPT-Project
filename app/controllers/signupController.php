@@ -143,7 +143,7 @@ class SignupController
                 {
                     unset($_SESSION['user']);
                     unset($_SESSION['otp']);
-                    header('location:'.'/UDPT-PROJECT/login');
+                    header('location:'. _WEB_ROOT. '/login');
                 }
                 
               }

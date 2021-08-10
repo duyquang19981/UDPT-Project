@@ -78,7 +78,7 @@ class LoginController
         $_SESSION['image'] = $user["image"];
         $_SESSION['jwt'] = $user["jwt"];
 
-        header('location:'.'/UDPT-PROJECT');
+        header('location:'._WEB_ROOT);
     }
 
     public function logout() {
@@ -87,6 +87,6 @@ class LoginController
         unset($_SESSION['email']);
         unset($_SESSION['image']);
         unset($_SESSION['jwt']);
-        header('location:'.'/UDPT-PROJECT/login');
+        header('location:'. _WEB_ROOT.'/login');
     }
 }

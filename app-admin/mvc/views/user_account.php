@@ -70,7 +70,7 @@
         if (isset($data["paging"]) && count($data["paging"]["pages"]) > 0 && isset($data["keyword"])) {
           foreach ($data["paging"]["pages"] as $Page) { ?>
             <li class="page-item <?php if($Page["current_page"] == "yes"){ echo "disabled";}?>">
-              <a class="page-link" href="/udpt-project/app-admin/user_account/Search/<?php echo $data["keyword"]."/"?><?php echo $Page["page"]."\"" ?>" tabindex="-1" style="background-color:powderblue;" ><?php echo $Page["page"] ?></a>
+              <a class="page-link" href="<?php echo _WEB_ROOT ?>/user_account/Search/<?php echo $data["keyword"]."/"?><?php echo $Page["page"]."\"" ?>" tabindex="-1" style="background-color:powderblue;" ><?php echo $Page["page"] ?></a>
             </li>
             <?php
             }
@@ -79,7 +79,7 @@
         {
           foreach ($data["paging"]["pages"] as $Page) { ?>
             <li class="page-item <?php if($Page["current_page"] == "yes"){ echo "disabled";}?>">
-              <a class="page-link" href="/udpt-project/app-admin/user_account/Read/<?php echo $Page["page"]."\"" ?>" tabindex="-1" style="background-color:powderblue;" ><?php echo $Page["page"] ?></a>
+              <a class="page-link" href="<?php echo _WEB_ROOT ?>/user_account/Read/<?php echo $Page["page"]."\"" ?>" tabindex="-1" style="background-color:powderblue;" ><?php echo $Page["page"] ?></a>
             </li>
             <?php
             }

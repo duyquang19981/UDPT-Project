@@ -22,7 +22,8 @@ class notification_admin
   {
     $query = "SELECT * FROM 
                     " . $this->table_name . "
-              WHERE admin_id =:admin_id";
+              WHERE admin_id =:admin_id 
+              ORDER BY `ID_NA` DESC";
     $stmt = $this->conn->prepare($query);
     $this->admin_id = htmlspecialchars(strip_tags($this->admin_id));
     $stmt->bindParam(":admin_id", $this->admin_id, PDO::PARAM_INT);

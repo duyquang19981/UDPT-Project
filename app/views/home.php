@@ -293,7 +293,7 @@
                 .catch(err => {
                     console.log('Error :-S', err)
                 });
-        }, 100);
+        }, 10000);
 
         $('[data-toggle="tooltip"]').tooltip();
         

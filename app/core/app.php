@@ -166,9 +166,11 @@ class app
         }
     }
     function getUrl()
-    {
+    {   
+        echo "GET: ";
+        print_r( $_GET);
         if (isset($_GET["url"])) {
-            echo  " 1: " . explode("/", filter_var(trim($_GET["url"], "/"))) .":  ";
+            echo  " 1: geturl " . explode("/", filter_var(trim($_GET["url"], "/"))) .":  ";
             return explode("/", filter_var(trim($_GET["url"], "/")));
         }
         else{ echo " cant get url :";}

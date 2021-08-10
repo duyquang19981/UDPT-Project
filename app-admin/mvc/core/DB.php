@@ -1,11 +1,12 @@
 <?php
 class Database
 {
-  public  $connect;
-  protected $servername = "localhost";
-  protected $username = "root";
-  protected $password  = "";
-  protected $dbname = "questiondb";
+  private $host = "sql6.freemysqlhosting.net";
+  private $db_name = "sql6430149";
+  private $username = "sql6430149";
+  private $password = "I4UrnEEINS";
+  private $port = 3306;
+  public $conn;
 
   function __construct()
   {

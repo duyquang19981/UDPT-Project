@@ -4,16 +4,34 @@ class Home extends Controller
 {
   public function index($category_id, $page)
   {
-    $callapi = new callapi();
+    $categoryModel = $this->modelAPI('category_ques');
+    $stmt = $categoryModel->readAll();
+    $num = $stmt->rowCount();
+    $res =  ["result" => "true", "categories" => []];
+    if ($num > 0) {
+      // products array
+      $category = array();
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // extract row
+        // this will make $row['name'] to
+        // just $name only
+        extract($row);
+        $category = array(
+          "category_id" => $CATEGORY_ID,
+          "mod_id" => $MOD_ID,
+          "name" => $NAME,
+          "status" => $STATUS,
+          "created" => $CREATED,
+        );
 
-    //get category
-    $url =  'https://measking.herokuapp.com/api/data_api/' . "category/read-all.php";
-    echo $url;
-    $responseData =  $callapi->callAPI("GET", $url, 0);
-    $responseData = $responseData["data"];
-    $res = $responseData["res"];
+        array_push($res["categories"], $category);
+      }
+
+      $res["result"] = "true";
+    }
     $categories = $res["categories"];
-
+    print_r($categories);
+    return 0;
     //check filter by category or not
     if (empty($category_id)) {
       $category_id = -1;
@@ -55,16 +73,15 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
-    
+
     $user_profile = null;
-    if(isset($_SESSION["jwt"]))
-    {
-      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
-      $user_profile =  $response3["data"];  
+    if (isset($_SESSION["jwt"])) {
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];
     }
-    
+
 
     $data =  [
       "View" => "home",
@@ -135,14 +152,13 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
 
     $user_profile = null;
-    if(isset($_SESSION["jwt"]))
-    {
-      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
-      $user_profile =  $response3["data"];  
+    if (isset($_SESSION["jwt"])) {
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];
     }
 
     $data =  [
@@ -180,10 +196,9 @@ class Home extends Controller
     $users = $res["user_accounts"];
 
     $user_profile = null;
-    if(isset($_SESSION["jwt"]))
-    {
-      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
-      $user_profile =  $response3["data"];  
+    if (isset($_SESSION["jwt"])) {
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];
     }
 
     $data =  [
@@ -249,14 +264,13 @@ class Home extends Controller
         }
       }
     }
-    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/ranking-5-in-month.php', 0);
+    $response2 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/ranking-5-in-month.php', 0);
     $top =  $response2["data"]["res"];
 
     $user_profile = null;
-    if(isset($_SESSION["jwt"]))
-    {
-      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/'.'user_account/read_user_profile.php?id_user='.$_SESSION["user_id"], 0);
-      $user_profile =  $response3["data"];  
+    if (isset($_SESSION["jwt"])) {
+      $response3 = $callapi->callAPI('GET', 'https://measking.herokuapp.com/api/data_api/' . 'user_account/read_user_profile.php?id_user=' . $_SESSION["user_id"], 0);
+      $user_profile =  $response3["data"];
     }
 
     $data =  [

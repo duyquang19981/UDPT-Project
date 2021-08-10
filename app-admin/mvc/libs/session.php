@@ -34,7 +34,9 @@ class Session
     self::init();
     if (self::get("admin-login") == false) {
       self::destroy();
-      header("Location: " . _WEB_ROOT . "/Login");
+      echo _WEB_ROOT;
+      echo ' :noses slion';
+      // header("Location: " . _WEB_ROOT . "/Login");
     }
   }
 

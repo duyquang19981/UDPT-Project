@@ -9,7 +9,6 @@ define('_DIR_ROOT', __DIR__);
 //     $web_root = 'http://' . $_SERVER['HTTP_HOST'];
 // }
 $web_root = 'https://' . $_SERVER['HTTP_HOST'];
-echo $web_root;
 // $temp = str_replace("\\", "/", strtolower(_DIR_ROOT));
 // $folder = str_replace(strtolower($_SERVER['DOCUMENT_ROOT']), '', $temp);
 

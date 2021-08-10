@@ -32,7 +32,6 @@ class Home extends Controller
     $categories = $res["categories"];
     print_r($categories);
 
-    return 0;
     //check filter by category or not 
     if (empty($category_id)) {
       $category_id = -1;
@@ -91,7 +90,10 @@ class Home extends Controller
 
         array_push($res["questions"], $ques);
       }
+      echo '<hr/>';
+      print_r($res["questions"]);
 
+      return 0;
 
       $stmt = $questionModel->countByCategoryId();
       $totalQues = $stmt->fetch(PDO::FETCH_ASSOC);

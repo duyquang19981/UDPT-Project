@@ -8,13 +8,6 @@ class Database
   private $port = 3306;
   public $conn;
 
-  // function __construct()
-  // {
-  //   $this->connect = mysqli_connect($this->servername, $this->username, $this->password);
-  //   mysqli_select_db($this->connect,$this->dbname);
-  //   mysqli_query($this->connect, "SET NAMES 'utf8'");
-  // }
-
   public function getConnection()
   {
     $this->conn = null;

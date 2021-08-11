@@ -54,7 +54,16 @@ class category_ques
                     " . $this->table_name;
         $stmt = $this->conn->prepare($query);
         if ($stmt->execute()) {
-            return $stmt;
+            $num = $stmt->rowCount();
+            $categories = [];
+            if ($num > 0) {
+                $category = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $category = $this->castCategoryRow($row);
+                    array_push($categories, $category);
+                }
+            }
+            return $categories;
         }
 
         return 0;
@@ -111,11 +120,23 @@ class category_ques
     function getNamebyid($id)
     {
         $query = "SELECT name FROM 
-                    " . $this->table_name. " where category_id = ".$id ;
+                    " . $this->table_name . " where category_id = " . $id;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['name'];
-        
+    }
+
+    function castCategoryRow($row)
+    {
+        extract($row);
+        $category = array(
+            "category_id" => $CATEGORY_ID,
+            "mod_id" => $MOD_ID,
+            "name" => $NAME,
+            "status" => $STATUS,
+            "created" => $CREATED,
+        );
+        return $category;
     }
 }

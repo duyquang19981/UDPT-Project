@@ -107,33 +107,39 @@ class tag
 
     function fillbydescription()
     {
-        $query= "SELECT id_tag 
+        $query = "SELECT id_tag 
                 FROM
                 " . $this->table_name . "
                 WHERE
-                description = :description" ;
-        
+                description = :description";
+
         $stmt = $this->conn->prepare($query);
 
-        $this->description=htmlspecialchars(strip_tags($this->description));
+        $this->description = htmlspecialchars(strip_tags($this->description));
         $stmt->bindParam(":description", $this->description, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt;
-        
     }
-    
+
     function getbyquesid($ques)
     {
         $query = "SELECT
                     t.DESCRIPTION
                 FROM
-                    ".$this->table_name." as t, question_tag as qt
+                    " . $this->table_name . " as t, question_tag as qt
                 WHERE
-                    qt.QUESTION_ID = ".$ques." and t.ID_TAG=qt.TAG_ID";
+                    qt.QUESTION_ID = " . $ques . " and t.ID_TAG=qt.TAG_ID";
         $stmt = $this->conn->prepare($query);
 
         $stmt->execute();
-        return $stmt;
-        
+        $tags = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $tag = array(
+                "DESCRIPTION" => $DESCRIPTION,
+            );
+            array_push($tags, $tag);
+        }
+        return $tags;
     }
 }

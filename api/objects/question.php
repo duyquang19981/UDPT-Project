@@ -106,6 +106,76 @@ class question
 
         return 0;
     }
+    function castQuestionRow($row)
+    {
+        extract($row);
+        $ques = array(
+            "id_question" => $ID_QUESTION,
+            "owner_id" => $OWNER_ID,
+            "category_id" => $CATEGORY_ID,
+            "mod_id" => $MOD_ID,
+            "description" => $DESCRIPTION,
+            "likes" => $LIKES,
+            "created" => $CREATED,
+            "accept_day" => $ACCEPT_DAY,
+            "status" => $STATUS,
+            "comment" => 0,
+            "tags" => [],
+            "category_name" => $CATNAME,
+            "id_user" => $ID_USER,
+            "name" => $NAME,
+            "image" => $IMAGE,
+            "email" => $EMAIL,
+            "birth" => $BIRTH,
+            "phone" => $PHONE,
+            "status" => $STATUS,
+            "created" => $CREATED,
+        );
+        return $ques;
+    }
+
+    function mvcReadByCategoryId()
+    {
+        //for user site
+        $select_field = 'C.CATEGORY_ID, C.NAME as CATNAME, C.MOD_ID, C.STATUS, C.CREATED';
+        if ($this->category_id != -1) {
+            $query = "SELECT " . $select_field . ", Q.*,U.* FROM 
+            " . $this->table_name . " Q, category_ques C," .
+                " user_account U " .
+                " WHERE Q.category_id = :category_id" .
+                " AND Q.category_id = C.category_id" .
+                " AND Q.OWNER_ID = U.ID_USER" .
+                " AND Q.status = 1" .
+                " AND Q.mod_id is not NULL" .
+                " ORDER BY Q.CREATED DESC" .
+                " LIMIT " . $this->limit .
+                " OFFSET " . $this->offset;
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
+        } else {
+            $query = "SELECT " . $select_field . ", Q.*,U.* FROM 
+            " . $this->table_name . " Q, category_ques C," .
+                " user_account U " .
+                " WHERE Q.category_id = C.category_id" .
+                " AND Q.OWNER_ID = U.ID_USER" .
+                " AND Q.status = 1" .
+                " AND Q.mod_id is not NULL" .
+                " ORDER BY Q.CREATED DESC" .
+                " LIMIT " . $this->limit .
+                " OFFSET " . $this->offset;
+            $stmt = $this->conn->prepare($query);
+        }
+        // bind values
+        if ($stmt->execute()) {
+            $questions = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($questions, $this->castQuestionRow($row));
+            }
+            return $questions;
+        }
+        return 0;
+    }
 
     function readAcceptedAndNotDeleted()
     {
@@ -158,7 +228,7 @@ class question
 
     function update()
     {
-        $query ="UPDATE " . $this->table_name." 
+        $query = "UPDATE " . $this->table_name . " 
         SET 
         category_id = :category_id,
         description = :description
@@ -176,10 +246,9 @@ class question
         // execute query
         if ($stmt->execute()) {
             return 1;
-            }
-    
-            return 0;
+        }
 
+        return 0;
     }
 
     function accept()
@@ -274,7 +343,7 @@ class question
 
         return 0;
     }
- 
+
     function readById()
     {
         $query = "SELECT * FROM 
@@ -402,7 +471,7 @@ class question
 
     function get_maxid_ques($id)
     {
-        $query = 'SELECT count(id_question) as max FROM ' . $this->table_name.' where id_question = '.$id.' and status = 1 and mod_id is not null' ;
+        $query = 'SELECT count(id_question) as max FROM ' . $this->table_name . ' where id_question = ' . $id . ' and status = 1 and mod_id is not null';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -411,15 +480,15 @@ class question
 
     function get_like()
     {
-        $query ="SELECT likes FROM " . $this->table_name." WHERE id_question = :id_question limit 0,1";
+        $query = "SELECT likes FROM " . $this->table_name . " WHERE id_question = :id_question limit 0,1";
 
         $stmt = $this->conn->prepare($query);
 
         $this->id_question = htmlspecialchars(strip_tags($this->id_question));
-        
+
         // bind values
         $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
-    
+
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$row['likes'];
@@ -427,7 +496,7 @@ class question
 
     function update_like($like)
     {
-        $query ="UPDATE " . $this->table_name." SET LIKES = ".$like." WHERE id_question = :id_question";
+        $query = "UPDATE " . $this->table_name . " SET LIKES = " . $like . " WHERE id_question = :id_question";
 
         $stmt = $this->conn->prepare($query);
         $this->id_question = htmlspecialchars(strip_tags($this->id_question));
@@ -436,9 +505,8 @@ class question
         // execute query
         if ($stmt->execute()) {
             return 1;
-            }
-    
-            return 0;
-    }
+        }
 
+        return 0;
+    }
 }

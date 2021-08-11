@@ -36,11 +36,12 @@ if($user->name!=null){
     $user_arr["answer"] = $user->getnumans($user->id_user);
 
     $stmt = $user->readAll();
-    $num = $stmt->rowCount();
+    // $num = $stmt->rowCount();
     $users = array();
     if ($num > 0) {
         
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while (1) {
             extract($row);
             $userss = array(
             "id_user" => $ID_USER,

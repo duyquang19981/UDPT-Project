@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <b style="font-size: 20px;">
-                                            <?php echo $question["username"] ?> </b>
+                                            <?php echo $question["name"] ?> </b>
                                         <p><?php echo $question["created"] ?> </p>
                                         <b><?php echo $question["category_name"] ?> </b>
 

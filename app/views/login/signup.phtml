@@ -3,10 +3,11 @@
     <!-- Tabs Titles -->
     <h2 class="inactive underlineHover"><a href="<?php echo _WEB_ROOT ?>/login"> Sign In </a></h2>
     <h2 class="active">Sign Up </h2>
-  
+
 
     <!-- Login Form -->
-    <form  method="post" action="<?php echo _WEB_ROOT ?>/signup/signuppost">
+    <!-- <form method="post" action="<?php echo _WEB_ROOT ?>/signup/signuppost"> -->
+    <form onsubmit="return false;">
       <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username">
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
       <input type="password" id="repassword" class="fadeIn third" name="repassword" placeholder="Repassword">
@@ -14,19 +15,23 @@
       <input type="email" id="email" class="fadeIn third" name="email" placeholder="Email">
       <input type="date" id="birth" class="fadeIn third" name="birth" placeholder="Birth">
       <input type="text" id="phone" class="fadeIn third" name="phone" placeholder="Phone">
-      <input type="submit" name = "signup" class="fadeIn fourth disabled" value="Sign Up">
+      <a data-toggle="modal" data-target="#notification">
+        <input type="submit" name="signup" class="fadeIn fourth disabled" value="Sign Up">
+      </a>
       <p class="invalidFeedback" style="color:red">
-        <?php if(isset($data)){echo $data["messenger"];}?>
+        <?php if (isset($data)) {
+          echo $data["messenger"];
+        } ?>
       </p>
     </form>
-     
+
     <!-- Remind Passowrd -->
-    
-    <div id="formFooter" >
+
+    <div id="formFooter">
       <div class="row">
         <div class="col-md-6" style="text-align:left">
           <a class="underlineHover" href="<?php echo _WEB_ROOT ?>">Home Page</a>
-        </div >
+        </div>
         <div class="col-md-6" style="text-align:right">
           <a class="underlineHover" href="<?php echo _WEB_ROOT ?>/forgotpass" style="margin-right:0">Forgot Password?</a>
         </div>

@@ -25,9 +25,10 @@ $res =  ["result" => "true", "questions" => []];
 
 
 $stmt = $question->readAcceptedAndNotDeleted();
-$num = $stmt->rowCount();
+// $num = $stmt->rowCount();
 if ($num > 0) {
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  while (0) {
     extract($row);
     $ques = array(
       "id_question" => $ID_QUESTION,
@@ -39,20 +40,21 @@ if ($num > 0) {
       "created" => $CREATED,
       "accept_day" => $ACCEPT_DAY,
       "status" => $STATUS,
-      "tags" =>[]
+      "tags" => []
 
     );
-    
+
     $tag = new tag($db);
-    $temp = $tag->getbyquesid( $ques ["id_question"]);
+    $temp = $tag->getbyquesid($ques["id_question"]);
     $tags = array();
-    while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+    // while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+    while (0) {
       extract($row);
       $tag = array(
         "DESCRIPTION" => $DESCRIPTION,
       );
 
-      array_push( $ques ["tags"], $tag);
+      array_push($ques["tags"], $tag);
     }
 
     $cate = new category_ques($db);
@@ -60,7 +62,7 @@ if ($num > 0) {
     $answer = new answer($db);
     $answer->id_question =  $ques["id_question"];
     $stmt1 =  $answer->readByQuesID();
-    $ques["comment"] = $stmt1->rowCount();
+    // $ques["comment"] = $stmt1->rowCount();
 
     array_push($res["questions"], $ques);
   }

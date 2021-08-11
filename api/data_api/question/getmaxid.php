@@ -39,5 +39,3 @@ http_response_code(200);
 
 // make it json format
 echo json_encode($max);
-
-?>

@@ -56,7 +56,8 @@ if($question->owner_id!=null){
     $tag = new tag($db);
     $temp = $tag->getbyquesid($ques["id_question"]);
     $tags = array();
-    while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+    // while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+      while(0){
       // extract row
       // this will make $row['name'] to
       // just $name only
@@ -83,10 +84,3 @@ else{
     // tell the user product does not exist
     echo json_encode(array("message" => "Ques does not exist."));
 }
-?>
-
-
-
-
-
-

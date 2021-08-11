@@ -32,7 +32,7 @@
     <div class="row" style="text-align: center; font-size: 30px">
       <div class="col-sm-1"></div>
       <div class="col-sm-10 ">
-        <b style="display:block">BẢNG XẾP HẠNG TRONG THÁNG
+        <b style="display:block">BẢNG XẾP HẠNG THÁNG
           <b style="color: rgb(247, 182, 6);"> <?php echo date('m'); ?></b>
         </b>
         <div class="" style="margin: 45px auto; width:50%; padding-left:11%">

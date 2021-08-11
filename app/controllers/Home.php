@@ -36,7 +36,7 @@ class Home extends Controller
         $ques["tags"] = $tagModel->getbyquesid($ques["id_question"]);
         $answerModel->id_question =  $ques["id_question"];
         $stmt1 = $answerModel->readByQuesID();
-        $ques["comment"] = $stmt1->rowCount();
+        $ques["comment"] = count($stmt1);
 
         array_push($questions, $ques);
       }
@@ -198,8 +198,7 @@ class Home extends Controller
     $userModel = $this->modelAPI('user_account');
 
     //get questions
-    $questionModel->category_id = -1;
-    $allQuestions = $questionModel->readByCategoryId();
+    $allQuestions = $questionModel->readAcceptedAndNotDeleted();
     $num = count($allQuestions);
 
     //filter
@@ -218,7 +217,7 @@ class Home extends Controller
       $ques["tags"] = $tagModel->getbyquesid($ques["id_question"]);
       $answerModel->id_question =  $ques["id_question"];
       $stmt1 = $answerModel->readByQuesID();
-      $ques["comment"] = $stmt1->rowCount();
+      $ques["comment"] = count($stmt1);
 
       array_push($tempQuesFilter, $ques);
     }
@@ -367,8 +366,7 @@ class Home extends Controller
     $categories = $categoryModel->readAll();
 
     //get questions
-    $questionModel->category_id = -1;
-    $allQuestions = $questionModel->readByCategoryId();
+    $allQuestions = $questionModel->readAcceptedAndNotDeleted();
     //get tags
     $questionsFilter = [];
     foreach ($allQuestions as $ques) {
@@ -376,7 +374,7 @@ class Home extends Controller
       if (in_array($tagname, $ques["tags"])) {
         $answerModel->id_question =  $ques["id_question"];
         $stmt1 = $answerModel->readByQuesID();
-        $ques["comment"] = $stmt1->rowCount();
+        $ques["comment"] = count($stmt1);
         array_push($questionsFilter, $ques);
       }
     }

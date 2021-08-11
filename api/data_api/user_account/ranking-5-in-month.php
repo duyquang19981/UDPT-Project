@@ -18,22 +18,23 @@ $data = json_decode(file_get_contents("php://input"));
 $res =  ["result" => "true", "user_accounts" => []];
 
 $stmt = $user_account->readAll();
-$num = $stmt->rowCount();
+// $num = $stmt->rowCount();
 
 if ($num > 0) {
   $users = array();
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  while (0) {
     extract($row);
     $user = array(
       "id_user" => $ID_USER,
       "name" => $NAME,
-      "image"=> $IMAGE,
+      "image" => $IMAGE,
       "email" => $EMAIL,
       "birth" => $BIRTH,
       "phone" => $PHONE,
       "status" => $STATUS,
       "created" => $CREATED,
-      
+
     );
     $month = date('m');
     $ques = 0;
@@ -56,10 +57,9 @@ if ($num > 0) {
     $users[$i] = $users[$max];
     $users[$max] = $temp;
   }
-  
+
   $arr = array();
-  for($i = 0; $i < 5; $i++)
-  {
+  for ($i = 0; $i < 5; $i++) {
     array_push($arr, $users[$i]);
   }
   http_response_code(200);

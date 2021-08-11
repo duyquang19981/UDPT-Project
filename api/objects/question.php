@@ -147,66 +147,25 @@ class question
     function readAcceptedAndNotDeleted()
     {
         //for user site
-        $query = "SELECT * FROM 
-            " . $this->table_name .
-            " WHERE status = 1" .
-            " AND mod_id is not NULL" .
-            " ORDER BY `CREATED` DESC";
+        $select_field = 'C.CATEGORY_ID, C.NAME as CATNAME, C.MOD_ID, C.STATUS, C.CREATED';
+        $query = "SELECT " . $select_field . ", Q.*,U.* FROM 
+        " . $this->table_name . " Q, category_ques C," .
+            " user_account U " .
+            " WHERE Q.category_id = C.category_id" .
+            " AND Q.OWNER_ID = U.ID_USER" .
+            " AND Q.status = 1" .
+            " AND Q.mod_id is not NULL" .
+            " ORDER BY Q.CREATED DESC";
+
 
         $stmt = $this->conn->prepare($query);
         // bind values
         if ($stmt->execute()) {
-            $num = $stmt->rowCount();
-            if ($num > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    extract($row);
-                    $ques = array(
-                        "id_question" => $ID_QUESTION,
-                        "owner_id" => $OWNER_ID,
-                        "category_id" => $CATEGORY_ID,
-                        "mod_id" => $MOD_ID,
-                        "description" => $DESCRIPTION,
-                        "likes" => $LIKES,
-                        "created" => $CREATED,
-                        "accept_day" => $ACCEPT_DAY,
-                        "status" => $STATUS,
-                        "tags" => []
-
-                    );
-
-                    $tag = new tag($db);
-                    $temp = $tag->getbyquesid($ques["id_question"]);
-                    $tags = array();
-                    // while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
-                    while (0) {
-
-                        extract($row);
-                        $tag = array(
-                            "DESCRIPTION" => $DESCRIPTION,
-                        );
-
-                        array_push($ques["tags"], $tag);
-                    }
-
-                    $cate = new category_ques($db);
-                    $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
-                    $answer = new answer($db);
-                    $answer->id_question =  $ques["id_question"];
-                    $stmt1 =  $answer->readByQuesID();
-                    $ques["comment"] = $stmt1->rowCount();
-
-                    array_push($res["questions"], $ques);
-                }
-
-                $res["result"] = "true";
-                http_response_code(200);
-                // tell the user
-                echo json_encode(array(
-                    "message" => "done",
-                    "res" => $res
-                ));
+            $questions = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($questions, $this->castQuestionRow($row));
             }
-            return $stmt;
+            return $questions;
         }
 
         return 0;

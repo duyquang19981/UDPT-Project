@@ -91,7 +91,7 @@
             <?php if (isset($answer) && count($answer) > 0) {
                 foreach ($answer as $ans) { ?>
                     <div>
-                        <hr style="width:100%; size:10px; align:center " />
+                        <hr style="width:100%; size:10px; " />
                         <div class="row">
                             <div class="col-md-1">
                                 <img src="<?php if ($ans["user_image"] != null) {
@@ -149,7 +149,9 @@
                     </div>
             <?php
                 }
-            } ?>
+            } else{ ?>
+                <span style="font-size:15px; margin-top:40px;">Chưa có câu trả lời nào. Bạn quay lại sau nhé!</span>
+            <?php } ?>
         </div>
     </div>
 </div>

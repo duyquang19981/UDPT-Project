@@ -2,36 +2,60 @@
 <html lang="en" style="background-color: #cccccc">
 
 <head>
-    <title>Question And Answer</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/LoginSignup.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/style.css">
+  <title>Question And Answer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/LoginSignup.css">
+  <link rel="stylesheet" type="text/css" href="<?php echo _PUBLIC ?>/css/style.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-      
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
 
 </head>
 
 <body>
 
-<?php require($VIEW); ?>
+  <?php require($VIEW); ?>
 
 
-<div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-body row" >
-        <div id="loader" ></div>
-        <div style="margin-left:5%; font-size: 30px;">Loading..........</div> 
+  <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body row">
+          <div id="loader"></div>
+          <div style="margin-left:5%; font-size: 30px;">Loading..........</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div id="notification" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="sendForm2">
+          <div class="modal-header">
+            <h4 class="modal-title">Thông báo</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <!-- <label>Lý do: </label> -->
+              Hệ thống đang được tạm ngưng để bảo trì. Chúng tôi rất xin lỗi về sự bất tiện này.
+              Website sẽ hoạt động trở lại trong thời gian sớm nhất. Trân trọng!
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input style="margin:0px 5px;" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

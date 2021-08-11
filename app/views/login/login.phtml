@@ -7,25 +7,30 @@
     <h2 class="active"> Sign In </h2>
     <h2 class="inactive underlineHover"><a href="<?php echo _WEB_ROOT ?>/signup">Sign Up </a></h2>
 
-   
+
 
     <!-- Login Form -->
-    <form method ="POST" action="<?php echo _WEB_ROOT ?>/login/loginpost" >
-      
+    <!-- <form method="POST" action="<?php echo _WEB_ROOT ?>/login/loginpost"> -->
+    <form onsubmit="return false;">
       <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+      <a data-toggle="modal" data-target="#notification">
+        <input type="submit" class="fadeIn fourth" value="Log In">
+      </a>
+      <!-- <button>Log in</button> -->
       <p class="invalidFeedback" style="color:red">
-        <?php if(isset($data)){echo $data["messenger"];}?>
+        <?php if (isset($data)) {
+          echo $data["messenger"];
+        } ?>
       </p>
     </form>
-    
+
     <!-- Remind Passowrd -->
-    <div id="formFooter" >
+    <div id="formFooter">
       <div class="row">
         <div class="col-md-6" style="text-align:left">
           <a class="underlineHover" href="<?php echo _WEB_ROOT ?>">Home Page</a>
-        </div >
+        </div>
         <div class="col-md-6" style="text-align:right">
           <a class="underlineHover" href="<?php echo _WEB_ROOT ?>/forgotpass" style="margin-right:0">Forgot Password?</a>
         </div>
@@ -33,3 +38,4 @@
     </div>
   </div>
 </div>
+

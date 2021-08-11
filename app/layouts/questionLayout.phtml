@@ -1,10 +1,7 @@
 <?php
 //get category
-$url =  _API_ROOT . "/category/read-all.php";
-$responseData =  $callapi->callAPI("GET", $url, 0);
-$responseData = $responseData["data"];
-$res = $responseData["res"];
-$categoriesRender = $res["categories"];
+$categoryModel = $this->modelAPI('category_ques');
+$categoriesRender = $categoryModel->readAll();
 // print_r($categories);
 ?>
 

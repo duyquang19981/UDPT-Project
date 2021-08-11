@@ -2,16 +2,21 @@
   <div id="formContent">
     <!-- Tabs Titles -->
     <h2 class="active"> Forgot Passowrd </h2>
- 
+
     <!-- Login Form -->
-    <form method="POST" action="<?php echo _WEB_ROOT ?>/forgotpass/fogotpasspost">
-    <p class="invalidFeedback" style="color:red">
-        <?php if(isset($data)){echo $data["messenger"];}?>
+    <!-- <form method="POST" action="<?php echo _WEB_ROOT ?>/forgotpass/fogotpasspost"> -->
+    <form onsubmit="return false;">
+      <p class="invalidFeedback" style="color:red">
+        <?php if (isset($data)) {
+          echo $data["messenger"];
+        } ?>
       </p>
       <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
-      <input type="submit" class="fadeIn fourth" value="Tiếp tục">
+      <a data-toggle="modal" data-target="#notification">
+        <input type="submit" class="fadeIn fourth" value="Tiếp tục">
+      </a>
     </form>
-    
+
     <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" href="<?php echo _WEB_ROOT ?>/login">Đăng nhập?</a>

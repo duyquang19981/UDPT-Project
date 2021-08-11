@@ -31,9 +31,9 @@ if (
   $tagname = array("DESCRIPTION" =>  $data->tagname);
 
   $stmt = $question->readAcceptedAndNotDeleted();
-  $num = $stmt->rowCount();
+  $num = count($stmt);
   if ($num > 0) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    foreach ($stmt as $row) {
       extract($row);
       $ques = array(
         "id_question" => $ID_QUESTION,
@@ -54,7 +54,8 @@ if (
       $tag = new tag($db);
       $temp = $tag->getbyquesid($ques["id_question"]);
       $tags = array();
-      while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+      // while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+      while (0) {
         extract($row);
         $tag = array(
           "DESCRIPTION" => $DESCRIPTION,
@@ -66,7 +67,7 @@ if (
         $answer = new answer($db);
         $answer->id_question =  $ques["id_question"];
         $stmt1 =  $answer->readByQuesID();
-        $ques["comment"] = $stmt1->rowCount();
+        $ques["comment"] = count($stmt1);
 
         array_push($res["questions"], $ques);
       }

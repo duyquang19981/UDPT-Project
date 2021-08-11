@@ -18,11 +18,12 @@ $data = json_decode(file_get_contents("php://input"));
 $res =  ["result" => "true", "user_accounts" => []];
 
 $stmt = $user_account->readAll();
-$num = $stmt->rowCount();
+// $num = $stmt->rowCount();
 
 if ($num > 0) {
   $users = array();
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  while (0) {
     extract($row);
     $user = array(
       "id_user" => $ID_USER,

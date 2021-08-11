@@ -114,7 +114,7 @@ class answer
 
     function update()
     {
-        $query ="UPDATE " . $this->table_name." 
+        $query = "UPDATE " . $this->table_name . " 
         SET 
         referencelink = :referencelink,
         content = :content,
@@ -136,9 +136,9 @@ class answer
         // execute query
         if ($stmt->execute()) {
             return 1;
-            }
-    
-            return 0;
+        }
+
+        return 0;
     }
 
     function accept()
@@ -252,17 +252,38 @@ class answer
 
     function readByQuesID()
     {
-        $query = "SELECT p.id_answer, p.id_question,p.id_user,p.content,p.created,p.referencelink,p.referenceimage,p.likes,p.status
-         FROM 
-        " . $this->table_name . " as p" .
-            " WHERE p.id_question = :id_question and p.status = 1 and p.mod_id is not null";
+        $query = "SELECT *
+        FROM 
+        " . $this->table_name . " as p" . ", user_account as u" .
+            " WHERE p.id_question = :id_question 
+            and p.ID_USER = u.ID_USER 
+            and p.status = 1 and p.mod_id is not null";
         $stmt = $this->conn->prepare($query);
 
         $this->id_question = htmlspecialchars(strip_tags($this->id_question));
         $stmt->bindParam(":id_question", $this->id_question, PDO::PARAM_INT);
 
         $stmt->execute();
-        return $stmt;
+        $answers = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            $ans = array(
+                "id_answer" => $ID_ANSWER,
+                "id_question" => $ID_QUESTION,
+                "id_user" => $ID_USER,
+                "content" => $CONTENT,
+                "created" => $CREATED,
+                "referencelink" => $REFERENCELINK,
+                "referenceimage" => $REFERENCEIMAGE,
+                "likes" => $LIKES,
+                "status" => $STATUS,
+                "username" => $USERNAME,
+                "user_image" => $IMAGE,
+
+            );
+            array_push($answers, $ans);
+        }
+        return  $answers;
     }
     function readByUserID()
     {

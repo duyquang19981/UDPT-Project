@@ -73,39 +73,6 @@ class question
         return 0;
     }
 
-    function readByCategoryId()
-    {
-        //for user site
-        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
-        if ($this->category_id != -1) {
-            $query = "SELECT * FROM 
-            " . $this->table_name .
-                " WHERE category_id = :category_id" .
-                " AND status = 1" .
-                " AND mod_id is not NULL" .
-                " ORDER BY `CREATED` DESC" .
-                " LIMIT " . $this->limit .
-                " OFFSET " . $this->offset;
-
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(":category_id", $this->category_id, PDO::PARAM_INT);
-        } else {
-            $query = "SELECT * FROM 
-            " . $this->table_name .
-                " WHERE status = 1" .
-                " AND mod_id is not NULL" .
-                " ORDER BY `CREATED` DESC" .
-                " LIMIT " . $this->limit .
-                " OFFSET " . $this->offset;
-            $stmt = $this->conn->prepare($query);
-        }
-        // bind values
-        if ($stmt->execute()) {
-            return $stmt;
-        }
-
-        return 0;
-    }
     function castQuestionRow($row)
     {
         extract($row);
@@ -134,7 +101,7 @@ class question
         return $ques;
     }
 
-    function mvcReadByCategoryId()
+    function readByCategoryId()
     {
         //for user site
         $select_field = 'C.CATEGORY_ID, C.NAME as CATNAME, C.MOD_ID, C.STATUS, C.CREATED';
@@ -189,6 +156,56 @@ class question
         $stmt = $this->conn->prepare($query);
         // bind values
         if ($stmt->execute()) {
+            $num = $stmt->rowCount();
+            if ($num > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+                    $ques = array(
+                        "id_question" => $ID_QUESTION,
+                        "owner_id" => $OWNER_ID,
+                        "category_id" => $CATEGORY_ID,
+                        "mod_id" => $MOD_ID,
+                        "description" => $DESCRIPTION,
+                        "likes" => $LIKES,
+                        "created" => $CREATED,
+                        "accept_day" => $ACCEPT_DAY,
+                        "status" => $STATUS,
+                        "tags" => []
+
+                    );
+
+                    $tag = new tag($db);
+                    $temp = $tag->getbyquesid($ques["id_question"]);
+                    $tags = array();
+                    // while ($row = $temp->fetch(PDO::FETCH_ASSOC)) {
+                    while (0) {
+
+                        extract($row);
+                        $tag = array(
+                            "DESCRIPTION" => $DESCRIPTION,
+                        );
+
+                        array_push($ques["tags"], $tag);
+                    }
+
+                    $cate = new category_ques($db);
+                    $ques["category_name"] = $cate->getNamebyid($ques["category_id"]);
+                    $answer = new answer($db);
+                    $answer->id_question =  $ques["id_question"];
+                    $stmt1 =  $answer->readByQuesID();
+                    $ques["comment"] = $stmt1->rowCount();
+
+                    array_push($res["questions"], $ques);
+                }
+
+                $res["result"] = "true";
+                http_response_code(200);
+                // tell the user
+                echo json_encode(array(
+                    "message" => "done",
+                    "res" => $res
+                ));
+            }
             return $stmt;
         }
 

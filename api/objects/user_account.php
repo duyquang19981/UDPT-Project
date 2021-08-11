@@ -522,7 +522,8 @@ class user_account
         $stmt = $this->conn->prepare($query);
         $users = array();
         if ($stmt->execute()) {
-            $month = date('m');
+            // $month = date('m');
+            $month = 7;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 extract($row);
                 $user = array(

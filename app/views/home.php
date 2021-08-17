@@ -38,7 +38,7 @@
                         <div class="row" style="text-align: center; font-size: 30px">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
-                                <b>Bạn có điều khúc mắc? Hãy đặt câu hỏi ngay để nhận được đáp án của mình.</b>
+                                <b>Bạn đang thắc mắc điều gì? Hãy đặt câu hỏi ngay để nhận được đáp án của mình.</b>
                             </div>
                         </div>
                         <div class="row">
@@ -212,7 +212,8 @@
                                                 } ?>" height="40px" width="40px" style="background-color: transparent;margin-top: 5px; border-radius: 10%;">
                                 </div>
                                 <div class="col-md-7" style="padding-top:5%;padding-bottom:2%; ">
-                                    <a href="<?php echo _WEB_ROOT . "/userProfile/" . $to["id_user"] ?>" style="color:black;text-decoration: none;" alt="<?php echo $to['name'] ?>">
+                                    <!-- <a href="<?php echo _WEB_ROOT . "/userProfile/" . $to["id_user"] ?>" style="color:black;text-decoration: none;" alt="<?php echo $to['name'] ?>"> -->
+                                    <a data-toggle="modal" data-target="#notification2" style="color:black;text-decoration: none; cursor: pointer;">
                                         <p style="font-size: 14px;"><?php echo $to['name'] ?></p>
                                     </a>
                                 </div>
@@ -247,7 +248,7 @@
 </div>
 
 <div id="report" class="modal fade">
-<div class="modal-dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form id="sendForm2">
                 <div class="modal-header">
@@ -264,6 +265,28 @@
                 </div>
                 <div class="modal-footer">
                     <input id="send_btn" style="margin: 0px 5px; background-color:#286090; " name="submitAddLabelFormBtn" type="submit" class="btn btn-success" value="Send">
+                    <input style="margin:0px 5px;" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="notification2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="sendForm2">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <!-- <label>Lý do: </label> -->
+                        Chức năng Liên kết đang được bảo trì. Xin lỗi về sự bất tiện này.
+                    </div>
+                </div>
+                <div class="modal-footer">
                     <input style="margin:0px 5px;" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                 </div>
             </form>

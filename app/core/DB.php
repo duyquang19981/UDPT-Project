@@ -1,19 +1,14 @@
 <?php
 class Database
 {
-  // private $host = "sql6.freemysqlhosting.net";
-  // private $db_name = "sql6430149";
-  // private $username = "sql6430149";
-  // private $password = "I4UrnEEINS";
-  // private $port = 3306;
-  // public $conn;
-
-  private $host = "remotemysql.com";
-  private $db_name = "jPvMGwV89i";
-  private $username = "jPvMGwV89i";
-  private $password = "nstTU3GyJb";
-  private $port = 3306;
+  
+  private $host = "38.17.53.116";
+  private $db_name = "question";
+  private $username = "admin";
+  private $password = "asdsddsa";
+  private $port = 19871;
   public $conn;
+
 
   public function getConnection()
   {
@@ -21,7 +16,8 @@ class Database
 
     try {
       $this->conn = new PDO(
-        "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
+        "mysql:host=" . $this->host . ";port=" . $this->port .
+          ";dbname=" . $this->db_name,
         $this->username,
         $this->password
       );

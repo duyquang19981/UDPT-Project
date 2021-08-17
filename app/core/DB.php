@@ -1,10 +1,17 @@
 <?php
 class Database
 {
-  private $host = "sql6.freemysqlhosting.net";
-  private $db_name = "sql6430149";
-  private $username = "sql6430149";
-  private $password = "I4UrnEEINS";
+  // private $host = "sql6.freemysqlhosting.net";
+  // private $db_name = "sql6430149";
+  // private $username = "sql6430149";
+  // private $password = "I4UrnEEINS";
+  // private $port = 3306;
+  // public $conn;
+
+  private $host = "remotemysql.com";
+  private $db_name = "jPvMGwV89i";
+  private $username = "jPvMGwV89i";
+  private $password = "nstTU3GyJb";
   private $port = 3306;
   public $conn;
 
